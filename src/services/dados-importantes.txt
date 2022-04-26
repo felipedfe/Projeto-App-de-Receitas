@@ -1,0 +1,87 @@
+É possível listar todas as categorias, nacionalidades (vindas da API como "areas") e ingredientes:
+
+categorias: https://www.themealdb.com/api/json/v1/1/list.php?c=list
+nacionalidades: https://www.themealdb.com/api/json/v1/1/list.php?a=list
+ingredientes: https://www.themealdb.com/api/json/v1/1/list.php?i=list
+
+As fotos dos ingredientes vêm de um end-point padronizado com a seguinte lógica:
+
+https://www.themealdb.com/images/ingredients/{nome-do-ingrediente}-Small.png
+// exemplo com "Lime"
+https://www.themealdb.com/images/ingredients/Lime-Small.png
+
+Rotas
+As rotas a serem utilizadas na aplicação devem ser as seguintes:
+
+Tela de login: /;
+Tela principal de receitas de comidas: /foods;
+Tela principal de receitas de bebidas: /drinks;
+Tela de detalhes de uma receita de comida: /foods/{id-da-receita};
+Tela de detalhes de uma receita de bebida: /drinks/{id-da-receita};
+Tela de receita em progresso de comida: /foods/{id-da-receita}/in-progress;
+Tela de receita em progresso de bebida: /drinks/{id-da-receita}/in-progress;
+Tela de explorar: /explore;
+Tela de explorar comidas: /explore/foods;
+Tela de explorar bebidas: /explore/drinks;
+Tela de explorar comidas por ingrediente: /explore/foods/ingredients;
+Tela de explorar bebidas por ingrediente: /explore/drinks/ingredients;
+Tela de explorar comidas por nacionalidade: /explore/foods/nationalities;
+Tela de perfil: /profile;
+Tela de receitas feitas: /done-recipes;
+Tela de receitas favoritas: /favorite-recipes.
+
+No localStorage do navegador:
+
+a chave mealsToken deve conter a seguinte estrutura:
+1
+a chave cocktailsToken deve conter a seguinte estrutura:
+1
+a chave user deve conter a seguinte estrutura:
+{
+    email: email-da-pessoa
+}
+a chave doneRecipes deve conter a seguinte estrutura:
+[{
+    id: id-da-receita,
+    type: comida-ou-bebida,
+    nationality: nacionalidade-da-receita-ou-texto-vazio,
+    category: categoria-da-receita-ou-texto-vazio,
+    alcoholicOrNot: alcoholic-ou-non-alcoholic-ou-texto-vazio,
+    name: nome-da-receita,
+    image: imagem-da-receita,
+    doneDate: quando-a-receita-foi-concluida,
+    tags: array-de-tags-da-receita-ou-array-vazio
+}]
+a chave favoriteRecipes deve conter a seguinte estrutura:
+[{
+    id: id-da-receita,
+    type: food-ou-drink,
+    nationality: nacionalidade-da-receita-ou-texto-vazio,
+    category: categoria-da-receita-ou-texto-vazio,
+    alcoholicOrNot: alcoholic-ou-non-alcoholic-ou-texto-vazio,
+    name: nome-da-receita,
+    image: imagem-da-receita
+}]
+a chave inProgressRecipes deve conter a seguinte estrutura:
+{
+    cocktails: {
+        id-da-bebida: [lista-de-ingredientes-utilizados],
+        ...
+    },
+    meals: {
+        id-da-comida: [lista-de-ingredientes-utilizados],
+        ...
+    }
+}
+Observações técnicas
+
+id-da-bebida e id-da-comida representam o ID de uma bebida e comida, respectivamente, e cada item da lista de ingredientes da respectiva receita deve ser representado apenas pelo número do ingrediente no formato numérico.
+
+tela: 360 X 640
+
+Combinados:
+- Uso de Context
+- Se ficar mais de 30 min travado em um requisito, pedir ajuda
+- Uso de componentes funcionais
+- Não usar Bootstrap
+- Cada um faz os testes do seu requisito
