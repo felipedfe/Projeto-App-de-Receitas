@@ -8,6 +8,7 @@ const EMAIL = 'test@test.com';
 const PASSWORD = '1234567';
 const INVALID_EMAIL = 'test@test';
 const INVALID_PASSWORD = '123';
+const PASSWORD_ID = 'password-input';
 
 describe('Test the Login page', () => {
   it('tests the route of the page', () => {
@@ -24,7 +25,7 @@ describe('Test the Login page', () => {
   });
   it('tests if there is a password input', () => {
     renderWithRouter(<App />);
-    const passwordInput = screen.getByTestId('password-input');
+    const passwordInput = screen.getByTestId(PASSWORD_ID);
     expect(passwordInput).toBeInTheDocument();
     expect(passwordInput).toHaveAttribute('placeholder', 'Password');
     expect(passwordInput).toHaveAttribute('type', 'password');
@@ -45,7 +46,7 @@ describe('Test the Login page', () => {
   });
   it('verifies if it\'s possible to type a password', () => {
     renderWithRouter(<App />);
-    const passwordInput = screen.getByTestId('password-input');
+    const passwordInput = screen.getByTestId(PASSWORD_ID);
     expect(passwordInput.value).toBe('');
     userEvent.type(passwordInput, PASSWORD);
     expect(passwordInput.value).toBe(PASSWORD);
@@ -53,7 +54,7 @@ describe('Test the Login page', () => {
   it('checks if the button is disabled when the email or passwor is invalid', () => {
     renderWithRouter(<App />);
     const emailInput = screen.getByRole('textbox');
-    const passwordInput = screen.getByTestId('password-input');
+    const passwordInput = screen.getByTestId(PASSWORD_ID);
     const sendBtn = screen.getByRole('button');
     userEvent.type(emailInput, INVALID_EMAIL);
     userEvent.type(passwordInput, PASSWORD);
@@ -65,7 +66,7 @@ describe('Test the Login page', () => {
   it('checks if the user is redirected when the form is submited', async () => {
     const { history } = renderWithRouter(<App />);
     const emailInput = screen.getByRole('textbox');
-    const passwordInput = screen.getByTestId('password-input');
+    const passwordInput = screen.getByTestId(PASSWORD_ID);
     const sendBtn = screen.getByRole('button');
 
     userEvent.type(emailInput, EMAIL);
