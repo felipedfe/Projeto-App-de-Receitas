@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
+import Footer from '../components/Footer';
 import { addCocktailToken, addMealToken, addUser } from '../services/localStorage';
 
 const Login = ({ history }) => {
@@ -61,6 +62,7 @@ const Login = ({ history }) => {
       >
         Enter
       </button>
+      <Footer />
     </form>
   );
 };
