@@ -3,13 +3,13 @@ import PropTypes from 'prop-types';
 import MyContext from '../context/MyContext';
 import { fetchRecipes } from '../services/api';
 
-const MyProvider = ({ children }) => {
+function Provider({ children }) {
   const [mealResponse, setMealResponse] = useState({ meals: [] });
   const [drinkResponse, setDrinkResponse] = useState({ drinks: {} });
   const [recipeDetail, setRecipeDetail] = useState([]);
   const [meals, setMeals] = useState({});
   const [drinks, setDrinks] = useState({});
-
+  
   const getMealsAndDrinks = async (type) => {
     const response = await fetchRecipes(type);
     if (type === 'meal') {
@@ -34,10 +34,10 @@ const MyProvider = ({ children }) => {
       {children}
     </MyContext.Provider>
   );
-};
+}
 
-MyProvider.propTypes = {
-  children: PropTypes.node.isRequired,
-};
+Provider.propTypes = {
+  children: PropTypes.node,
+}.isRequired;
 
-export default MyProvider;
+export default Provider;
