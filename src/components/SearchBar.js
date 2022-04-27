@@ -11,7 +11,10 @@ import { getMealByName,
 } from '../services/api';
 
 function SearchBar(props) {
-  const { mealResponse, setMealResponse, setDrink } = useContext(MyContext);
+  const { mealResponse,
+    setMealResponse,
+    setDrinkResponse,
+    drinkResponse } = useContext(MyContext);
 
   const { history: { location: { pathname } } } = props;
   console.log(pathname);
@@ -56,7 +59,7 @@ function SearchBar(props) {
     default:
       return null;
     }
-    setDrink(drinks);
+    setDrinkResponse(drinks);
     console.log(drinks);
   };
 
@@ -70,10 +73,13 @@ function SearchBar(props) {
   };
 
   const { meals } = mealResponse;
+  const { drinks } = drinkResponse;
 
   return (
     <div className="search-container">
-      {meals.length === 1 && <Redirect to="/" />}
+      {meals.length === 1 && <Redirect to={ `/foods/${meals[0].idMeal}` } />}
+      {drinks.length === 1 && <Redirect to={ `/drinks/${drinks[0].idDrink}` } />}
+
       <span>SearchBar: </span>
       <input
         type="text"
