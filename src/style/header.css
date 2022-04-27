@@ -1,0 +1,11 @@
+.header-sect {
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
+  padding: 8px;
+}
+
+.header-sect button {
+  background-color: transparent;
+  border: none;
+}

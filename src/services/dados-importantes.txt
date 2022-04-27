@@ -1,3 +1,7 @@
+Código pro cypress:
+npm run cy -- --spec cypress/integration/login_spec.js
+npm run cy:open
+
 É possível listar todas as categorias, nacionalidades (vindas da API como "areas") e ingredientes:
 
 categorias: https://www.themealdb.com/api/json/v1/1/list.php?c=list
