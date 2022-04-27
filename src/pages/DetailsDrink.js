@@ -1,17 +1,22 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
+import { useParams } from 'react-router-dom';
 import DetailsTitle from '../components/DetailsTitle';
 import Recomendations from '../components/Recomendations';
 import MyContext from '../context/MyContext';
+import useIngredients from '../hooks/useIngredients';
+import { fetchDetails } from '../services/api';
 
 function DetailsDrink() {
-  const { id } = useParams();
   const [detail, setDetail] = useState({});
-  const ingredients = useIngredients(detail);
-  const { setRecipeDetail } = useContext(MyContext);
+  const ingredients = useIngredients();
+  const { id } = useParams();
+  const { recipeDetail, setRecipeDetail } = useContext(MyContext);
+  console.log({ ingredients, detail, recipeDetail });
 
   useEffect(() => async () => {
     const data = await fetchDetails('cocktail', id);
     setDetail(data.drinks[0]);
+    console.log(data.drinks[0]);
     setRecipeDetail(data.drinks[0]);
   }, [id]);
 
@@ -37,7 +42,7 @@ function DetailsDrink() {
           label="english_captions"
         />
       </video>
-      <Recomendations type="meal" />
+      <Recomendations type="drink" />
       <button className="start-btn" type="button" data-testid="start-recipe-btn">
         Start Recipe
       </button>

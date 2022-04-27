@@ -10,7 +10,7 @@ import MyContext from '../context/MyContext';
 function DetailsFood() {
   const { id } = useParams();
   const [detail, setDetail] = useState({});
-  const ingredients = useIngredients(detail);
+  const ingredients = useIngredients();
   const { setRecipeDetail } = useContext(MyContext);
 
   useEffect(() => async () => {
