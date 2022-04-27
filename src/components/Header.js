@@ -59,11 +59,7 @@ function Header() {
         src={ profileIcon }
         onClick={ () => setAvailable(true) }
       >
-        {
-          available
-            ? <Redirect to="/profile" />
-            : null
-        }
+        {available && <Redirect to="/profile" />}
         <img src={ profileIcon } alt="Profile" />
       </button>
 
