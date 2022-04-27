@@ -2,6 +2,7 @@ import React, { useContext, useState } from 'react';
 import { Redirect } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import MyContext from '../context/MyContext';
+import RecipeCard from './RecipeCard';
 import { getMealByName,
   getMealByIngredient,
   getMealByFirstLetter,
@@ -23,44 +24,57 @@ function SearchBar(props) {
   const [searchInput, setSearchInput] = useState('');
   const [radio, setRadio] = useState('ingredient');
 
+  const MAX_RECIPES_TO_RENDER = 12;
+  const { meals } = mealResponse;
+  const { drinks } = drinkResponse;
+
   // Função de requisição para as APIs de comida
   const getMeals = async () => {
-    let meals = '';
+    let mealsList = '';
     switch (radio) {
     case 'ingredient':
-      meals = await getMealByIngredient(searchInput);
+      mealsList = await getMealByIngredient(searchInput);
       break;
     case 'name':
-      meals = await getMealByName(searchInput);
+      mealsList = await getMealByName(searchInput);
       break;
     case 'first-letter':
-      meals = await getMealByFirstLetter(searchInput);
+      mealsList = await getMealByFirstLetter(searchInput);
+      console.log('-->', mealsList);
       break;
     default:
       return null;
     }
-    setMealResponse(meals);
-    console.log(meals);
+    if (mealsList.message) {
+      global.alert('Your search must have only 1 (one) character');
+      mealsList = { meals: [] };
+    }
+    if (mealsList.meals === null) {
+      global.alert('Sorry, we haven\'t found any recipes for these filters.');
+      mealsList = { meals: [] };
+    }
+    setMealResponse(mealsList);
+    console.log(mealsList);
   };
 
   // Função de requisição para as APIs de bebida
   const getDrinks = async () => {
-    let drinks = '';
+    let drinksList = '';
     switch (radio) {
     case 'ingredient':
-      drinks = await getDrinkByIngredient(searchInput);
+      drinksList = await getDrinkByIngredient(searchInput);
       break;
     case 'name':
-      drinks = await getDrinkByName(searchInput);
+      drinksList = await getDrinkByName(searchInput);
       break;
     case 'first-letter':
-      drinks = await getDrinkByFirstLetter(searchInput);
+      drinksList = await getDrinkByFirstLetter(searchInput);
       break;
     default:
       return null;
     }
-    setDrinkResponse(drinks);
-    console.log(drinks);
+    setDrinkResponse(drinksList);
+    console.log(drinksList);
   };
 
   const handleClick = async () => {
@@ -72,17 +86,43 @@ function SearchBar(props) {
     }
   };
 
-  const { meals } = mealResponse;
-  const { drinks } = drinkResponse;
+  // Função que retorna o render dos Recipe Cards
+  const renderCards = (option) => {
+    let filteredByQuantity = [];
+    switch (option) {
+    case 'meal':
+      filteredByQuantity = meals
+        .filter((item) => meals.indexOf(item) < MAX_RECIPES_TO_RENDER);
+
+      return filteredByQuantity.map((recipeObj, index) => (
+        <RecipeCard
+          key={ recipeObj.idMeal }
+          recipeType="meal"
+          recipe={ recipeObj }
+          index={ index }
+        />));
+    case 'drink':
+      filteredByQuantity = drinks
+        .filter((item) => drinks.indexOf(item) < MAX_RECIPES_TO_RENDER);
+
+      return filteredByQuantity.map((recipeObj, index) => (
+        <RecipeCard
+          key={ recipeObj.idMeal }
+          recipeType="drink"
+          recipe={ recipeObj }
+          index={ index }
+        />));
+    default:
+      return null;
+    }
+  };
 
   return (
     <div className="search-container">
-      {meals.length === 1 && <Redirect to={ `/foods/${meals[0].idMeal}` } />}
-      {drinks.length === 1 && <Redirect to={ `/drinks/${drinks[0].idDrink}` } />}
-
       <span>SearchBar: </span>
       <input
         type="text"
+        data-testid="search-input"
         onChange={ ({ target }) => setSearchInput(target.value) }
       />
 
@@ -114,16 +154,24 @@ function SearchBar(props) {
           onClick={ ({ target }) => { setRadio(target.value); } }
         />
         First Letter
-
-        <button
-          type="button"
-          name="search-type"
-          data-testid="exec-search-btn"
-          onClick={ handleClick }
-        >
-          Search
-        </button>
       </div>
+
+      <button
+        type="button"
+        name="search-type"
+        data-testid="exec-search-btn"
+        onClick={ handleClick }
+      >
+        Search
+      </button>
+
+      {/* Redireciona para a página de detalhes caso só encontre uma receita */}
+      {meals.length === 1 && <Redirect to={ `/foods/${meals[0].idMeal}` } />}
+      {drinks.length === 1 && <Redirect to={ `/drinks/${drinks[0].idDrink}` } />}
+
+      {/* Aqui são renderizados os cards das receitas caso sejam encontradas mais de uma */}
+      {meals.length > 1 && renderCards('meal')}
+      {drinks.length > 1 && renderCards('drink')}
     </div>
   );
 }
