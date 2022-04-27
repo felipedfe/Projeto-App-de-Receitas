@@ -1,6 +1,7 @@
 const MEAL_TOKEN = 'mealsToken';
 const COCKTAIL_TOKEN = 'cocktailsToken';
 const USER = 'user';
+const FAVORITE_RECIPES = 'favoriteRecipes';
 
 // Adiciona token do meal
 export const addMealToken = (token) => {
@@ -35,4 +36,26 @@ export const addUser = (email) => {
 export const getUser = () => {
   const user = JSON.parse(localStorage.getItem(USER));
   return user;
+};
+
+// limpa o localStorage
+export const cleanLocalStorage = () => {
+  localStorage.removeItem(MEAL_TOKEN);
+  localStorage.removeItem(COCKTAIL_TOKEN);
+  localStorage.removeItem(USER);
+  localStorage.removeItem(FAVORITE_RECIPES);
+};
+
+// adiciona receita aos favoritos
+export const addFavorite = (recipe) => {
+  const favorites = JSON.parse(localStorage.getItem(FAVORITE_RECIPES)) || [];
+  const newFavorites = [...favorites, recipe];
+  localStorage.setItem(FAVORITE_RECIPES, JSON.stringify(newFavorites));
+};
+
+// remove receita dos favoritos
+export const removeFromFavorite = (id) => {
+  const favorites = JSON.parse(localStorage.getItem(FAVORITE_RECIPES));
+  const newFavorites = favorites.filter((recipe) => recipe.id !== id);
+  localStorage.setItem(FAVORITE_RECIPES, JSON.stringify(newFavorites));
 };
