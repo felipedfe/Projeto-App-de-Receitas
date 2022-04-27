@@ -18,11 +18,12 @@ import ProgressFood from './pages/ProgressFood';
 import ProgressDrink from './pages/ProgressDrink';
 import DetailsDrink from './pages/DetailsDrink';
 import DetailsFood from './pages/DetailsFood';
+import Provider from './components/Provider';
 
 function App() {
   return (
     <Provider>
-      <div className="">
+      <div className="main-sect">
         <Switch>
           <Route exact path="/" component={ Login } />
           <Route path="/foods/:id/in-progress" component={ ProgressFood } />
