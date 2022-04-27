@@ -17,12 +17,12 @@ import ProgressFood from './pages/ProgressFood';
 import ProgressDrink from './pages/ProgressDrink';
 import DetailsDrink from './pages/DetailsDrink';
 import DetailsFood from './pages/DetailsFood';
-import MyProvider from './context/MyProvider';
+import Provider from './components/Provider';
 
 function App() {
   return (
-    <MyProvider>
-      <div className="">
+    <Provider>
+      <div className="main-sect">
         <Switch>
           <Route exact path="/" component={ Login } />
           <Route path="/foods/:id/in-progress" component={ ProgressFood } />
@@ -51,7 +51,7 @@ function App() {
           <Route path="/favorite-recipes" component={ FavoriteRecipes } />
         </Switch>
       </div>
-    </MyProvider>
+    </Provider>
   );
 }
 

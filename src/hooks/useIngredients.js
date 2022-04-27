@@ -1,28 +1,26 @@
-import { useContext, useEffect, useState } from 'react';
-import MyContext from '../context/MyContext';
+import { useEffect, useState } from 'react';
 
-const useIngredients = () => {
+const useIngredients = (detail) => {
   const [ingredients, setIngredients] = useState([]);
-  const { recipeDetail } = useContext(MyContext);
   useEffect(() => {
-    const keys = Object.keys(recipeDetail);
+    const keys = Object.keys(detail);
     const ingredientsList = [];
     const measuresList = [];
     keys.forEach((key) => {
-      if (key.includes('strIngredient') && recipeDetail[key]) {
-        ingredientsList.push(recipeDetail[key]);
-      }
-      if (key.includes('strMeasure')) measuresList.push(recipeDetail[key]);
+      if (key.includes('strIngredient') && detail[key]) ingredientsList.push(key);
+      if (key.includes('strMeasure')) measuresList.push(detail[key]);
     });
     const measurements = [];
     ingredientsList.forEach((item, index) => {
-      if (recipeDetail[item]) {
-        measurements.push({ measure: measuresList[index], ingredient: item });
+      if (detail[item]) {
+        measurements.push({
+          measure: measuresList[index] || 'qb',
+          ingredient: detail[item],
+        });
       }
     });
-
     setIngredients(measurements);
-  }, [recipeDetail]);
+  }, [detail]);
   return ingredients;
 };
 

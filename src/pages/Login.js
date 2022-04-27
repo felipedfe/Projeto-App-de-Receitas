@@ -1,11 +1,18 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { addCocktailToken, addMealToken, addUser } from '../services/localStorage';
+import MyContext from '../context/MyContext';
 
 const Login = ({ history }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [validate, setValidate] = useState(false);
+  const { getMealsAndDrinks } = useContext(MyContext);
+
+  useEffect(() => {
+    getMealsAndDrinks('meal');
+    getMealsAndDrinks('drink');
+  }, []);
 
   useEffect(() => {
     const validEmail = email.match(/^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/gm);

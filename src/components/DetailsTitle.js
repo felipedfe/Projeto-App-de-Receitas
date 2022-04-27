@@ -51,6 +51,7 @@ const DetailsTitle = ({ type, id }) => {
       if (item.id === id) setFavorite(true);
     });
   }, [id]);
+
   return (
     <section>
       <img
@@ -80,7 +81,8 @@ const DetailsTitle = ({ type, id }) => {
           alt="Favorite this recipe recipe?"
         />
       </button>
-      <p data-testid="recipe-category">{ detail.strCategory }</p>
+      <p data-testid="recipe-category">{ detail.category }</p>
+      {detail.alcoholicOrNot && <p>{detail.alcoholicOrNot}</p>}
     </section>
   );
 };

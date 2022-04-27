@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import MyContext from './MyContext';
+import MyContext from '../context/MyContext';
 import { fetchRecipes } from '../services/api';
 
 const MyProvider = ({ children }) => {
+  const [mealResponse, setMealResponse] = useState({ meals: [] });
+  const [drinkResponse, setDrinkResponse] = useState({ drinks: {} });
   const [recipeDetail, setRecipeDetail] = useState([]);
   const [meals, setMeals] = useState({});
   const [drinks, setDrinks] = useState({});
@@ -15,7 +17,11 @@ const MyProvider = ({ children }) => {
     } else setDrinks(response);
   };
 
-  const value = {
+  const providerState = {
+    mealResponse,
+    setMealResponse,
+    drinkResponse,
+    setDrinkResponse,
     recipeDetail,
     setRecipeDetail,
     meals,
@@ -24,7 +30,7 @@ const MyProvider = ({ children }) => {
   };
 
   return (
-    <MyContext.Provider value={ value }>
+    <MyContext.Provider value={ providerState }>
       {children}
     </MyContext.Provider>
   );
