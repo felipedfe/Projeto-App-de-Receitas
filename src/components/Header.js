@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useLocation, Redirect } from 'react-router-dom';
 import profileIcon from '../images/profileIcon.svg';
-import seachIcon from '../images/searchIcon.svg';
+import searchIcon from '../images/searchIcon.svg';
 import '../style/header.css';
 
 function Header() {
@@ -70,11 +70,11 @@ function Header() {
         <>
           <button
             type="button"
-            src={ seachIcon }
+            src={ searchIcon }
             data-testid="search-top-btn"
             onClick={ () => setInput(!input) }
           >
-            <img src={ seachIcon } alt="Seach" />
+            <img src={ searchIcon } alt="Search" />
           </button>
 
           {input && (
