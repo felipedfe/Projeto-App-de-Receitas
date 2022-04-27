@@ -1,8 +1,47 @@
-import React from 'react';
+import React, { useContext } from 'react';
+import DetailsTitle from '../components/DetailsTitle';
+import Recomendations from '../components/Recomendations';
+import MyContext from '../context/MyContext';
 
 function DetailsDrink() {
+  const { id } = useParams();
+  const [detail, setDetail] = useState({});
+  const ingredients = useIngredients(detail);
+  const { setRecipeDetail } = useContext(MyContext);
+
+  useEffect(() => async () => {
+    const data = await fetchDetails('cocktail', id);
+    setDetail(data.drinks[0]);
+    setRecipeDetail(data.drinks[0]);
+  }, [id]);
+
   return (
-    <section />
+    <section>
+      <DetailsTitle type="drink" id={ id } />
+      <h2>Ingredients</h2>
+      <ul>
+        {ingredients.map(({ measure, ingredient }, index) => (
+          <li key={ index } data-testid={ `${index}-ingredient-name-and-measure` }>
+            {`${measure} ${ingredient}`}
+          </li>
+        ))}
+      </ul>
+      <h2>Instructions</h2>
+      <p data-testid="instructions">{detail.strInstructions}</p>
+      <video width="300" controls data-testid="video">
+        <source src={ detail.strYoutube } />
+        <track
+          src="captions_en.vtt"
+          kind="captions"
+          srcLang="en"
+          label="english_captions"
+        />
+      </video>
+      <Recomendations type="meal" />
+      <button className="start-btn" type="button" data-testid="start-recipe-btn">
+        Start Recipe
+      </button>
+    </section>
   );
 }
 

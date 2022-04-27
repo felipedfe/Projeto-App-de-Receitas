@@ -1,0 +1,16 @@
+.recomendation-sect {
+  display: flex;
+  justify-content: space-evenly;
+  margin: 12px auto 32px;
+  overflow-x: scroll;
+  padding: 40px;
+  width: 100vw;
+}
+
+.start-btn {
+  bottom: 0;
+  left: 50%;
+  position: fixed;
+  transform: translateX(-50%);
+  width: 50%;
+}

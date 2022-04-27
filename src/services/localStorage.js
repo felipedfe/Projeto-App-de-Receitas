@@ -59,3 +59,9 @@ export const removeFromFavorite = (id) => {
   const newFavorites = favorites.filter((recipe) => recipe.id !== id);
   localStorage.setItem(FAVORITE_RECIPES, JSON.stringify(newFavorites));
 };
+
+// busca receitas favoritas
+export const getFavorites = () => {
+  const favorites = JSON.parse(localStorage.getItem(FAVORITE_RECIPES));
+  return favorites;
+};
