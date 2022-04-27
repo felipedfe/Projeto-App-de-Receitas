@@ -1,12 +1,11 @@
-.main-footer {
-  bottom: 0;
+.header-sect {
+  align-items: center;
   display: flex;
   justify-content: space-between;
-  position: fixed;
-  width: 100vw;
+  padding: 8px;
 }
 
-.main-footer button {
+.header-sect button {
   background-color: transparent;
   border: none;
 }

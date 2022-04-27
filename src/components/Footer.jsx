@@ -28,7 +28,6 @@ function Footer() {
         onClick={ actionButtonDrink }
         src={ drinkIcon }
       >
-        Drinks
         <img src={ drinkIcon } alt="Drink icon" />
       </button>
 
@@ -38,7 +37,6 @@ function Footer() {
         onClick={ actionButtonExplore }
         src={ exploreIcon }
       >
-        Explore
         <img src={ exploreIcon } alt="Explore icon" />
       </button>
 
@@ -48,7 +46,6 @@ function Footer() {
         onClick={ actionButtonFoods }
         src={ mealIcon }
       >
-        Meal
         <img src={ mealIcon } alt="Meal icon" />
       </button>
 
