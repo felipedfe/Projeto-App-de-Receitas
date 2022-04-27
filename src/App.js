@@ -1,7 +1,7 @@
 import React from 'react';
 import { Switch, Route } from 'react-router-dom';
 import './App.css';
-import 'bootstrap/dist/css/bootstrap.min.css';
+import Login from './pages/Login';
 import Foods from './pages/Foods';
 import Drinks from './pages/Drinks';
 import Explore from './pages/Explore';
@@ -22,14 +22,13 @@ function App() {
   return (
     <div className="">
       <Switch>
-        <Route exact path="/foods" component={ Foods } />
-        <Route path="/drinks" component={ Drinks } />
+        <Route exact path="/" component={ Login } />
         <Route path="/foods/:id/in-progress" component={ ProgressFood } />
         <Route path="/foods/:id" component={ DetailsFood } />
+        <Route exact path="/foods" component={ Foods } />
         <Route path="/drinks/:id/in-progress" component={ ProgressDrink } />
         <Route path="/drinks/:id" component={ DetailsDrink } />
-        <Route path="/explore" component={ Explore } />
-        <Route exact path="/explore/foods" component={ ExploreFoods } />
+        <Route path="/drinks" component={ Drinks } />
         <Route
           path="/explore/foods/ingredients"
           component={ ExploreFoodsByIngredients }
@@ -38,11 +37,13 @@ function App() {
           path="/explore/foods/nationalities"
           component={ ExploreFoodsByNationality }
         />
+        <Route path="/explore/foods" component={ ExploreFoods } />
         <Route
           path="/explore/drinks/ingredients"
           component={ ExploreDrinksByIngredientes }
         />
         <Route path="/explore/drinks" component={ ExploreDrinks } />
+        <Route path="/explore" component={ Explore } />
         <Route path="/profile" component={ Profile } />
         <Route path="/done-recipes" component={ DoneRecipes } />
         <Route path="/favorite-recipes" component={ FavoriteRecipes } />
