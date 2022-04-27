@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useLocation, Redirect } from 'react-router-dom';
 import profileIcon from '../images/profileIcon.svg';
 import seachIcon from '../images/searchIcon.svg';
+import '../style/header.css';
 
 function Header() {
   const [input, setInput] = useState(false);
@@ -52,7 +53,7 @@ function Header() {
   }
 
   return (
-    <section>
+    <section className="header-sect">
       <button
         type="button"
         data-testid="profile-top-btn"
@@ -66,26 +67,25 @@ function Header() {
       <p data-testid="page-title">{ routeName }</p>
 
       {arrayRoute.includes(pathRoute) && (
-            <>
-              <button
-                type="button"
-                src={ seachIcon }
-                data-testid="search-top-btn"
-                onClick={ () => setInput(!input) }
-              >
-                <img src={ seachIcon } alt="Seach" />
-              </button>
+        <>
+          <button
+            type="button"
+            src={ seachIcon }
+            data-testid="search-top-btn"
+            onClick={ () => setInput(!input) }
+          >
+            <img src={ seachIcon } alt="Seach" />
+          </button>
 
-              {input && (
+          {input && (
             <input
               type="text"
               data-testid="search-input"
               placeholder="Buscar"
             />
-          )
-              }
-            </>
           )}
+        </>
+      )}
     </section>
   );
 }
