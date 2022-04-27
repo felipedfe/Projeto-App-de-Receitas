@@ -1,11 +1,10 @@
 .exploreSection {
   display: flex;
-  flex-direction: column;
+  flex-flow: column wrap;
   text-align: center;
-  flex-wrap: wrap;
 }
 button {
+  align-self: center;
   width: 200px;
   margin-top: 20px;
-  align-self: center;
-} 
+}
