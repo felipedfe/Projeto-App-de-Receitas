@@ -65,9 +65,7 @@ function Header() {
 
       <p data-testid="page-title">{ routeName }</p>
 
-      {
-        arrayRoute.includes(pathRoute)
-          ? (
+      {arrayRoute.includes(pathRoute) && (
             <>
               <button
                 type="button"
@@ -78,9 +76,7 @@ function Header() {
                 <img src={ seachIcon } alt="Seach" />
               </button>
 
-              {
-                input
-          && (
+              {input && (
             <input
               type="text"
               data-testid="search-input"
@@ -89,9 +85,7 @@ function Header() {
           )
               }
             </>
-          )
-          : null
-      }
+          )}
     </section>
   );
 }
