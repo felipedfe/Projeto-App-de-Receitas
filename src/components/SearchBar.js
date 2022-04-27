@@ -17,8 +17,9 @@ function SearchBar(props) {
     setDrinkResponse,
     drinkResponse } = useContext(MyContext);
 
-  const { history: { location: { pathname } } } = props;
-  console.log(pathname);
+  // const { history: { location: { pathname } } } = props;
+  // console.log(pathname);
+  console.log(props);
 
   // State
   const [searchInput, setSearchInput] = useState('');

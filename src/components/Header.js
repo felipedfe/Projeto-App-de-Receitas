@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useLocation, Redirect } from 'react-router-dom';
 import profileIcon from '../images/profileIcon.svg';
 import searchIcon from '../images/searchIcon.svg';
+import SearchBar from './SearchBar';
 import '../style/header.css';
 
 function Header() {
@@ -78,11 +79,14 @@ function Header() {
           </button>
 
           {input && (
-            <input
-              type="text"
-              data-testid="search-input"
-              placeholder="Buscar"
-            />
+            <>
+              <input
+                type="text"
+                data-testid="search-input"
+                placeholder="Buscar"
+              />
+              <SearchBar />
+            </>
           )}
         </>
       )}
