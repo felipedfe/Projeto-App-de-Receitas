@@ -2,7 +2,9 @@ import React from 'react';
 
 function DetailsFood() {
   return (
-    <section />
+    <section>
+      <h1>oi</h1>
+    </section>
   );
 }
 

@@ -1,0 +1,11 @@
+.sectionExplore {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  flex-wrap: wrap;
+}
+button {
+  width: 200px;
+  margin-top: 20px;
+  align-self: center;
+}

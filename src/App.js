@@ -3,7 +3,6 @@ import { Switch, Route } from 'react-router-dom';
 import './App.css';
 import Login from './pages/Login';
 import Provider from './components/Provider';
-import SearchBar from './components/SearchBar';
 import Foods from './pages/Foods';
 import Drinks from './pages/Drinks';
 import Explore from './pages/Explore';
@@ -52,7 +51,7 @@ function App() {
           <Route path="/favorite-recipes" component={ FavoriteRecipes } />
         </Switch>
       </div>
-   </Provider>
+    </Provider>
   );
 }
 
