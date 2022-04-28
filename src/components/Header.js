@@ -79,14 +79,7 @@ function Header() {
           </button>
 
           {input && (
-            <>
-              <input
-                type="text"
-                data-testid="search-input"
-                placeholder="Buscar"
-              />
-              <SearchBar />
-            </>
+            <SearchBar />
           )}
         </>
       )}

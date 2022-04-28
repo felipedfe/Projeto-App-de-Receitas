@@ -1,5 +1,5 @@
 import React, { useContext, useState } from 'react';
-import { Redirect } from 'react-router-dom';
+import { Redirect, useLocation } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import MyContext from '../context/MyContext';
 import RecipeCard from './RecipeCard';
@@ -11,15 +11,14 @@ import { getMealByName,
   getDrinkByFirstLetter,
 } from '../services/api';
 
-function SearchBar(props) {
+function SearchBar() {
   const { mealResponse,
     setMealResponse,
     setDrinkResponse,
     drinkResponse } = useContext(MyContext);
 
-  // const { history: { location: { pathname } } } = props;
-  // console.log(pathname);
-  console.log(props);
+  const location = useLocation();
+  const { pathname } = location;
 
   // State
   const [searchInput, setSearchInput] = useState('');
@@ -41,7 +40,7 @@ function SearchBar(props) {
       break;
     case 'first-letter':
       mealsList = await getMealByFirstLetter(searchInput);
-      console.log('-->', mealsList);
+      // console.log('-->', mealsList);
       break;
     default:
       return null;
