@@ -40,10 +40,7 @@ export const getUser = () => {
 
 // limpa o localStorage
 export const cleanLocalStorage = () => {
-  localStorage.removeItem(MEAL_TOKEN);
-  localStorage.removeItem(COCKTAIL_TOKEN);
-  localStorage.removeItem(USER);
-  localStorage.removeItem(FAVORITE_RECIPES);
+  localStorage.clear();
 };
 
 // adiciona receita aos favoritos
