@@ -4,6 +4,16 @@
   padding: 0;
 }
 
+.favorite-card-container {
+  margin-bottom: 30px;
+  display: block;
+  border: solid pink 2px;
+}
+
+.card-image {
+  width: 100px;
+}
+
 .main-sect {
   width: 100vw;
 }

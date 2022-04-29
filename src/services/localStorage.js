@@ -51,6 +51,7 @@ export const addFavorite = (recipe) => {
   const favorites = JSON.parse(localStorage.getItem(FAVORITE_RECIPES)) || [];
   const newFavorites = [...favorites, recipe];
   localStorage.setItem(FAVORITE_RECIPES, JSON.stringify(newFavorites));
+  console.log(localStorage);
 };
 
 // remove receita dos favoritos
