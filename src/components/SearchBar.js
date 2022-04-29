@@ -39,7 +39,7 @@ function SearchBar() {
       break;
     case 'first-letter':
       mealsList = await getMealByFirstLetter(searchInput);
-      console.log('-->', mealsList);
+      // console.log('-->', mealsList);
       break;
     default:
       return null;
