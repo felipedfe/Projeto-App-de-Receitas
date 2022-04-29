@@ -18,7 +18,6 @@ import ProgressFood from './pages/ProgressFood';
 import ProgressDrink from './pages/ProgressDrink';
 import DetailsDrink from './pages/DetailsDrink';
 import DetailsFood from './pages/DetailsFood';
-import Provider from './components/Provider';
 
 function App() {
   return (
