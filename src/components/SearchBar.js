@@ -17,8 +17,7 @@ function SearchBar() {
     setDrinkResponse,
     drinkResponse } = useContext(MyContext);
 
-  const location = useLocation();
-  const { pathname } = location;
+  const { pathname } = useLocation();
 
   // State
   const [searchInput, setSearchInput] = useState('');
@@ -54,7 +53,6 @@ function SearchBar() {
       mealsList = { meals: [] };
     }
     setMealResponse(mealsList);
-    console.log(mealsList);
   };
 
   // Função de requisição para as APIs de bebida
@@ -74,7 +72,6 @@ function SearchBar() {
       return null;
     }
     setDrinkResponse(drinksList);
-    console.log(drinksList);
   };
 
   const handleClick = async () => {

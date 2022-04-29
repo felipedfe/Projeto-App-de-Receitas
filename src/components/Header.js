@@ -1,15 +1,17 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { useLocation, Redirect } from 'react-router-dom';
+import MyContext from '../context/MyContext';
 import profileIcon from '../images/profileIcon.svg';
 import searchIcon from '../images/searchIcon.svg';
 import SearchBar from './SearchBar';
 import '../style/header.css';
 
 function Header() {
-  const [input, setInput] = useState(false);
+  const { search, setSearch } = useContext(MyContext);
   const [available, setAvailable] = useState(false);
 
   const location = useLocation();
+
   const pathRoute = location.pathname;
 
   let routeName = '';
@@ -68,20 +70,14 @@ function Header() {
       <p data-testid="page-title">{ routeName }</p>
 
       {arrayRoute.includes(pathRoute) && (
-        <>
-          <button
-            type="button"
-            src={ searchIcon }
-            data-testid="search-top-btn"
-            onClick={ () => setInput(!input) }
-          >
-            <img src={ searchIcon } alt="Search" />
-          </button>
-
-          {input && (
-            <SearchBar />
-          )}
-        </>
+        <button
+          type="button"
+          src={ searchIcon }
+          data-testid="search-top-btn"
+          onClick={ () => setSearch(!search) }
+        >
+          <img src={ searchIcon } alt="Search" />
+        </button>
       )}
     </section>
   );
