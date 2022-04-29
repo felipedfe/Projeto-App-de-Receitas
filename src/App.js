@@ -3,7 +3,6 @@ import { Switch, Route } from 'react-router-dom';
 import './App.css';
 import Login from './pages/Login';
 import Provider from './components/Provider';
-// import SearchBar from './components/SearchBar';
 import Foods from './pages/Foods';
 import Drinks from './pages/Drinks';
 import Explore from './pages/Explore';
@@ -19,11 +18,12 @@ import ProgressFood from './pages/ProgressFood';
 import ProgressDrink from './pages/ProgressDrink';
 import DetailsDrink from './pages/DetailsDrink';
 import DetailsFood from './pages/DetailsFood';
+import Provider from './components/Provider';
 
 function App() {
   return (
     <Provider>
-      <div className="">
+      <div className="main-sect">
         <Switch>
           <Route exact path="/" component={ Login } />
           <Route path="/foods/:id/in-progress" component={ ProgressFood } />
