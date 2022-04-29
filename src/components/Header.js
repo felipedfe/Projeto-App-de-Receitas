@@ -10,6 +10,7 @@ function Header() {
   const [available, setAvailable] = useState(false);
 
   const location = useLocation();
+
   const pathRoute = location.pathname;
 
   let routeName = '';
