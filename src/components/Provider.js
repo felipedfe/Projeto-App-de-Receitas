@@ -7,6 +7,8 @@ function Provider({ children }) {
   const [loading, setLoading] = useState(false);
   const [mealResponse, setMealResponse] = useState({ meals: [] });
   const [drinkResponse, setDrinkResponse] = useState({ drinks: {} });
+  const [foods, setFoods] = useState([]);
+  const [drinks, setDrinks] = useState([]);
   const [recipeDetail, setRecipeDetail] = useState([]);
   const [meals, setMeals] = useState({});
   const [drinks, setDrinks] = useState({});
@@ -35,6 +37,10 @@ function Provider({ children }) {
   };
 
   const providerState = {
+    foods,
+    drinks,
+    setDrinks,
+    setFoods,
     loading,
     setLoading,
     mealResponse,

@@ -62,6 +62,47 @@ export const getDrinkByFirstLetter = async (letter) => {
   }
 };
 
+export const loadingFoods = async () => {
+  try {
+    const response = await fetch('https://www.themealdb.com/api/json/v1/1/search.php?s=');
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    return error;
+  }
+};
+
+export const loadingDrinks = async () => {
+  try {
+    const response = await fetch('https://www.thecocktaildb.com/api/json/v1/1/search.php?s=');
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    return error;
+  }
+};
+
+export const getFoodByCategory = async (category) => {
+  try {
+    const response = await fetch(`https://www.themealdb.com/api/json/v1/1/filter.php?c=${category}`);
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    return error;
+  }
+};
+
+export const getDrinksByCategory = async (category) => {
+  try {
+    const URL = `https://www.thecocktaildb.com/api/json/v1/1/filter.php?c=${category}`;
+    const response = await fetch(URL);
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    return error;
+  }
+};
+
 export const fetchDetails = async (type, id) => {
   try {
     let endpoint;
@@ -119,3 +160,5 @@ export const getSurpriseDrink = async () => {
     return error;
   }
 };
+
+   
