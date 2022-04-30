@@ -1,5 +1,5 @@
 import React, { useContext, useState } from 'react';
-import { Redirect } from 'react-router-dom';
+import { Redirect, useLocation } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import MyContext from '../context/MyContext';
 import RecipeCard from './RecipeCard';
@@ -11,14 +11,13 @@ import { getMealByName,
   getDrinkByFirstLetter,
 } from '../services/api';
 
-function SearchBar(props) {
+function SearchBar() {
   const { mealResponse,
     setMealResponse,
     setDrinkResponse,
     drinkResponse } = useContext(MyContext);
 
-  const { history: { location: { pathname } } } = props;
-  console.log(pathname);
+  const { pathname } = useLocation();
 
   // State
   const [searchInput, setSearchInput] = useState('');
@@ -40,7 +39,7 @@ function SearchBar(props) {
       break;
     case 'first-letter':
       mealsList = await getMealByFirstLetter(searchInput);
-      console.log('-->', mealsList);
+      // console.log('-->', mealsList);
       break;
     default:
       return null;
@@ -54,7 +53,6 @@ function SearchBar(props) {
       mealsList = { meals: [] };
     }
     setMealResponse(mealsList);
-    console.log(mealsList);
   };
 
   // Função de requisição para as APIs de bebida
@@ -74,7 +72,6 @@ function SearchBar(props) {
       return null;
     }
     setDrinkResponse(drinksList);
-    console.log(drinksList);
   };
 
   const handleClick = async () => {

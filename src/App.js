@@ -22,7 +22,7 @@ import DetailsFood from './pages/DetailsFood';
 function App() {
   return (
     <Provider>
-      <div className="">
+      <div className="main-sect">
         <Switch>
           <Route exact path="/" component={ Login } />
           <Route path="/foods/:id/in-progress" component={ ProgressFood } />

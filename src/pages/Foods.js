@@ -1,6 +1,8 @@
 import React, { useEffect, useContext, useState } from 'react';
 import PropTypes from 'prop-types';
 import Header from '../components/Header';
+import SearchBar from '../components/SearchBar';
+import MyContext from '../context/MyContext';
 import Footer from '../components/Footer';
 import { loadingFoods, getFoodByCategory } from '../services/api';
 import RecipeCard from '../components/RecipeCard';
@@ -8,6 +10,7 @@ import MyContext from '../context/MyContext';
 
 function Foods(props) {
   const { foods, setFoods } = useContext(MyContext);
+  const { search, getMealsAndDrinks } = useContext(MyContext);
   const [chosenFood, setChosenFood] = useState([]);
   const [wordCategory, setWordCategory] = useState('');
 
@@ -21,6 +24,8 @@ function Foods(props) {
       const gettingFoods = await loadingFoods();
       setFoods(gettingFoods?.meals.slice(0, NUMBER_CARDS));
       setChosenFood(gettingFoods?.meals.slice(0, NUMBER_CARDS));
+      getMealsAndDrinks('drink');
+      getMealsAndDrinks('meal');
     };
     foodScreen();
   }, []);
@@ -51,7 +56,7 @@ function Foods(props) {
   return (
     <section>
       <Header />
-
+      {search && <SearchBar />}
       { categoryOptions.map((option) => (
         <div key={ option }>
           <button

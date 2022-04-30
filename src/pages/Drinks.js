@@ -5,9 +5,11 @@ import Footer from '../components/Footer';
 import { loadingDrinks, getDrinksByCategory } from '../services/api';
 import RecipeCard from '../components/RecipeCard';
 import MyContext from '../context/MyContext';
+import SearchBar from '../components/SearchBar';
 
 function Drinks(props) {
   const { drinks, setDrinks } = useContext(MyContext);
+  const { search, getMealsAndDrinks } = useContext(MyContext);
   const [chosenDrink, setChosenDrink] = useState([]);
   const [wordCategory, setWordCategory] = useState('');
 
@@ -23,6 +25,8 @@ function Drinks(props) {
       const gettingDrinks = await loadingDrinks();
       setDrinks(gettingDrinks?.drinks.slice(0, NUMBER_CARDS));
       setChosenDrink(gettingDrinks?.drinks.slice(0, NUMBER_CARDS));
+      getMealsAndDrinks('drink');
+      getMealsAndDrinks('meal');
     };
     drinksScreen();
   }, []);
@@ -55,7 +59,8 @@ function Drinks(props) {
   return (
     <section>
       <Header />
-
+  
+      {search && <SearchBar />}      
       { categoryOptions.map((option) => (
         <div key={ option }>
           <button
