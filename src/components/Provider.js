@@ -5,8 +5,14 @@ import MyContext from '../context/MyContext';
 function Provider({ children }) {
   const [mealResponse, setMealResponse] = useState({ meals: [] });
   const [drinkResponse, setDrinkResponse] = useState({ drinks: {} });
+  const [foods, setFoods] = useState([]);
+  const [drinks, setDrinks] = useState([]);
 
   const providerState = {
+    foods,
+    drinks,
+    setDrinks,
+    setFoods,
     mealResponse,
     setMealResponse,
     drinkResponse,

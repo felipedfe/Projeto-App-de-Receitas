@@ -21,8 +21,12 @@ function RecipeCard(props) {
     case 'drink':
       return (
         <>
-          <img alt={ recipe.strDrink } src={ recipe.strDrinkThumb } />
-          <p>{recipe.strDrink}</p>
+          <img
+            data-testid={ `${index}-card-img` }
+            alt={ recipe.strDrink }
+            src={ recipe.strDrinkThumb }
+          />
+          <p data-testid={ `${index}-card-name` }>{recipe.strDrink}</p>
         </>
       );
     default:
