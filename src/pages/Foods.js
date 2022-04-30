@@ -6,7 +6,6 @@ import MyContext from '../context/MyContext';
 import Footer from '../components/Footer';
 import { loadingFoods, getFoodByCategory } from '../services/api';
 import RecipeCard from '../components/RecipeCard';
-import MyContext from '../context/MyContext';
 
 function Foods(props) {
   const { foods, setFoods } = useContext(MyContext);

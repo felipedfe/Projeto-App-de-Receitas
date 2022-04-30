@@ -3,7 +3,6 @@ import { useLocation, Redirect } from 'react-router-dom';
 import MyContext from '../context/MyContext';
 import profileIcon from '../images/profileIcon.svg';
 import searchIcon from '../images/searchIcon.svg';
-import SearchBar from './SearchBar';
 import '../style/header.css';
 
 function Header() {

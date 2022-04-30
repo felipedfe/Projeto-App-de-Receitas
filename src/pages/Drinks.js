@@ -59,8 +59,7 @@ function Drinks(props) {
   return (
     <section>
       <Header />
-  
-      {search && <SearchBar />}      
+      {search && <SearchBar />}
       { categoryOptions.map((option) => (
         <div key={ option }>
           <button

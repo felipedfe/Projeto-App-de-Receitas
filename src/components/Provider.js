@@ -11,7 +11,6 @@ function Provider({ children }) {
   const [drinks, setDrinks] = useState([]);
   const [recipeDetail, setRecipeDetail] = useState([]);
   const [meals, setMeals] = useState({});
-  const [drinks, setDrinks] = useState({});
   const [search, setSearch] = useState(false);
 
   const getRecipe = async (type, id) => {
@@ -51,7 +50,6 @@ function Provider({ children }) {
     recipeDetail,
     setRecipeDetail,
     meals,
-    drinks,
     getMealsAndDrinks,
     search,
     setSearch,
