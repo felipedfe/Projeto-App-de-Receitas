@@ -5,10 +5,10 @@
 }
 
 .favorite-card-container {
-  margin-bottom: 30px;
-  display: block;
-  border: solid rgb(211, 211, 211) 2px;
+  border: solid lightgray 2px;
   border-radius: 10px;
+  display: block;
+  margin-bottom: 30px;
   width: 70%;
 }
 
