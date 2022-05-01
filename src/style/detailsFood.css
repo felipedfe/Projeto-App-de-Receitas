@@ -9,20 +9,20 @@
   display: flex;
   justify-content: space-evenly;
   margin-right: 40px;
-  transform: translate(115%);
+  transform: translate(200%);
   width: 80%;
 }
 
 .recomendation-sect button {
+  background-color: transparent;
+  border: none;
   margin: 12px;
-  width: 50%;
+  width: 200px;
 }
 
 .recomendation-img {
-  height: fit-content;
-  max-width: 100px;
-  object-fit: cover;
-  width: fit-content;
+  height: 150px;
+  width: 150px;
 }
 
 .start-btn {

@@ -47,6 +47,7 @@ a chave favoriteRecipes deve conter a seguinte estrutura:
     image: imagem-da-receita
 }]
 a chave inProgressRecipes deve conter a seguinte estrutura:
+
 {
     cocktails: {
         id-da-bebida: [lista-de-ingredientes-utilizados],

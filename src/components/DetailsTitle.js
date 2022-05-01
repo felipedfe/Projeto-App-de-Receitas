@@ -1,24 +1,29 @@
 import React, { useContext, useState, useEffect } from 'react';
-import { useRouteMatch } from 'react-router-dom';
 import PropTypes from 'prop-types';
+import { useHistory } from 'react-router-dom';
 import { addFavorite, getFavorites, removeFromFavorite } from '../services/localStorage';
 import MyContext from '../context/MyContext';
 import share from '../images/shareIcon.svg';
 import whiteHeart from '../images/whiteHeartIcon.svg';
 import blackHeart from '../images/blackHeartIcon.svg';
 
-// const copy = require('clipboard-copy');
+const copy = require('clipboard-copy');
 
-const DetailsTitle = ({ type, id }) => {
-  const { recipeDetail } = useContext(MyContext);
+const DetailsTitle = ({ type, id, recipeDetail }) => {
+  const { setLoading } = useContext(MyContext);
   const [favorite, setFavorite] = useState(false);
-  const route = useRouteMatch();
-  let detail;
-  if (recipeDetail) {
+  const [detail, setDetail] = useState({});
+  const [copied, setCopied] = useState(false);
+  const history = useHistory();
+  let timeoutId;
+
+  const renameDetails = () => {
+    setLoading(true);
+    let details;
     if (type === 'meal') {
-      detail = {
+      details = {
         id,
-        type,
+        type: 'food',
         nationality: recipeDetail.strArea,
         category: recipeDetail.strCategory,
         alcoholicOrNot: '',
@@ -26,23 +31,26 @@ const DetailsTitle = ({ type, id }) => {
         image: recipeDetail.strMealThumb,
       };
     } else {
-      detail = {
+      details = {
         id,
         type,
-        nationality: recipeDetail.strArea,
+        nationality: '',
         category: recipeDetail.strCategory,
         alcoholicOrNot: recipeDetail.strAlcoholic,
         name: recipeDetail.strDrink,
         image: recipeDetail.strDrinkThumb,
       };
     }
-  }
+    setDetail(details);
+  };
 
   useEffect(() => {
-    if (favorite) {
-      addFavorite(detail);
-    } else removeFromFavorite(id);
-  }, [favorite]);
+    renameDetails();
+  }, []);
+
+  useEffect(() => {
+    setLoading(false);
+  }, [detail]);
 
   useEffect(() => {
     const favorites = getFavorites() || [];
@@ -51,6 +59,29 @@ const DetailsTitle = ({ type, id }) => {
       if (item.id === id) setFavorite(true);
     });
   }, [id]);
+
+  const handleClick = () => {
+    if (favorite) {
+      setFavorite(false);
+      removeFromFavorite(id);
+    } else {
+      setFavorite(true);
+      addFavorite({ ...detail });
+    }
+  };
+
+  const handleCopy = async () => {
+    const text = `${window.location.origin}${history.location.pathname}`;
+    const linkCopied = await copy(text);
+    console.log(linkCopied);
+    setCopied(true);
+    const timeOut = 3000;
+    timeoutId = setTimeout(() => {
+      setCopied(false);
+    }, timeOut);
+  };
+
+  useEffect(() => () => clearTimeout(timeoutId));
 
   return (
     <section>
@@ -63,26 +94,35 @@ const DetailsTitle = ({ type, id }) => {
       <h1 data-testid="recipe-title">
         { detail.name }
       </h1>
-      <button
-        type="button"
-        data-testid="share-btn"
-        src={ share }
-        onClick={ () => copy(route) }
-      >
-        <img src={ share } alt="Share" />
-      </button>
+      <section>
+        <button
+          type="button"
+          data-testid="share-btn"
+          src={ share }
+          onClick={ handleCopy }
+        >
+          <img src={ share } alt="Share" />
+        </button>
+        {copied && <p>Link copied!</p>}
+      </section>
       <button
         type="button"
         data-testid="favorite-btn"
-        onClick={ () => setFavorite(!favorite) }
+        onClick={ handleClick }
+        src={ favorite ? blackHeart : whiteHeart }
       >
         <img
           src={ favorite ? blackHeart : whiteHeart }
           alt="Favorite this recipe recipe?"
         />
       </button>
-      <p data-testid="recipe-category">{ detail.category }</p>
-      {detail.alcoholicOrNot && <p>{detail.alcoholicOrNot}</p>}
+      {type === 'meal' && (
+        <p data-testid="recipe-category">{ detail.category }</p>
+      )}
+      {detail.alcoholicOrNot && (
+        <p data-testid="recipe-category">
+          {detail.alcoholicOrNot}
+        </p>)}
     </section>
   );
 };
@@ -90,6 +130,27 @@ const DetailsTitle = ({ type, id }) => {
 DetailsTitle.propTypes = {
   type: PropTypes.string.isRequired,
   id: PropTypes.string.isRequired,
+  recipeDetail: PropTypes.shape({
+    strArea: PropTypes.string,
+    strCategory: PropTypes.string,
+    strAlcoholic: PropTypes.string,
+    strDrink: PropTypes.string,
+    strDrinkThumb: PropTypes.string,
+    strMeal: PropTypes.string,
+    strMealThumb: PropTypes.string,
+  }),
+};
+
+DetailsTitle.defaultProps = {
+  recipeDetail: {
+    strArea: '',
+    strCategory: '',
+    strAlcoholic: '',
+    strDrink: '',
+    strDrinkThumb: '',
+    strMeal: '',
+    strMealThumb: '',
+  },
 };
 
 export default DetailsTitle;

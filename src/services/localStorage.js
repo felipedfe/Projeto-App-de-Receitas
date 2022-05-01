@@ -2,6 +2,8 @@ const MEAL_TOKEN = 'mealsToken';
 const COCKTAIL_TOKEN = 'cocktailsToken';
 const USER = 'user';
 const FAVORITE_RECIPES = 'favoriteRecipes';
+const IN_PROGRESS = 'inProgressRecipes';
+const DONE_RECIPES = 'doneRecipes';
 
 // Adiciona token do meal
 export const addMealToken = (token) => {
@@ -39,9 +41,7 @@ export const getUser = () => {
 };
 
 // limpa o localStorage
-export const cleanLocalStorage = () => {
-  localStorage.clear();
-};
+export const cleanLocalStorage = () => localStorage.clear();
 
 // adiciona receita aos favoritos
 export const addFavorite = (recipe) => {
@@ -59,6 +59,45 @@ export const removeFromFavorite = (id) => {
 
 // busca receitas favoritas
 export const getFavorites = () => {
-  const favorites = JSON.parse(localStorage.getItem(FAVORITE_RECIPES));
+  const favorites = JSON.parse(localStorage.getItem(FAVORITE_RECIPES)) || [];
   return favorites;
 };
+
+// busca recitas em progresso
+export const getInProgressRecipes = () => {
+  const recipes = JSON.parse(localStorage.getItem(IN_PROGRESS))
+    || { cocktails: {}, meals: {} };
+  return recipes;
+};
+
+// adiciona receita em progresso
+export const addInProgressRecipe = (type, id, ingredients) => {
+  const recipes = JSON.parse(localStorage.getItem(IN_PROGRESS))
+    || { cocktails: {}, meals: {} };
+  const newRecipes = { ...recipes, [type]: { ...recipes[type], [id]: ingredients } };
+  localStorage.setItem(IN_PROGRESS, JSON.stringify(newRecipes));
+};
+
+// busca receitas acabadas
+export const getDoneRecipes = () => {
+  const recipes = JSON.parse(localStorage.getItem(DONE_RECIPES)) || [];
+  return recipes;
+};
+
+// finaliza receita
+export const addDoneRecipes = (recipe) => {
+  const recipes = JSON.parse(localStorage.getItem(DONE_RECIPES)) || [];
+  const newRecipes = [...recipes, recipe];
+  localStorage.setItem(DONE_RECIPES, JSON.stringify(newRecipes));
+};
+
+addDoneRecipes({
+  idDrink: '15997',
+  strDrink: 'GG',
+  strDrinkAlternate: null,
+  strTags: null,
+  strVideo: null,
+  strCategory: 'Ordinary Drink',
+  strAlcoholic: 'Optional alcohol',
+  strGlass: 'Collins Glass',
+});

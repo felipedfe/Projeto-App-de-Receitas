@@ -1,12 +1,15 @@
 import PropTypes from 'prop-types';
-import React from 'react';
+import React, { useContext } from 'react';
 import Header from '../components/Header';
+import SearchBar from '../components/SearchBar';
+import MyContext from '../context/MyContext';
 import Footer from '../components/Footer';
 import { getUser, cleanLocalStorage } from '../services/localStorage';
 
 function Profile(props) {
   const { email } = getUser();
   const { history } = props;
+  const { search } = useContext(MyContext);
 
   console.log(localStorage);
 
@@ -17,7 +20,10 @@ function Profile(props) {
 
   return (
     <section>
-      <Header />
+      <section>
+        <Header />
+        {search && <SearchBar />}
+      </section>
       <p data-testid="profile-email">{email}</p>
       <div className="profile-buttons-container">
         <button
