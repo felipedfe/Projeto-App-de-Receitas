@@ -36,7 +36,7 @@ export const addUser = (email) => {
 
 // busca o usuário
 export const getUser = () => {
-  const user = JSON.parse(localStorage.getItem(USER));
+  const user = JSON.parse(localStorage.getItem(USER)) || { email: '' };
   return user;
 };
 
@@ -90,14 +90,3 @@ export const addDoneRecipes = (recipe) => {
   const newRecipes = [...recipes, recipe];
   localStorage.setItem(DONE_RECIPES, JSON.stringify(newRecipes));
 };
-
-addDoneRecipes({
-  idDrink: '15997',
-  strDrink: 'GG',
-  strDrinkAlternate: null,
-  strTags: null,
-  strVideo: null,
-  strCategory: 'Ordinary Drink',
-  strAlcoholic: 'Optional alcohol',
-  strGlass: 'Collins Glass',
-});

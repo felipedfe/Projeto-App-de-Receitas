@@ -29,6 +29,11 @@ beforeEach(() => {
   window.fetch = jest.fn().mockImplementation(fetchMock);
 });
 
+const gotToFood = async (render) => {
+  await render.history.push(FOODS_PATH);
+  await render.history.push(ONE_FOOD_PATH);
+};
+
 describe('Tests the Food details page', () => {
   const ingredientsList = listIngredients(oneMeal.meals[0]);
   it('tests if the correct information is rendered', async () => {
@@ -36,10 +41,7 @@ describe('Tests the Food details page', () => {
     await act(async () => {
       render = renderWithRouter(<App />);
     });
-    await act(async () => {
-      await render.history.push(FOODS_PATH);
-      await render.history.push(ONE_FOOD_PATH);
-    });
+    await act(async () => gotToFood(render));
     await waitForElement(() => screen.findByTestId(PHOTO_ID), { timeout: 5000 });
     expect(window.fetch).toHaveBeenCalled();
     const foodPhoto = await screen.findByTestId(PHOTO_ID);
@@ -68,10 +70,7 @@ describe('Tests the Food details page', () => {
     await act(async () => {
       render = renderWithRouter(<App />);
     });
-    await act(async () => {
-      await render.history.push(FOODS_PATH);
-      await render.history.push(ONE_FOOD_PATH);
-    });
+    await act(async () => gotToFood(render));
     expect(window.fetch).toHaveBeenCalled();
     expect(window.fetch).toBeCalledWith('https://www.themealdb.com/api/json/v1/1/lookup.php?i=52771');
   });
@@ -80,10 +79,7 @@ describe('Tests the Food details page', () => {
     await act(async () => {
       render = renderWithRouter(<App />);
     });
-    await act(async () => {
-      await render.history.push(FOODS_PATH);
-      await render.history.push(ONE_FOOD_PATH);
-    });
+    await act(async () => gotToFood(render));
     const penne = oneMeal.meals[0];
     const foodPhoto = await screen.findByTestId(PHOTO_ID);
     const foodName = screen.getByTestId(TITLE_ID);
@@ -110,10 +106,7 @@ describe('Tests the Food details page', () => {
     await act(async () => {
       render = renderWithRouter(<App />);
     });
-    await act(async () => {
-      await render.history.push(FOODS_PATH);
-      await render.history.push(ONE_FOOD_PATH);
-    });
+    await act(async () => gotToFood(render));
     const recomendationTitle = screen.getAllByTestId(/recomendation-title/);
     expect(recomendationTitle[0]).not.toHaveTextContent(meals[0].strMeal);
     expect(window.fetch).toBeCalledWith('https://www.thecocktaildb.com/api/json/v1/1/search.php?s=');
@@ -123,10 +116,7 @@ describe('Tests the Food details page', () => {
     await act(async () => {
       render = renderWithRouter(<App />);
     });
-    await act(async () => {
-      await render.history.push(FOODS_PATH);
-      await render.history.push(ONE_FOOD_PATH);
-    });
+    await act(async () => gotToFood(render));
     const recomendationCards = screen.getAllByTestId(/recomendation-card/);
     const recomendationTitle = screen.getAllByTestId(/recomendation-title/);
     const RECOM_LENGTH = 6;
@@ -137,15 +127,25 @@ describe('Tests the Food details page', () => {
       expect(screen.getByAltText(drink.strDrink)).toBeInTheDocument();
     });
   });
+  it('tests the cards buttons', async () => {
+    let render;
+    await act(async () => {
+      render = renderWithRouter(<App />);
+    });
+    await act(async () => gotToFood(render));
+    const recomendationCards = screen.getAllByTestId(/recomendation-card/);
+    await act(async () => {
+      userEvent.click(recomendationCards[0]);
+    });
+    const cardId = drinks.drinks[0].idDrink;
+    expect(render.history.location.pathname).toBe(`/drinks/${cardId}`);
+  });
   it('tests the start button and the localStorage for recipes in progress', async () => {
     let render;
     await act(async () => {
       render = renderWithRouter(<App />);
     });
-    await act(async () => {
-      await render.history.push(FOODS_PATH);
-      await render.history.push(ONE_FOOD_PATH);
-    });
+    await act(async () => gotToFood(render));
     let startBtn = screen.getByTestId(START_BTN);
     expect(startBtn).toHaveTextContent(/start recipe/i);
     await act(async () => {
@@ -168,10 +168,7 @@ describe('Tests the Food details page', () => {
     await act(async () => {
       addDoneRecipes(oneMeal.meals[0]);
     });
-    await act(async () => {
-      await render.history.push(FOODS_PATH);
-      await render.history.push(ONE_FOOD_PATH);
-    });
+    await act(async () => gotToFood(render));
     const doneRecipes = getDoneRecipes();
     expect(doneRecipes).toHaveLength(1);
     expect(screen.queryByTestId(START_BTN)).not.toBeInTheDocument();
@@ -181,10 +178,7 @@ describe('Tests the Food details page', () => {
     await act(async () => {
       render = renderWithRouter(<App />);
     });
-    await act(async () => {
-      await render.history.push(FOODS_PATH);
-      await render.history.push(ONE_FOOD_PATH);
-    });
+    await act(async () => gotToFood(render));
     const shareBtn = screen.getByTestId(SHARE_ID);
     expect(shareBtn).toHaveAttribute('src', shareImg);
   });
@@ -193,10 +187,7 @@ describe('Tests the Food details page', () => {
     await act(async () => {
       render = renderWithRouter(<App />);
     });
-    await act(async () => {
-      await render.history.push(FOODS_PATH);
-      await render.history.push(ONE_FOOD_PATH);
-    });
+    await act(async () => gotToFood(render));
     let likeBtn = screen.getByTestId(FAVORIT_ID);
     expect(likeBtn).toHaveAttribute('src', whiteHeart);
     await act(async () => {
@@ -221,10 +212,7 @@ describe('Tests the Food details page', () => {
     await act(async () => {
       render = renderWithRouter(<App />);
     });
-    await act(async () => {
-      await render.history.push(FOODS_PATH);
-      await render.history.push(ONE_FOOD_PATH);
-    });
+    await act(async () => gotToFood(render));
     let favoriteLocal = getFavorites();
     expect(favoriteLocal).toEqual([]);
     const likeBtn = screen.getByTestId(FAVORIT_ID);

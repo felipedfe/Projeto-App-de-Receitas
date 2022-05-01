@@ -2,7 +2,6 @@ import React, { useContext, useState } from 'react';
 import { Redirect, useLocation } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import MyContext from '../context/MyContext';
-import RecipeCard from './RecipeCard';
 import { getMealByName,
   getMealByIngredient,
   getMealByFirstLetter,
@@ -23,7 +22,6 @@ function SearchBar() {
   const [searchInput, setSearchInput] = useState('');
   const [radio, setRadio] = useState('ingredient');
 
-  const MAX_RECIPES_TO_RENDER = 12;
   const { meals } = mealResponse;
   const { drinks } = drinkResponse;
 
@@ -71,6 +69,14 @@ function SearchBar() {
     default:
       return null;
     }
+    if (drinksList.message) {
+      global.alert('Your search must have only 1 (one) character');
+      drinksList = { drinks: [] };
+    }
+    if (drinksList.drinks === null) {
+      global.alert('Sorry, we haven\'t found any recipes for these filters.');
+      drinksList = { drinks: [] };
+    }
     setDrinkResponse(drinksList);
   };
 
@@ -84,35 +90,35 @@ function SearchBar() {
   };
 
   // Função que retorna o render dos Recipe Cards
-  const renderCards = (option) => {
-    let filteredByQuantity = [];
-    switch (option) {
-    case 'meal':
-      filteredByQuantity = meals
-        .filter((item) => meals.indexOf(item) < MAX_RECIPES_TO_RENDER);
+  // const renderCards = (option) => {
+  //   let filteredByQuantity = [];
+  //   switch (option) {
+  //   case 'meal':
+  //     filteredByQuantity = meals
+  //       .filter((item) => meals.indexOf(item) < MAX_RECIPES_TO_RENDER);
 
-      return filteredByQuantity.map((recipeObj, index) => (
-        <RecipeCard
-          key={ recipeObj.idMeal }
-          recipeType="meal"
-          recipe={ recipeObj }
-          index={ index }
-        />));
-    case 'drink':
-      filteredByQuantity = drinks
-        .filter((item) => drinks.indexOf(item) < MAX_RECIPES_TO_RENDER);
+  //     return filteredByQuantity.map((recipeObj, index) => (
+  //       <RecipeCard
+  //         key={ recipeObj.idMeal }
+  //         recipeType="meal"
+  //         recipe={ recipeObj }
+  //         index={ index }
+  //       />));
+  //   case 'drink':
+  //     filteredByQuantity = drinks
+  //       .filter((item) => drinks.indexOf(item) < MAX_RECIPES_TO_RENDER);
 
-      return filteredByQuantity.map((recipeObj, index) => (
-        <RecipeCard
-          key={ recipeObj.idMeal }
-          recipeType="drink"
-          recipe={ recipeObj }
-          index={ index }
-        />));
-    default:
-      return null;
-    }
-  };
+  //     return filteredByQuantity.map((recipeObj, index) => (
+  //       <RecipeCard
+  //         key={ recipeObj.idMeal }
+  //         recipeType="drink"
+  //         recipe={ recipeObj }
+  //         index={ index }
+  //       />));
+  //   default:
+  //     return null;
+  //   }
+  // };
 
   return (
     <div className="search-container">
@@ -174,10 +180,6 @@ function SearchBar() {
       {/* Redireciona para a página de detalhes caso só encontre uma receita */}
       {meals.length === 1 && <Redirect to={ `/foods/${meals[0].idMeal}` } />}
       {drinks.length === 1 && <Redirect to={ `/drinks/${drinks[0].idDrink}` } />}
-
-      {/* Aqui são renderizados os cards das receitas caso sejam encontradas mais de uma */}
-      {meals.length > 1 && renderCards('meal')}
-      {drinks.length > 1 && renderCards('drink')}
     </div>
   );
 }
