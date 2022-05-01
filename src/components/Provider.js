@@ -7,9 +7,10 @@ function Provider({ children }) {
   const [loading, setLoading] = useState(false);
   const [mealResponse, setMealResponse] = useState({ meals: [] });
   const [drinkResponse, setDrinkResponse] = useState({ drinks: {} });
-  const [recipeDetail, setRecipeDetail] = useState([]);
-  const [meals, setMeals] = useState([]);
+  const [foods, setFoods] = useState([]);
   const [drinks, setDrinks] = useState([]);
+  const [recipeDetail, setRecipeDetail] = useState([]);
+  const [meals, setMeals] = useState({});
   const [search, setSearch] = useState(false);
 
   const getRecipe = async (type, id) => {
@@ -35,6 +36,10 @@ function Provider({ children }) {
   };
 
   const providerState = {
+    foods,
+    drinks,
+    setDrinks,
+    setFoods,
     loading,
     setLoading,
     mealResponse,
@@ -45,7 +50,6 @@ function Provider({ children }) {
     recipeDetail,
     setRecipeDetail,
     meals,
-    drinks,
     getMealsAndDrinks,
     search,
     setSearch,
