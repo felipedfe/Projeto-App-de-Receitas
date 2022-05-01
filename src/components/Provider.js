@@ -9,7 +9,7 @@ function Provider({ children }) {
   const [drinkResponse, setDrinkResponse] = useState({ drinks: {} });
   const [foods, setFoods] = useState([]);
   const [drinks, setDrinks] = useState([]);
-  const [recipeDetail, setRecipeDetail] = useState([]);
+  const [recipeDetail, setRecipeDetail] = useState({});
   const [meals, setMeals] = useState({});
   const [search, setSearch] = useState(false);
 

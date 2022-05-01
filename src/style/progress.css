@@ -1,0 +1,22 @@
+.ing-checkbox-sect {
+  display: flex;
+  flex-direction: column;
+  margin: auto;
+  padding: 8px;
+  width: 90vw;
+}
+
+.ing-checkbox-sect label {
+  align-items: center;
+  display: flex;
+}
+
+.ing-checkbox-sect label input {
+  height: 12px;
+  margin: 4px;
+  width: 12px;
+}
+
+.checked {
+  text-decoration: line-through;
+}

@@ -14,8 +14,7 @@ const DetailsTitle = ({ type, id, recipeDetail }) => {
   const [favorite, setFavorite] = useState(false);
   const [detail, setDetail] = useState({});
   const [copied, setCopied] = useState(false);
-  const history = useHistory();
-  let timeoutId;
+  const { location } = useHistory();
 
   const renameDetails = () => {
     setLoading(true);
@@ -46,7 +45,7 @@ const DetailsTitle = ({ type, id, recipeDetail }) => {
 
   useEffect(() => {
     renameDetails();
-  }, []);
+  }, [recipeDetail]);
 
   useEffect(() => {
     setLoading(false);
@@ -70,18 +69,13 @@ const DetailsTitle = ({ type, id, recipeDetail }) => {
     }
   };
 
-  const handleCopy = async () => {
-    const text = `${window.location.origin}${history.location.pathname}`;
-    const linkCopied = await copy(text);
-    console.log(linkCopied);
+  const handleCopy = () => {
+    const { pathname } = location;
+    let text = `${window.location.origin}${pathname}`;
+    text = text.split('/in-progress').join('');
+    copy(text);
     setCopied(true);
-    const timeOut = 3000;
-    timeoutId = setTimeout(() => {
-      setCopied(false);
-    }, timeOut);
   };
-
-  useEffect(() => () => clearTimeout(timeoutId));
 
   return (
     <section>

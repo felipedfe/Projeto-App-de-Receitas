@@ -13,7 +13,7 @@ const RecipeBtn = ({ type, id }) => {
 
   useEffect(() => {
     const recipesInProgress = getInProgressRecipes();
-    if (Object.keys(recipesInProgress[type]).length > 0 && recipesInProgress[type][id]) {
+    if (recipesInProgress[type][id]) {
       setInProgress(true);
     }
   }, []);
@@ -21,11 +21,11 @@ const RecipeBtn = ({ type, id }) => {
   const handleClick = () => {
     if (!inProgress) {
       addInProgressRecipe(type, id, ingredients);
-      if (type === 'meals') {
-        history.push(`/foods/${id}/in-progress`);
-      } else {
-        history.push(`/drinks/${id}/in-progress`);
-      }
+    }
+    if (type === 'meals') {
+      history.push(`/foods/${id}/in-progress`);
+    } else {
+      history.push(`/drinks/${id}/in-progress`);
     }
   };
 
