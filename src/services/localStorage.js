@@ -78,6 +78,12 @@ export const addInProgressRecipe = (type, id, ingredients) => {
   localStorage.setItem(IN_PROGRESS, JSON.stringify(newRecipes));
 };
 
+export const updateInProgress = (type, id, ingredients) => {
+  const recipes = JSON.parse(localStorage.getItem(IN_PROGRESS));
+  recipes[type][id] = ingredients;
+  localStorage.setItem(IN_PROGRESS, JSON.stringify(recipes));
+};
+
 // busca receitas acabadas
 export const getDoneRecipes = () => {
   const recipes = JSON.parse(localStorage.getItem(DONE_RECIPES)) || [];
@@ -85,7 +91,10 @@ export const getDoneRecipes = () => {
 };
 
 // finaliza receita
-export const addDoneRecipes = (recipe) => {
+export const addDoneRecipes = (type, recipe) => {
+  const inProgress = JSON.parse(localStorage.getItem(IN_PROGRESS));
+  delete inProgress[type][recipe.id];
+  localStorage.setItem(IN_PROGRESS, JSON.stringify(inProgress));
   const recipes = JSON.parse(localStorage.getItem(DONE_RECIPES)) || [];
   const newRecipes = [...recipes, recipe];
   localStorage.setItem(DONE_RECIPES, JSON.stringify(newRecipes));
