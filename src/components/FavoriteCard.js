@@ -15,6 +15,7 @@ function FavoriteCard(props) {
   index,
   setFavoriteRecipesState } = props;
 
+  // URL da receita
   const urlLink = `/${type}s/${id}`;
 
   // State
@@ -55,9 +56,6 @@ function FavoriteCard(props) {
       >
         {type === 'food' ? `${nationality} - ${category}` : alcoholicOrNot}
       </p>
-      {/* <p>{nationality}</p> */}
-      {/* <p>{type === 'food' && nationality}</p> */}
-      {/* <p>{type === 'drink' && alcoholicOrNot}</p> */}
       <button
         data-testid={ `${index}-horizontal-share-btn` }
         type="button"
