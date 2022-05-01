@@ -57,7 +57,6 @@ export const getDrinkByFirstLetter = async (letter) => {
     const data = await response.json();
     return data;
   } catch (error) {
-    global.alert('Your search must have only 1 (one) character');
     return error;
   }
 };

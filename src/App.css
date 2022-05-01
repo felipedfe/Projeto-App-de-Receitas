@@ -7,11 +7,21 @@
 .favorite-card-container {
   margin-bottom: 30px;
   display: block;
-  border: solid pink 2px;
+  border: solid rgb(211, 211, 211) 2px;
+  border-radius: 10px;
+  width: 70%;
+}
+
+.favorite-card-btn {
+  background: none;
+  border: none;
+  margin: 0;
+  padding: 0;
+  width: 50px;
 }
 
 .card-image {
-  width: 100px;
+  width: 150px;
 }
 
 .main-sect {

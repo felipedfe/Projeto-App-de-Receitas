@@ -1,5 +1,5 @@
 import React, { useContext, useState } from 'react';
-import { Redirect } from 'react-router-dom';
+import { Redirect, useLocation } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import MyContext from '../context/MyContext';
 import RecipeCard from './RecipeCard';
@@ -11,13 +11,17 @@ import { getMealByName,
   getDrinkByFirstLetter,
 } from '../services/api';
 
-function SearchBar(props) {
+function SearchBar() {
   const { mealResponse,
     setMealResponse,
     setDrinkResponse,
     drinkResponse } = useContext(MyContext);
 
-  const { history: { location: { pathname } } } = props;
+  // const { history: { location: { pathname } } } = props;
+  // console.log(pathname);
+
+  const location = useLocation();
+  const { pathname } = location;
   console.log(pathname);
 
   // State
@@ -72,6 +76,14 @@ function SearchBar(props) {
       break;
     default:
       return null;
+    }
+    if (drinksList.message) {
+      global.alert('Your search must have only 1 (one) character');
+      drinksList = { drinks: [] };
+    }
+    if (drinksList.drinks === null) {
+      global.alert('Sorry, we haven\'t found any recipes for these filters.');
+      drinksList = { drinks: [] };
     }
     setDrinkResponse(drinksList);
     console.log(drinksList);
