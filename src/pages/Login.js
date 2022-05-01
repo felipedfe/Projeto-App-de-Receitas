@@ -9,8 +9,6 @@ const Login = ({ history }) => {
   const [validate, setValidate] = useState(false);
   const { getMealsAndDrinks } = useContext(MyContext);
 
-  console.log(localStorage);
-
   useEffect(() => {
     getMealsAndDrinks('meal');
     getMealsAndDrinks('drink');

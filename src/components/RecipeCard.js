@@ -1,10 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import '../style/recipeCards.css';
 
-function RecipeCard(props) {
-  console.log(props);
-  const { recipeType, recipe, index } = props;
-
+function RecipeCard({ recipeType, recipe, index }) {
   const returnNameAndImage = () => {
     switch (recipeType) {
     case 'meal':
@@ -35,7 +33,7 @@ function RecipeCard(props) {
   };
 
   return (
-    <div data-testid={ `${index}-recipe-card` } className="recipe-card-container">
+    <div data-testid={ `${index}-recipe-card` } className="recipe-card">
       {returnNameAndImage()}
     </div>
   );

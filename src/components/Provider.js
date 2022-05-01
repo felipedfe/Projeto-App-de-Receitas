@@ -68,6 +68,11 @@ function Provider({ children }) {
     providerState.loading = loading;
   }, [loading]);
 
+  useEffect(() => {
+    providerState.mealResponse = mealResponse;
+    providerState.drinkResponse = drinkResponse;
+  }, [mealResponse, drinkResponse]);
+
   return (
     <MyContext.Provider value={ providerState }>
       {children}
