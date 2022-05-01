@@ -59,7 +59,7 @@ export const removeFromFavorite = (id) => {
 
 // busca receitas favoritas
 export const getFavorites = () => {
-  const favorites = JSON.parse(localStorage.getItem(FAVORITE_RECIPES));
+  const favorites = JSON.parse(localStorage.getItem(FAVORITE_RECIPES)) || [];
   return favorites;
 };
 

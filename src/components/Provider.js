@@ -8,8 +8,8 @@ function Provider({ children }) {
   const [mealResponse, setMealResponse] = useState({ meals: [] });
   const [drinkResponse, setDrinkResponse] = useState({ drinks: {} });
   const [recipeDetail, setRecipeDetail] = useState([]);
-  const [meals, setMeals] = useState({});
-  const [drinks, setDrinks] = useState({});
+  const [meals, setMeals] = useState([]);
+  const [drinks, setDrinks] = useState([]);
   const [search, setSearch] = useState(false);
 
   const getRecipe = async (type, id) => {

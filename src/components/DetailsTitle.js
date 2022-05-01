@@ -1,5 +1,6 @@
 import React, { useContext, useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
+import { useHistory } from 'react-router-dom';
 import { addFavorite, getFavorites, removeFromFavorite } from '../services/localStorage';
 import MyContext from '../context/MyContext';
 import share from '../images/shareIcon.svg';
@@ -13,6 +14,7 @@ const DetailsTitle = ({ type, id, recipeDetail }) => {
   const [favorite, setFavorite] = useState(false);
   const [detail, setDetail] = useState({});
   const [copied, setCopied] = useState(false);
+  const history = useHistory();
   let timeoutId;
 
   const renameDetails = () => {
@@ -68,8 +70,10 @@ const DetailsTitle = ({ type, id, recipeDetail }) => {
     }
   };
 
-  const handleCopy = () => {
-    copy(window.location.href);
+  const handleCopy = async () => {
+    const text = `${window.location.origin}${history.location.pathname}`;
+    const linkCopied = await copy(text);
+    console.log(linkCopied);
     setCopied(true);
     const timeOut = 3000;
     timeoutId = setTimeout(() => {

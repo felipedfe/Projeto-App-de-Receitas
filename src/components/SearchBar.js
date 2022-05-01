@@ -124,33 +124,42 @@ function SearchBar() {
       />
 
       <div className="radio-container">
-        <input
-          type="radio"
-          value="ingredient"
-          name="search-type"
-          data-testid="ingredient-search-radio"
-          defaultChecked
-          onClick={ ({ target }) => { setRadio(target.value); } }
-        />
-        Ingredient
+        <label htmlFor="ingredient">
+          <input
+            type="radio"
+            id="ingredient"
+            value="ingredient"
+            name="search-type"
+            data-testid="ingredient-search-radio"
+            defaultChecked
+            onClick={ ({ target }) => { setRadio(target.value); } }
+          />
+          Ingredient
+        </label>
 
-        <input
-          type="radio"
-          name="search-type"
-          value="name"
-          data-testid="name-search-radio"
-          onClick={ ({ target }) => { setRadio(target.value); } }
-        />
-        Name
+        <label htmlFor="name">
+          <input
+            type="radio"
+            id="name"
+            name="search-type"
+            value="name"
+            data-testid="name-search-radio"
+            onClick={ ({ target }) => { setRadio(target.value); } }
+          />
+          Name
+        </label>
 
-        <input
-          type="radio"
-          name="search-type"
-          value="first-letter"
-          data-testid="first-letter-search-radio"
-          onClick={ ({ target }) => { setRadio(target.value); } }
-        />
-        First Letter
+        <label htmlFor="first-letter">
+          <input
+            type="radio"
+            id="first-letter"
+            name="search-type"
+            value="first-letter"
+            data-testid="first-letter-search-radio"
+            onClick={ ({ target }) => { setRadio(target.value); } }
+          />
+          First Letter
+        </label>
       </div>
 
       <button
