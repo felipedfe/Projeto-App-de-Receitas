@@ -136,7 +136,9 @@ export const fetchRecipes = async (type) => {
   }
 };
 
-// Comida Aleatoria
+/*
+Comida Aleatoria
+ */
 
 export const getSurpriseFood = async () => {
   try {

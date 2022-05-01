@@ -33,7 +33,7 @@ function DetailsFood() {
             <ul>
               {ingredients.map(({ measure, ingredient }, index) => (
                 <li key={ index } data-testid={ `${index}-ingredient-name-and-measure` }>
-                  {`${measure} ${ingredient}`}
+                  {`${measure}-${ingredient}`}
                 </li>
               ))}
             </ul>

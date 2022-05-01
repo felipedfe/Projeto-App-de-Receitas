@@ -37,7 +37,7 @@ function DetailsDrink() {
                   key={ index }
                   data-testid={ `${index}-ingredient-name-and-measure` }
                 >
-                  {`${measure} ${ingredient}`}
+                  {`${measure}-${ingredient}`}
                 </li>
               ))}
             </ul>
