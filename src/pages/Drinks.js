@@ -7,17 +7,13 @@ import RecipeCard from '../components/RecipeCard';
 import MyContext from '../context/MyContext';
 import SearchBar from '../components/SearchBar';
 
-  const { search, getMealsAndDrinks, drinks, setDrinks,
-    drinkResponse, setDrinkResponse,
+function Drinks(props) {
+  const { search, getMealsAndDrinks, drinkResponse, setDrinkResponse,
     beverage, setBeverage } = useContext(MyContext);
-
   const [chosenDrink, setChosenDrink] = useState([]);
   const [wordCategory, setWordCategory] = useState('');
-
   const { history } = props;
-
   const NUMBER_CARDS = 12;
-
   const categoryOptions = ['All', 'Ordinary Drink', 'Cocktail',
     'Other/Unknown', 'Cocoa', 'Milk / Float / Shake'];
 
@@ -59,31 +55,32 @@ import SearchBar from '../components/SearchBar';
 
   return (
     <section>
-      <Header />
-      {search && <SearchBar />}
       <section>
-        { categoryOptions.map((option) => (
+        <Header />
+        {search && <SearchBar />}
+      </section>
+      <section>
+        {categoryOptions.map((option) => (
           <button
             key={ option }
             type="button"
             data-testid={ `${option}-category-filter` }
             onClick={ () => handleClick(option) }
           >
-            { option }
+            {option}
           </button>
         ))}
       </section>
 
       {!drinkResponse.drinks.length && (
         <section className="recipe-card-container">
-          { chosenDrink?.map((order, index) => (
+          {chosenDrink?.map((order, index) => (
             <button
               className="recipe-card-btn"
               key={ order.idDrink }
               type="button"
               onClick={ () => changePage(order.idDrink) }
             >
-
               <RecipeCard
                 recipeType="drink"
                 recipe={ order }
@@ -105,7 +102,6 @@ import SearchBar from '../components/SearchBar';
                   type="button"
                   onClick={ () => changePage(order.idDrink) }
                 >
-
                   <RecipeCard
                     recipeType="drink"
                     recipe={ order }
@@ -117,7 +113,6 @@ import SearchBar from '../components/SearchBar';
           })}
         </section>
       )}
-
       <Footer />
     </section>
   );
@@ -126,7 +121,9 @@ import SearchBar from '../components/SearchBar';
 export default Drinks;
 
 Drinks.propTypes = {
-  history: PropTypes.string,
+  history: PropTypes.shape({
+    push: PropTypes.func,
+  }),
 }.isRequired;
 
 // ERRO NO TESTE: 'Milk / Float / Shake' NÃO EXISTE COMO CATEGORIA NA API, DEVENDO SER DIRECIONADA APENAS PARA SHAKE, MAS O TESTE NÃO CONSIDERA ISSO, E PORTANTO, NO BROWSER O RETORNO É NADA.
