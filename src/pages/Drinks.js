@@ -7,9 +7,10 @@ import RecipeCard from '../components/RecipeCard';
 import MyContext from '../context/MyContext';
 import SearchBar from '../components/SearchBar';
 
-function Drinks(props) {
   const { search, getMealsAndDrinks, drinks, setDrinks,
-    drinkResponse, setDrinkResponse } = useContext(MyContext);
+    drinkResponse, setDrinkResponse,
+    beverage, setBeverage } = useContext(MyContext);
+
   const [chosenDrink, setChosenDrink] = useState([]);
   const [wordCategory, setWordCategory] = useState('');
 
@@ -23,7 +24,7 @@ function Drinks(props) {
   useEffect(() => {
     const drinksScreen = async () => {
       const gettingDrinks = await loadingDrinks();
-      setDrinks(gettingDrinks?.drinks.slice(0, NUMBER_CARDS));
+      setBeverage(gettingDrinks?.drinks.slice(0, NUMBER_CARDS));
       setChosenDrink(gettingDrinks?.drinks.slice(0, NUMBER_CARDS));
       getMealsAndDrinks('drink');
       getMealsAndDrinks('meal');
@@ -34,18 +35,18 @@ function Drinks(props) {
   const handleCategory = async (category) => {
     setWordCategory(category);
     if (category === 'All') {
-      setChosenDrink(drinks);
+      setChosenDrink(beverage);
     } else {
       const gettingCategory = await getDrinksByCategory(category);
-      const testing = gettingCategory?.drinks.slice(0, NUMBER_CARDS);
-      setChosenDrink(testing);
+      const getCategory = gettingCategory?.drinks.slice(0, NUMBER_CARDS);
+      setChosenDrink(getCategory);
     }
   };
 
   const handleClick = (option) => {
     setDrinkResponse({ drinks: [] });
     if (option === wordCategory) {
-      setChosenDrink(drinks);
+      setChosenDrink(beverage);
       setWordCategory('');
     } else {
       handleCategory(option);

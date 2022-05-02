@@ -35,8 +35,8 @@ function Foods(props) {
       setChosenFood(foods); //
     } else {
       const gettingCategory = await getFoodByCategory(category);
-      const testing = gettingCategory?.meals.slice(0, NUMBER_CARDS);
-      setChosenFood(testing);
+      const getCategory = gettingCategory?.meals.slice(0, NUMBER_CARDS);
+      setChosenFood(getCategory);
     }
   };
   const handleClick = (option) => {

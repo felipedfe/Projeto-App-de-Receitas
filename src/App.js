@@ -9,7 +9,7 @@ import Explore from './pages/Explore';
 import ExploreFoodsByIngredients from './pages/ExploreFoodsByIngredients';
 import ExploreFoodsByNationality from './pages/ExploreFoodsByNationality';
 import ExploreFoods from './pages/ExploreFoods';
-import ExploreDrinksByIngredientes from './pages/ExploreDrinksByIngredients';
+import ExploreDrinksByIngredients from './pages/ExploreDrinksByIngredients';
 import ExploreDrinks from './pages/ExploreDrinks';
 import Profile from './pages/Profile';
 import DoneRecipes from './pages/DoneRecipes';
@@ -30,23 +30,26 @@ function App() {
           <Route exact path="/foods" component={ Foods } />
           <Route path="/drinks/:id/in-progress" component={ ProgressDrink } />
           <Route path="/drinks/:id" component={ DetailsDrink } />
-          <Route path="/drinks" component={ Drinks } />
+          <Route exact path="/drinks" component={ Drinks } />
           <Route
+            exact
             path="/explore/foods/ingredients"
             component={ ExploreFoodsByIngredients }
           />
           <Route
+            exact
             path="/explore/foods/nationalities"
             component={ ExploreFoodsByNationality }
           />
-          <Route path="/explore/foods" component={ ExploreFoods } />
+          <Route exact path="/explore/foods" component={ ExploreFoods } />
           <Route
+            exact
             path="/explore/drinks/ingredients"
-            component={ ExploreDrinksByIngredientes }
+            component={ ExploreDrinksByIngredients }
           />
-          <Route path="/explore/drinks" component={ ExploreDrinks } />
-          <Route path="/explore" component={ Explore } />
-          <Route path="/profile" component={ Profile } />
+          <Route exact path="/explore/drinks" component={ ExploreDrinks } />
+          <Route exact path="/explore" component={ Explore } />
+          <Route exact path="/profile" component={ Profile } />
           <Route path="/done-recipes" component={ DoneRecipes } />
           <Route path="/favorite-recipes" component={ FavoriteRecipes } />
         </Switch>
