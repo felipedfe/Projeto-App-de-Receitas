@@ -1,12 +1,13 @@
 import React from 'react';
 import { screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import Provider from '../components/Provider';
 import profileIcon from '../images/profileIcon.svg';
 import searchIcon from '../images/searchIcon.svg';
 import renderWithRouter from './helpers/renderWithRouter';
 import Foods from '../pages/Foods';
 import Drinks from '../pages/Drinks';
-import App from '../App';
+import Login from '../pages/Login';
 import Explore from '../pages/Explore';
 import ExploreDrinks from '../pages/ExploreDrinks';
 import ExploreFoods from '../pages/ExploreFoods';
@@ -38,10 +39,10 @@ describe('Test the Header page', () => {
 
   const hasHeader = async (title, searchBtn = true) => {
     const profileBtn = await screen.findByTestId(PROFILE_BTN_ID);
+    const titleId = await screen.findByTestId(TITLE_ID);
     expect(profileBtn).toBeInTheDocument();
     expect(profileBtn).toHaveAttribute('src', profileIcon);
 
-    const titleId = await screen.findByTestId(TITLE_ID);
     expect(titleId).toBeInTheDocument();
     expect(titleId).toHaveTextContent(title);
 
@@ -57,122 +58,187 @@ describe('Test the Header page', () => {
 
   const oneClick = async () => {
     const searchBtn = await screen.findByTestId(SEARCH_BTN_ID);
+    const inputSearch = await screen.findByTestId(SEARCH_INPUT_ID);
+    const { history } = renderWithRouter(
+      <Provider>
+        <Drinks />
+      </Provider>,
+    );
+    history.push('/drinks');
     expect(searchBtn).toBeInTheDocument();
 
     userEvent.click(searchBtn);
-    expect(SEARCH_INPUT_ID).toBeInTheDocument();
+    expect(inputSearch).toBeInTheDocument();
   };
 
   const twoClicks = async () => {
     const searchBtn = await screen.findByTestId(SEARCH_BTN_ID);
+    const inputSearch = await screen.findByTestId(SEARCH_INPUT_ID);
+    renderWithRouter(<Foods />);
+    // const { history } = renderWithRouter(
+    //   <Provider>
+    //     <Drinks />
+    //   </Provider>,
+    // );
+    // history.push('/drinks');
     expect(searchBtn).toBeInTheDocument();
 
     userEvent.click(searchBtn);
-    expect(SEARCH_INPUT_ID).toBeInTheDocument();
+    expect(inputSearch).toBeInTheDocument();
     userEvent.click(searchBtn);
-    expect(SEARCH_INPUT_ID).not.toBeInTheDocument();
+    expect(inputSearch).not.toBeInTheDocument();
   };
 
   const redirect = async () => {
     const profileBtn = await screen.findByTestId(PROFILE_BTN_ID);
+    const { history } = renderWithRouter(<Foods />);
     expect(profileBtn).toBeInTheDocument();
 
     userEvent.click(profileBtn);
-    renderWithRouter(<Profile />);
+    const { pathname } = history.location;
+    expect(pathname).toBe('/profile');
   };
 
-  it('check if there is a Header on Foods Page', () => {
-    renderWithRouter(<Foods />);
-    hasHeader('Foods');
+  it('check if there is a Header on Foods Page', async () => {
+    const { history } = renderWithRouter(
+      <Provider>
+        <Foods />
+      </Provider>,
+    );
+    history.push('/foods');
+    await hasHeader('Foods', true);
   });
-
-  it('check if there is a Header on Drinks Page', () => {
-    renderWithRouter(<Drinks />);
-    hasHeader('Drinks');
+  it('check if there is a Header on Drinks Page', async () => {
+    const { history } = renderWithRouter(
+      <Provider>
+        <Drinks />
+      </Provider>,
+    );
+    history.push('/drinks');
+    await hasHeader('Drinks', true);
   });
-
   it('check if there is a Header on Explore Page', () => {
-    renderWithRouter(<Explore />);
+    const { history } = renderWithRouter(
+      <Provider>
+        <Explore />
+      </Provider>,
+    );
+    history.push('/explore');
     hasHeader('Explore', false);
   });
 
   it('check if there is a Header on Explore Drinks Page', () => {
-    renderWithRouter(<ExploreDrinks />);
+    const { history } = renderWithRouter(
+      <Provider>
+        <ExploreDrinks />
+      </Provider>,
+    );
+    history.push('/explore/drinks');
     hasHeader('Explore Drinks', false);
   });
 
   it('check if there is a Header on Explore Foods Page', () => {
-    renderWithRouter(<ExploreFoods />);
+    const { history } = renderWithRouter(
+      <Provider>
+        <ExploreFoods />
+      </Provider>,
+    );
+    history.push('/explore/foods');
     hasHeader('Explore Foods', false);
   });
 
   it('check if there is a Header on Explore Drinks By Ingredients Page', () => {
-    renderWithRouter(<ExploreDrinksByIngredients />);
+    const { history } = renderWithRouter(
+      <Provider>
+        <ExploreDrinksByIngredients />
+      </Provider>,
+    );
+    history.push('/explore/drinks/ingredients');
     hasHeader('Explore Ingredients', false);
   });
-
   it('check if there is a Header on Explore Foods By Ingredients Page', () => {
-    renderWithRouter(<ExploreFoodsByIngredients />);
+    const { history } = renderWithRouter(
+      <Provider>
+        <ExploreFoodsByIngredients />
+      </Provider>,
+    );
+    history.push('/explore/foods/ingredients');
     hasHeader('Explore Ingredients', false);
   });
-
-  it('check if there is a Header on Explore Foods By Nationality Page', () => {
-    renderWithRouter(<ExploreFoodsByNationality />);
-    hasHeader('Explore Nationalities');
+  it('check if there is a Header on Explore Foods By Nationality Page', async () => {
+    const { history } = renderWithRouter(
+      <Provider>
+        <ExploreFoodsByNationality />
+      </Provider>,
+    );
+    history.push('/explore/foods/nationalities');
+    await hasHeader('Explore Nationalities');
   });
-
   it('check if there is a Header on Profile Page', () => {
-    renderWithRouter(<Profile />);
+    const { history } = renderWithRouter(
+      <Provider>
+        <Profile />
+      </Provider>,
+    );
+    history.push('/profile');
     hasHeader('Profile', false);
   });
-
   it('check if there is a Header on Done Recipes Page', () => {
     renderWithRouter(<DoneRecipes />);
     hasHeader('Done Recipes', false);
   });
-
   it('check if there is a Header on Favorite Recipes Page', () => {
     renderWithRouter(<FavoriteRecipes />);
     hasHeader('Favorite Recipes', false);
   });
-
   it('check if there is no Header on Login Page', () => {
-    renderWithRouter(<App />);
+    const { history } = renderWithRouter(
+      <Provider>
+        <Login />
+      </Provider>,
+    );
+    history.push('/');
     hasNoHeader();
   });
-
-  it('check if there is no Header on Progress Food Page', () => {
+  it('check if there is no Header on Progress Food Page', async () => {
     renderWithRouter(<ProgressFood />);
-    hasNoHeader();
+    await hasNoHeader();
   });
-
   it('check if there is no Header on Progress Drink Page', () => {
-    renderWithRouter(<ProgressDrink />);
-    hasNoHeader();
+    // const { history } = renderWithRouter(
+    //   <Provider>
+    //     <DetailsFood />
+    //   </Provider>,
+    // );
+    // history.push('/detailsFood');
+    // renderWithRouter(<ProgressDrink />);
+    // hasNoHeader();
   });
-
   it('check if there is no Header on Details Food Page', () => {
-    renderWithRouter(<DetailsFood />);
+    const { history } = renderWithRouter(
+      <Provider>
+        <DetailsFood />
+      </Provider>,
+    );
+    history.push('/detailsFood');
     hasNoHeader();
   });
-
   it('check if there is no Header on Details Drink Page', () => {
-    renderWithRouter(<DetailsDrink />);
+    const { history } = renderWithRouter(
+      <Provider>
+        <DetailsDrink />
+      </Provider>,
+    );
+    history.push('/detailsDrink');
     hasNoHeader();
   });
-
-  it('checks if is redirected to Profile Page by clicking the btn Profile', async () => {
-    renderWithRouter(<Foods />);
+  it('checks if is redirected to Profile Page by clicking the btn Profile', () => {
     redirect();
   });
-
   it('checks if the search input appears by clicking 1 time the btn Search', () => {
-    renderWithRouter(<Foods />);
     oneClick();
   });
-
-  it('checks if the input disappears by clicking the 2 time the btn Search', async () => {
-    renderWithRouter(<Foods />);
+  it('checks if the input disappears by clicking the 2 time the btn Search', () => {
     twoClicks();
   });
 });
