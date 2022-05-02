@@ -1,5 +1,6 @@
 import React, { useContext, useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
+import { useHistory } from 'react-router-dom';
 import { addFavorite, getFavorites, removeFromFavorite } from '../services/localStorage';
 import MyContext from '../context/MyContext';
 import share from '../images/shareIcon.svg';
@@ -13,7 +14,7 @@ const DetailsTitle = ({ type, id, recipeDetail }) => {
   const [favorite, setFavorite] = useState(false);
   const [detail, setDetail] = useState({});
   const [copied, setCopied] = useState(false);
-  let timeoutId;
+  const { location } = useHistory();
 
   const renameDetails = () => {
     setLoading(true);
@@ -44,7 +45,7 @@ const DetailsTitle = ({ type, id, recipeDetail }) => {
 
   useEffect(() => {
     renameDetails();
-  }, []);
+  }, [recipeDetail]);
 
   useEffect(() => {
     setLoading(false);
@@ -69,15 +70,12 @@ const DetailsTitle = ({ type, id, recipeDetail }) => {
   };
 
   const handleCopy = () => {
-    copy(window.location.href);
+    const { pathname } = location;
+    let text = `${window.location.origin}${pathname}`;
+    text = text.split('/in-progress').join('');
+    copy(text);
     setCopied(true);
-    const timeOut = 3000;
-    timeoutId = setTimeout(() => {
-      setCopied(false);
-    }, timeOut);
   };
-
-  useEffect(() => () => clearTimeout(timeoutId));
 
   return (
     <section>

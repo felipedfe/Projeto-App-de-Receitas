@@ -1,0 +1,28 @@
+.recipe-card-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin: auto;
+  width: 90vw;
+}
+
+.recipe-card-btn {
+  background-color: transparent;
+  border: none;
+  border-radius: 8px;
+  margin: 4px;
+  width: fit-content;
+}
+
+.recipe-card {
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: fit-content;
+}
+
+.recipe-card img {
+  border-radius: 8px;
+  width: 150px;
+}

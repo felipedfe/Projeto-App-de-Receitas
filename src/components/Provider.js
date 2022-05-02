@@ -9,7 +9,7 @@ function Provider({ children }) {
   const [drinkResponse, setDrinkResponse] = useState({ drinks: {} });
   const [foods, setFoods] = useState([]);
   const [drinks, setDrinks] = useState([]);
-  const [recipeDetail, setRecipeDetail] = useState([]);
+  const [recipeDetail, setRecipeDetail] = useState({});
   const [meals, setMeals] = useState({});
   const [search, setSearch] = useState(false);
   const [beverage, setBeverage] = useState([]);
@@ -69,6 +69,15 @@ function Provider({ children }) {
   useEffect(() => {
     providerState.loading = loading;
   }, [loading]);
+
+  useEffect(() => {
+    providerState.mealResponse = mealResponse;
+    providerState.drinkResponse = drinkResponse;
+  }, [mealResponse, drinkResponse]);
+
+  useEffect(() => {
+    providerState.search = search;
+  }, [search]);
 
   return (
     <MyContext.Provider value={ providerState }>

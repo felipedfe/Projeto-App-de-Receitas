@@ -6,14 +6,10 @@ import drinkIcon from '../images/drinkIcon.svg';
 import exploreIcon from '../images/exploreIcon.svg';
 import mealIcon from '../images/mealIcon.svg';
 import App from '../App';
-import Foods from '../pages/Foods';
-import Drinks from '../pages/Drinks';
-import Explore from '../pages/Explore';
 import ExploreFoods from '../pages/ExploreFoods';
 import ExploreDrinks from '../pages/ExploreDrinks';
 import ExploreFoodsByIngredients from '../pages/ExploreFoodsByIngredients';
 import ExploreDrinksByIngredients from '../pages/ExploreDrinksByIngredients';
-import ExploreFoodsByNationality from '../pages/ExploreFoodsByNationality';
 import Profile from '../pages/Profile';
 
 const EMAIL = 'test@test.com';
@@ -22,6 +18,17 @@ const PASSWORD = '1234567';
 const drinkButtonTestId = 'drinks-bottom-btn';
 const exploreButtonTestId = 'explore-bottom-btn';
 const mealButtonTestId = 'food-bottom-btn';
+
+const goToFood = () => {
+  const emailInput = screen.getByRole('textbox');
+  const passInput = screen.getByPlaceholderText(/password/i);
+  const loginBtn = screen.getByRole('button', {
+    name: /enter/i,
+  });
+  userEvent.type(emailInput, EMAIL);
+  userEvent.type(passInput, PASSWORD);
+  userEvent.click(loginBtn);
+};
 
 const footerIconsInPage = () => {
   const testDrinkButton = screen.getByTestId(drinkButtonTestId);
@@ -50,14 +57,7 @@ const footerIconsInPage = () => {
 describe('Test Footer', () => {
   it('Test footer and buttons on screen', () => {
     const { history } = renderWithRouter(<App />);
-    const emailInput = screen.getByRole('textbox');
-    const passInput = screen.getByPlaceholderText(/password/i);
-    const loginBtn = screen.getByRole('button', {
-      name: /enter/i,
-    });
-    userEvent.type(emailInput, EMAIL);
-    userEvent.type(passInput, PASSWORD);
-    userEvent.click(loginBtn);
+    goToFood();
 
     const { pathname } = history.location;
     expect(pathname).toBe('/foods');
@@ -72,7 +72,8 @@ describe('Test Footer', () => {
   });
 
   it('Test footer style and buttons icons', () => {
-    renderWithRouter(<Foods />);
+    renderWithRouter(<App />);
+    goToFood();
     const testFooter = screen.getByTestId('footer');
     expect(testFooter).toBeInTheDocument();
     expect(testFooter).toHaveStyle('bottom:', '0px');
@@ -86,11 +87,17 @@ describe('Test Footer', () => {
   });
 
   it('Test page Drinks with footer', () => {
-    renderWithRouter(<Drinks />);
+    renderWithRouter(<App />);
+    goToFood();
+    const drinksBtn = screen.getByTestId(drinkButtonTestId);
+    userEvent.click(drinksBtn);
     footerIconsInPage();
   });
   it('Test page Explore with footer', () => {
-    renderWithRouter(<Explore />);
+    renderWithRouter(<App />);
+    goToFood();
+    const exploreBtn = screen.getByTestId(exploreButtonTestId);
+    userEvent.click(exploreBtn);
     footerIconsInPage();
   });
   it('Test page Explore Foods with footer', () => {
@@ -114,7 +121,14 @@ describe('Test Footer', () => {
     footerIconsInPage();
   });
   it('Test page Explore Foods By Nationality with footer', () => {
-    renderWithRouter(<ExploreFoodsByNationality />);
+    renderWithRouter(<App />);
+    goToFood();
+    const exploreBtn = screen.getByTestId(exploreButtonTestId);
+    userEvent.click(exploreBtn);
+    const exploreFoodsBtn = screen.getByText(/explore foods/i);
+    userEvent.click(exploreFoodsBtn);
+    const foodsByNationality = screen.getByText(/by nationality/i);
+    userEvent.click(foodsByNationality);
     footerIconsInPage();
   });
   it('Test page Explore Foods By Nationality with footer', () => {
@@ -125,7 +139,8 @@ describe('Test Footer', () => {
 
 describe('Tests if clicking on the buttons the person is redirected', () => {
   it('clicking on the drinks icon redirects the person to cocktails', () => {
-    const { history } = renderWithRouter(<Foods />);
+    const { history } = renderWithRouter(<App />);
+    goToFood();
     const drinkBtn = screen.getByRole('img', {
       name: /drink icon/i,
     });
@@ -135,7 +150,8 @@ describe('Tests if clicking on the buttons the person is redirected', () => {
   });
 
   it('clicking on the explore icon redirects the person to explore page', () => {
-    const { history } = renderWithRouter(<Foods />);
+    const { history } = renderWithRouter(<App />);
+    goToFood();
     const exploreBtn = screen.getByRole('img', {
       name: /explore icon/i,
     });
@@ -145,7 +161,8 @@ describe('Tests if clicking on the buttons the person is redirected', () => {
   });
 
   it('clicking on the meal icon redirects the person to foods page', () => {
-    const { history } = renderWithRouter(<Foods />);
+    const { history } = renderWithRouter(<App />);
+    goToFood();
     const mealBtn = screen.getByRole('img', {
       name: /meal icon/i,
     });

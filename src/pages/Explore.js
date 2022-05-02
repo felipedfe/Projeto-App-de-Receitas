@@ -1,17 +1,16 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import { useHistory } from 'react-router-dom';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
-import SearchBar from '../components/SearchBar';
-import MyContext from '../context/MyContext';
 import '../style/explore.css';
 
 function Explore() {
   const history = useHistory();
-  const { search } = useContext(MyContext);
+
   const goToExploreFoodsPage = () => {
     history.push('/explore/foods');
   };
+
   const goToExploreDrinks = () => {
     history.push('/explore/drinks');
   };
@@ -20,7 +19,6 @@ function Explore() {
     <section>
       <section>
         <Header />
-        {search && <SearchBar />}
       </section>
       <section className="sectionExplore">
         <h1>Explore</h1>

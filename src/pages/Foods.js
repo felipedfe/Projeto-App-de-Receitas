@@ -8,8 +8,8 @@ import { loadingFoods, getFoodByCategory } from '../services/api';
 import RecipeCard from '../components/RecipeCard';
 
 function Foods(props) {
-  const { foods, setFoods } = useContext(MyContext);
-  const { search, getMealsAndDrinks } = useContext(MyContext);
+  const { search, getMealsAndDrinks,
+    foods, setFoods, mealResponse, setMealResponse } = useContext(MyContext);
   const [chosenFood, setChosenFood] = useState([]);
   const [wordCategory, setWordCategory] = useState('');
 
@@ -40,6 +40,7 @@ function Foods(props) {
     }
   };
   const handleClick = (option) => {
+    setMealResponse({ meals: [] });
     if (option === wordCategory) {
       setChosenFood(foods);
       setWordCategory('');
@@ -54,33 +55,65 @@ function Foods(props) {
 
   return (
     <section>
-      <Header />
-      {search && <SearchBar />}
-      { categoryOptions.map((option) => (
-        <div key={ option }>
-          <button
-            type="button"
-            data-testid={ `${option}-category-filter` }
-            onClick={ () => handleClick(option) }
-          >
-            { option }
-          </button>
-        </div>
-      ))}
+      <section>
+        <Header />
+        {search && <SearchBar />}
+      </section>
+      <section>
+        { categoryOptions.map((option) => (
+          <div key={ option }>
+            <button
+              type="button"
+              data-testid={ `${option}-category-filter` }
+              onClick={ () => handleClick(option) }
+            >
+              { option }
+            </button>
+          </div>
+        ))}
+      </section>
 
-      { chosenFood?.map((food, index) => (
-        <button
-          key={ food.idMeal }
-          type="button"
-          onClick={ () => changePage(food.idMeal) }
-        >
-          <RecipeCard
-            recipeType="meal"
-            recipe={ food }
-            index={ index }
-          />
-        </button>
-      ))}
+      {!mealResponse.meals.length && (
+        <section className="recipe-card-container">
+          {chosenFood?.map((food, index) => (
+            <button
+              className="recipe-card-btn"
+              key={ food.idMeal }
+              type="button"
+              onClick={ () => changePage(food.idMeal) }
+            >
+              <RecipeCard
+                recipeType="meal"
+                recipe={ food }
+                index={ index }
+              />
+            </button>
+          ))}
+        </section>
+      )}
+
+      {mealResponse.meals.length > 1 && (
+        <section className="recipe-card-container">
+          {mealResponse.meals.map((food, index) => {
+            if (index < NUMBER_CARDS) {
+              return (
+                <button
+                  className="recipe-card-btn"
+                  key={ food.idMeal }
+                  type="button"
+                  onClick={ () => changePage(food.idMeal) }
+                >
+                  <RecipeCard
+                    recipeType="meal"
+                    recipe={ food }
+                    index={ index }
+                  />
+                </button>
+              );
+            } return null;
+          })}
+        </section>
+      )}
 
       <Footer />
     </section>

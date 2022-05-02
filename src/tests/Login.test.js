@@ -3,9 +3,10 @@ import { screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import renderWithRouter from './helpers/renderWithRouter';
 import App from '../App';
+import { getToken, getUser } from '../services/localStorage';
 
-const EMAIL = 'test@test.com';
-const PASSWORD = '1234567';
+export const EMAIL = 'test@test.com';
+export const PASSWORD = '1234567';
 const INVALID_EMAIL = 'test@test';
 const INVALID_PASSWORD = '123';
 const PASSWORD_ID = 'password-input';
@@ -76,5 +77,40 @@ describe('Test the Login page', () => {
 
     const { pathname } = history.location;
     expect(pathname).toBe('/foods');
+  });
+  it('checks the token in the localStorage', () => {
+    renderWithRouter(<App />);
+    const emailInput = screen.getByRole('textbox');
+    const passwordInput = screen.getByTestId(PASSWORD_ID);
+    const sendBtn = screen.getByRole('button');
+
+    userEvent.type(emailInput, EMAIL);
+    userEvent.type(passwordInput, PASSWORD);
+    expect(sendBtn).toBeEnabled();
+    userEvent.click(sendBtn);
+
+    const mealTokenStorage = getToken('meal');
+    const drinkTokenStorage = getToken('cocktail');
+    expect(mealTokenStorage).toBe(1);
+    expect(drinkTokenStorage).toBe(1);
+    const noParamStorage = getToken();
+    expect(noParamStorage).toBeNull();
+  });
+  it('verifies if the user is saved in localStorage', () => {
+    renderWithRouter(<App />);
+    const emailInput = screen.getByRole('textbox');
+    const passwordInput = screen.getByTestId(PASSWORD_ID);
+    const sendBtn = screen.getByRole('button');
+
+    userEvent.type(emailInput, EMAIL);
+    userEvent.type(passwordInput, PASSWORD);
+    expect(sendBtn).toBeEnabled();
+    userEvent.click(sendBtn);
+
+    const expected = {
+      email: EMAIL,
+    };
+    const userStorage = getUser();
+    expect(userStorage).toEqual(expected);
   });
 });

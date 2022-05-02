@@ -19,7 +19,7 @@ function DetailsFood() {
     getRecipe('meal', id);
     getMealsAndDrinks('drink');
     const doneRecipes = getDoneRecipes();
-    const isDone = doneRecipes.some((item) => item.idMeal === id);
+    const isDone = doneRecipes.some((item) => item.id === id);
     setDone(isDone);
   }, []);
 
@@ -33,7 +33,7 @@ function DetailsFood() {
             <ul>
               {ingredients.map(({ measure, ingredient }, index) => (
                 <li key={ index } data-testid={ `${index}-ingredient-name-and-measure` }>
-                  {`${measure} ${ingredient}`}
+                  {`${measure}-${ingredient}`}
                 </li>
               ))}
             </ul>
