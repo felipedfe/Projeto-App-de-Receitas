@@ -5,8 +5,8 @@ import renderWithRouter from './helpers/renderWithRouter';
 import App from '../App';
 import { getToken, getUser } from '../services/localStorage';
 
-const EMAIL = 'test@test.com';
-const PASSWORD = '1234567';
+export const EMAIL = 'test@test.com';
+export const PASSWORD = '1234567';
 const INVALID_EMAIL = 'test@test';
 const INVALID_PASSWORD = '123';
 const PASSWORD_ID = 'password-input';
