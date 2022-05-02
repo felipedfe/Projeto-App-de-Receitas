@@ -1,8 +1,9 @@
 import React, { useContext } from 'react';
+import PropTypes from 'prop-types';
 import { useHistory } from 'react-router-dom';
 import MyContext from '../context/MyContext';
 
-const CarouselRecom = (type) => {
+const CarouselRecom = ({ type }) => {
   const { meals, drinks } = useContext(MyContext);
   const history = useHistory();
 
@@ -15,7 +16,7 @@ const CarouselRecom = (type) => {
   return (
     <section className="photos-sect">
       {type === 'meal' ? (
-        meals.meals.length > 0 && meals.meals.map((card, index) => {
+        meals.length > 0 && meals.map((card, index) => {
           if (index < cardsLength) {
             return (
               <button
@@ -29,11 +30,12 @@ const CarouselRecom = (type) => {
                   src={ card.strMealThumb }
                   alt={ card.strMeal }
                 />
+                <p data-testid={ `${index}-recomendation-title` }>{card.strMeal}</p>
               </button>);
           } return null;
         })
       ) : (
-        drinks.drinks.length > 0 && drinks.drinks.map((card, index) => {
+        drinks.length > 0 && drinks.map((card, index) => {
           if (index < cardsLength) {
             return (
               <button
@@ -47,12 +49,17 @@ const CarouselRecom = (type) => {
                   src={ card.strDrinkThumb }
                   alt={ card.strDrink }
                 />
+                <p data-testid={ `${index}-recomendation-title` }>{card.strDrink}</p>
               </button>);
           } return null;
         })
       )}
     </section>
   );
+};
+
+CarouselRecom.propTypes = {
+  type: PropTypes.string.isRequired,
 };
 
 export default CarouselRecom;

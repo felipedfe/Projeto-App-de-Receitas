@@ -1,50 +1,55 @@
-import React, { useContext, useState, useEffect } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
+// import DetailsTitle from '../components/DetailsTitle';
 import DetailsTitle from '../components/DetailsTitle';
+import RecipeBtn from '../components/RecipeBtn';
 import Recomendations from '../components/Recomendations';
 import MyContext from '../context/MyContext';
 import useIngredients from '../hooks/useIngredients';
-import { fetchDetails } from '../services/api';
+import { getDoneRecipes } from '../services/localStorage';
 
 function DetailsDrink() {
-  const [detail, setDetail] = useState({});
   const { id } = useParams();
-  const { getMealsAndDrinks } = useContext(MyContext);
+  const [done, setDone] = useState(false);
+  const { loading, getRecipe,
+    recipeDetail: detail, getMealsAndDrinks } = useContext(MyContext);
   const ingredients = useIngredients(detail);
 
-  const fetchRecipeDets = async () => {
-    getMealsAndDrinks('meal');
-    const data = await fetchDetails('cocktail', id);
-    setDetail(data.drinks[0]);
-  };
-
   useEffect(() => {
-    fetchRecipeDets();
+    getRecipe('drink', id);
+    getMealsAndDrinks('meal');
+    const doneRecipes = getDoneRecipes();
+    const isDone = doneRecipes.some((item) => item.idDrink === id);
+    setDone(isDone);
   }, []);
 
   return (
-    <section>
-      {Object.keys(detail).length > 0 && (
-        <>
-          <DetailsTitle type="drink" id={ id } />
-          <h2>Ingredients</h2>
-          <ul>
-            {ingredients.map(({ measure, ingredient }, index) => (
-              <li key={ index } data-testid={ `${index}-ingredient-name-and-measure` }>
-                {`${measure} ${ingredient}`}
-              </li>
-            ))}
-          </ul>
-          <h2>Instructions</h2>
-          <p data-testid="instructions">{detail.strInstructions}</p>
-          <h2>Recommended</h2>
-          <Recomendations type="drink" />
-          <button className="start-btn" type="button" data-testid="start-recipe-btn">
-            Start Recipe
-          </button>
-        </>
-      )}
-    </section>
+    loading && <p>Loading...</p>,
+    !loading && (
+      <section>
+        {Object.keys(detail).length > 0 && (
+          <>
+            <DetailsTitle type="drink" recipeDetail={ detail } id={ id } />
+            <h2>Ingredients</h2>
+            <ul>
+              {ingredients.map(({ measure, ingredient }, index) => (
+                <li
+                  key={ index }
+                  data-testid={ `${index}-ingredient-name-and-measure` }
+                >
+                  {`${measure}-${ingredient}`}
+                </li>
+              ))}
+            </ul>
+            <h2>Instructions</h2>
+            <p data-testid="instructions">{detail.strInstructions}</p>
+            <h2>Recommended</h2>
+            <Recomendations type="meal" />
+            {!done && <RecipeBtn type="cocktails" id={ id } />}
+          </>
+        )}
+      </section>
+    )
   );
 }
 
