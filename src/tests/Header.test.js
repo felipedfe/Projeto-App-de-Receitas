@@ -18,7 +18,6 @@ import Profile from '../pages/Profile';
 import DoneRecipes from '../pages/DoneRecipes';
 import FavoriteRecipes from '../pages/FavoriteRecipes';
 import ProgressFood from '../pages/ProgressFood';
-import ProgressDrink from '../pages/ProgressDrink';
 import DetailsFood from '../pages/DetailsFood';
 import DetailsDrink from '../pages/DetailsDrink';
 
