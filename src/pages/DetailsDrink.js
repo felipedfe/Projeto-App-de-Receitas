@@ -19,7 +19,7 @@ function DetailsDrink() {
     getRecipe('drink', id);
     getMealsAndDrinks('meal');
     const doneRecipes = getDoneRecipes();
-    const isDone = doneRecipes.some((item) => item.idDrink === id);
+    const isDone = doneRecipes.some((item) => item.id === id);
     setDone(isDone);
   }, []);
 

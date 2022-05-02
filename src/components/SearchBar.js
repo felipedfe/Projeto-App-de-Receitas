@@ -28,25 +28,16 @@ function SearchBar() {
   // Função de requisição para as APIs de comida
   const getMeals = async () => {
     let mealsList = '';
-    switch (radio) {
-    case 'ingredient':
+    if (radio === 'ingredient') {
       mealsList = await getMealByIngredient(searchInput);
-      break;
-    case 'name':
+    } if (radio === 'name') {
       mealsList = await getMealByName(searchInput);
-      break;
-    case 'first-letter':
+    } if (radio === 'first-letter') {
       mealsList = await getMealByFirstLetter(searchInput);
-      // console.log('-->', mealsList);
-      break;
-    default:
-      return null;
-    }
-    if (mealsList.message) {
+    } if (mealsList.message) {
       global.alert('Your search must have only 1 (one) character');
       mealsList = { meals: [] };
-    }
-    if (mealsList.meals === null) {
+    } if (mealsList.meals === null) {
       global.alert('Sorry, we haven\'t found any recipes for these filters.');
       mealsList = { meals: [] };
     }
@@ -56,24 +47,16 @@ function SearchBar() {
   // Função de requisição para as APIs de bebida
   const getDrinks = async () => {
     let drinksList = '';
-    switch (radio) {
-    case 'ingredient':
+    if (radio === 'ingredient') {
       drinksList = await getDrinkByIngredient(searchInput);
-      break;
-    case 'name':
+    } if (radio === 'name') {
       drinksList = await getDrinkByName(searchInput);
-      break;
-    case 'first-letter':
+    } if (radio === 'first-letter') {
       drinksList = await getDrinkByFirstLetter(searchInput);
-      break;
-    default:
-      return null;
-    }
-    if (drinksList.message) {
+    } if (drinksList.message) {
       global.alert('Your search must have only 1 (one) character');
       drinksList = { drinks: [] };
-    }
-    if (drinksList.drinks === null) {
+    } if (drinksList.drinks === null) {
       global.alert('Sorry, we haven\'t found any recipes for these filters.');
       drinksList = { drinks: [] };
     }
@@ -88,37 +71,6 @@ function SearchBar() {
       getDrinks();
     }
   };
-
-  // Função que retorna o render dos Recipe Cards
-  // const renderCards = (option) => {
-  //   let filteredByQuantity = [];
-  //   switch (option) {
-  //   case 'meal':
-  //     filteredByQuantity = meals
-  //       .filter((item) => meals.indexOf(item) < MAX_RECIPES_TO_RENDER);
-
-  //     return filteredByQuantity.map((recipeObj, index) => (
-  //       <RecipeCard
-  //         key={ recipeObj.idMeal }
-  //         recipeType="meal"
-  //         recipe={ recipeObj }
-  //         index={ index }
-  //       />));
-  //   case 'drink':
-  //     filteredByQuantity = drinks
-  //       .filter((item) => drinks.indexOf(item) < MAX_RECIPES_TO_RENDER);
-
-  //     return filteredByQuantity.map((recipeObj, index) => (
-  //       <RecipeCard
-  //         key={ recipeObj.idMeal }
-  //         recipeType="drink"
-  //         recipe={ recipeObj }
-  //         index={ index }
-  //       />));
-  //   default:
-  //     return null;
-  //   }
-  // };
 
   return (
     <div className="search-container">

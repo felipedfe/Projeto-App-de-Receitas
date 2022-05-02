@@ -73,6 +73,10 @@ function Provider({ children }) {
     providerState.drinkResponse = drinkResponse;
   }, [mealResponse, drinkResponse]);
 
+  useEffect(() => {
+    providerState.search = search;
+  }, [search]);
+
   return (
     <MyContext.Provider value={ providerState }>
       {children}

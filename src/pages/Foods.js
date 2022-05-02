@@ -55,8 +55,10 @@ function Foods(props) {
 
   return (
     <section>
-      <Header />
-      {search && <SearchBar />}
+      <section>
+        <Header />
+        {search && <SearchBar />}
+      </section>
       <section>
         { categoryOptions.map((option) => (
           <div key={ option }>
