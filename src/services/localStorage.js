@@ -48,7 +48,6 @@ export const addFavorite = (recipe) => {
   const favorites = JSON.parse(localStorage.getItem(FAVORITE_RECIPES)) || [];
   const newFavorites = [...favorites, recipe];
   localStorage.setItem(FAVORITE_RECIPES, JSON.stringify(newFavorites));
-  console.log(localStorage);
 };
 
 // remove receita dos favoritos
@@ -92,10 +91,7 @@ export const getDoneRecipes = () => {
 };
 
 // finaliza receita
-export const addDoneRecipes = (type, recipe) => {
-  const inProgress = JSON.parse(localStorage.getItem(IN_PROGRESS));
-  delete inProgress[type][recipe.id];
-  localStorage.setItem(IN_PROGRESS, JSON.stringify(inProgress));
+export const addDoneRecipes = (_type, recipe) => {
   const recipes = JSON.parse(localStorage.getItem(DONE_RECIPES)) || [];
   const newRecipes = [...recipes, recipe];
   localStorage.setItem(DONE_RECIPES, JSON.stringify(newRecipes));

@@ -12,6 +12,7 @@ import { addDoneRecipes, getDoneRecipes, getFavorites } from '../services/localS
 import shareImg from '../images/shareIcon.svg';
 import whiteHeart from '../images/whiteHeartIcon.svg';
 import blackHeart from '../images/blackHeartIcon.svg';
+import { doneMeal } from './mocks/doneRecipeObject';
 
 const FOODS_PATH = '/foods';
 const ONE_FOOD_PATH = '/foods/52771';
@@ -166,7 +167,7 @@ describe('Tests the Food details page', () => {
       render = renderWithRouter(<App />);
     });
     await act(async () => {
-      addDoneRecipes(oneMeal.meals[0]);
+      addDoneRecipes('meal', doneMeal);
     });
     await act(async () => gotToFood(render));
     const doneRecipes = getDoneRecipes();

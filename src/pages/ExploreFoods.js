@@ -1,15 +1,12 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import { useHistory } from 'react-router-dom';
 import { getSurpriseFood } from '../services/api';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
-import SearchBar from '../components/SearchBar';
-import MyContext from '../context/MyContext';
 import '../style/exploreFoods.css';
 
 function ExploreFoods() {
   const history = useHistory();
-  const { search } = useContext(MyContext);
   const redirectByIngredient = () => {
     history.push('/explore/foods/ingredients');
   };
@@ -29,7 +26,6 @@ function ExploreFoods() {
     <section>
       <section>
         <Header />
-        {search && <SearchBar />}
       </section>
       <section className="exploreSection">
         <h1>Explore Foods</h1>

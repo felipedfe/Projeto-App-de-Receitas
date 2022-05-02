@@ -6,7 +6,6 @@ import FavoriteCard from '../components/FavoriteCard';
 function FavoriteRecipes() {
   // Aqui resgatamos as receitas favoritas salvas no Local Storage
   const favoriteRecipes = getFavorites();
-  console.log('-->', favoriteRecipes);
 
   // State
   const [favoriteRecipesState, setFavoriteRecipesState] = useState(favoriteRecipes);
