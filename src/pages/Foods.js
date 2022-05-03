@@ -8,8 +8,8 @@ import { loadingFoods, getFoodByCategory, getMealByIngredient } from '../service
 import RecipeCard from '../components/RecipeCard';
 
 function Foods(props) {
-  const { search, getMealsAndDrinks, foods, setFoods, ingredientFoodSelected
-    foods, setFoods, mealResponse, setMealResponse } = useContext(MyContext);
+  const { search, getMealsAndDrinks, foods, setFoods, ingredientFoodSelected,
+    mealResponse, setMealResponse } = useContext(MyContext);
   const [chosenFood, setChosenFood] = useState([]);
   const [wordCategory, setWordCategory] = useState('');
 

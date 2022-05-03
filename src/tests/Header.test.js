@@ -36,7 +36,7 @@ describe('Test the Header page', () => {
     expect(titleId).toHaveTextContent(title);
 
     if (searchBtn) {
-      const searchBbtn = await screen.findByTestId(SEARCH_BTN_ID);
+      const searchBbtn = await screen.queryByTestId(SEARCH_BTN_ID);
       expect(searchBbtn).toBeInTheDocument();
       expect(searchBbtn).toHaveAttribute('src', searchIcon);
     } else {

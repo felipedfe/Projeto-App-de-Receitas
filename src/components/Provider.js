@@ -29,6 +29,7 @@ function Provider({ children }) {
     if (type === 'meal') key = 'meals';
     else key = 'drinks';
     setRecipeDetail(response[key][0]);
+    setLoading(false);
   };
 
   useEffect(() => {
@@ -63,7 +64,7 @@ function Provider({ children }) {
 
   useEffect(() => {
     setLoading(false);
-  }, [recipeDetail]);
+  }, [recipeDetail, foodIngredients, drinkIngredients, nationality, meals, drinks]);
 
   const getMealsAndDrinks = async (type) => {
     setLoading(true);
@@ -71,7 +72,6 @@ function Provider({ children }) {
     if (type === 'meal') {
       setMeals(response.meals);
     } else setDrinks(response.drinks);
-    setLoading(false);
   };
 
   const providerState = {
@@ -103,6 +103,10 @@ function Provider({ children }) {
   };
 
   useEffect(() => {
+    providerState.nationality = nationality;
+  }, [nationality]);
+
+  useEffect(() => {
     providerState.recipeDetail = recipeDetail;
   }, [recipeDetail]);
 
@@ -123,6 +127,11 @@ function Provider({ children }) {
   useEffect(() => {
     providerState.search = search;
   }, [search]);
+
+  useEffect(() => {
+    providerState.foodIngredients = foodIngredients;
+    providerState.drinkIngredients = drinkIngredients;
+  }, [foodIngredients, drinkIngredients]);
 
   return (
     <MyContext.Provider value={ providerState }>

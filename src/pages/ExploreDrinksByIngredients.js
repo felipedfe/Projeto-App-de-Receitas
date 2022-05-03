@@ -2,6 +2,8 @@ import React, { useContext } from 'react';
 import { useHistory } from 'react-router-dom';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
+import SearchBar from '../components/SearchBar';
+import MyContext from '../context/MyContext';
 
 function ExploreDrinksByIngredients() {
   const { search, drinkIngredients, setIngredientDrinkSelected } = useContext(MyContext);
@@ -17,8 +19,10 @@ function ExploreDrinksByIngredients() {
   return (
     <section>
       <section>
-        <Header />
-        {search && <SearchBar />}
+        <section>
+          <Header />
+          {search && <SearchBar />}
+        </section>
         {filteringArray.map((each, index) => (
           <button
             type="button"

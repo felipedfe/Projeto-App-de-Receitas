@@ -13,7 +13,6 @@ function ExploreDrinks() {
 
   const redirectBySurpriseDrink = async () => {
     const apiSurpriseDrink = await getSurpriseDrink();
-    console.log({ apiSurpriseDrink });
     const drink = apiSurpriseDrink.drinks;
     const result = drink[0].idDrink;
     history.push(`/drinks/${result}`);

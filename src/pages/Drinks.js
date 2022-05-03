@@ -10,7 +10,7 @@ import SearchBar from '../components/SearchBar';
 
 function Drinks(props) {
   const { search, getMealsAndDrinks, drinkResponse, setDrinkResponse,
-    beverage, setBeverage, drinks, setDrinks, ingredientDrinkSelected } = useContext(MyContext);
+    beverage, setBeverage, ingredientDrinkSelected } = useContext(MyContext);
   const [chosenDrink, setChosenDrink] = useState([]);
   const [wordCategory, setWordCategory] = useState('');
   const { history } = props;

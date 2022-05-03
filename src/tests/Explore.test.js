@@ -16,10 +16,10 @@ const INGREDIENTS_ID = 'explore-by-ingredient';
 
 const exploreDrink = '/explore/drinks';
 
-const goToExploreFoods = (history) => {
+const goToExploreFoods = async (history) => {
   history.push('/explore');
   const foodsBtn = screen.getByTestId(btnExploreFoods);
-  userEvent.click(foodsBtn);
+  await act(async () => { userEvent.click(foodsBtn); });
 };
 
 const goToExploreDrinks = (history) => {
@@ -29,6 +29,8 @@ const goToExploreDrinks = (history) => {
 };
 
 afterEach(() => jest.fn().mockClear());
+
+beforeEach(() => { window.fetch = jest.fn(fetchMock); });
 
 describe('Test screen explore', () => {
   it('have two buttons with testid', () => {
@@ -69,9 +71,9 @@ describe('test if both buttons are redirecting', () => {
 });
 
 describe('Screen foods testing buttons redirects', () => {
-  it('test explorefoods page', () => {
+  it('test explorefoods page', async () => {
     const { history } = renderWithRouter(<App />);
-    goToExploreFoods(history);
+    await goToExploreFoods(history);
     const byIngredient = screen.getByTestId(INGREDIENTS_ID);
     const byNationality = screen.queryByTestId(NATIONALITY_ID);
     const surprise = screen.getByTestId(SURPRISE_ID);
@@ -82,35 +84,31 @@ describe('Screen foods testing buttons redirects', () => {
     expect(surprise).toBeInTheDocument();
     expect(surprise).toHaveTextContent(/surprise me/i);
   });
-  it('click button By Ingredient,you are redirected to explorefoodsbyingredients', () => {
+  it('click button By Ingredient,you are redirected to the right page', async () => {
     const { history } = renderWithRouter(<App />);
-    goToExploreFoods(history);
-    const ingredientBtn = screen.getByRole('button', {
-      name: /by ingredient/i,
-    });
-    userEvent.click(ingredientBtn);
+    await goToExploreFoods(history);
+    const ingredientBtn = screen.getByTestId(INGREDIENTS_ID);
+    await act(async () => { userEvent.click(ingredientBtn); });
+    expect(window.fetch).toHaveBeenCalled();
     const { pathname } = history.location;
     expect(pathname).toBe('/explore/foods/ingredients');
   });
-  it('click btn ByNationality,you are redirected to explorefoodsbynationality', () => {
+  it('click btn ByNationality,you are redirected to the right page', async () => {
     const { history } = renderWithRouter(<App />);
-    goToExploreFoods(history);
-    const nationalitytBtn = screen.getByRole('button', {
-      name: /by nationality/i,
-    });
-    userEvent.click(nationalitytBtn);
+    await goToExploreFoods(history);
+    const nationalitytBtn = screen.getByRole('button', { name: /by nationality/i });
+    await act(async () => { userEvent.click(nationalitytBtn); });
     const { pathname } = history.location;
     expect(pathname).toBe('/explore/foods/nationalities');
   });
   it('click btn surprise me,you are redirected to especific page with api', async () => {
     let render;
-    window.fetch = jest.fn().mockImplementation(fetchMock);
     const result = oneMeal.meals[0].idMeal;
     await act(async () => {
       render = renderWithRouter(<App />);
       render.history.push('/foods');
     });
-    goToExploreFoods(render.history);
+    await goToExploreFoods(render.history);
     const surpriseMe = screen.getByTestId(SURPRISE_ID);
     await act(async () => { userEvent.click(surpriseMe); });
     expect(window.fetch).toHaveBeenCalled();
@@ -141,9 +139,7 @@ describe('Test explore drinks page', () => {
   it('click button ByIngredient,you are redirected to exploreDrinksbyingredients', () => {
     const { history } = renderWithRouter(<App />);
     goToExploreDrinks(history);
-    const ingredientButton = screen.getByRole('button', {
-      name: /by ingredient/i,
-    });
+    const ingredientButton = screen.getByRole('button', { name: /by ingredient/i });
     userEvent.click(ingredientButton);
     const { pathname } = history.location;
     expect(pathname).toBe('/explore/drinks/ingredients');
