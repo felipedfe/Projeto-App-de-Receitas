@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 function RecipeCard(props) {
-  console.log(props);
   const { recipeType, recipe, index } = props;
 
   const returnNameAndImage = () => {

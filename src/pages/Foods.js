@@ -4,11 +4,11 @@ import Header from '../components/Header';
 import SearchBar from '../components/SearchBar';
 import MyContext from '../context/MyContext';
 import Footer from '../components/Footer';
-import { loadingFoods, getFoodByCategory } from '../services/api';
+import { loadingFoods, getFoodByCategory, getMealByIngredient } from '../services/api';
 import RecipeCard from '../components/RecipeCard';
 
 function Foods(props) {
-  const { foods, setFoods } = useContext(MyContext);
+  const { foods, setFoods, ingredientFoodSelected } = useContext(MyContext);
   const { search, getMealsAndDrinks } = useContext(MyContext);
   const [chosenFood, setChosenFood] = useState([]);
   const [wordCategory, setWordCategory] = useState('');
@@ -17,6 +17,13 @@ function Foods(props) {
 
   const NUMBER_CARDS = 12;
   const categoryOptions = ['All', 'Beef', 'Goat', 'Chicken', 'Breakfast', 'Dessert'];
+
+  const exploreIngredients = async () => {
+    if (ingredientFoodSelected) {
+      const meals = await getMealByIngredient(ingredientFoodSelected);
+      setChosenFood(meals.meals);
+    }
+  };
 
   useEffect(() => {
     const foodScreen = async () => {
@@ -27,6 +34,7 @@ function Foods(props) {
       getMealsAndDrinks('meal');
     };
     foodScreen();
+    exploreIngredients();
   }, []);
 
   const handleCategory = async (category) => {

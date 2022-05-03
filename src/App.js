@@ -18,6 +18,7 @@ import ProgressFood from './pages/ProgressFood';
 import ProgressDrink from './pages/ProgressDrink';
 import DetailsDrink from './pages/DetailsDrink';
 import DetailsFood from './pages/DetailsFood';
+import NotFound from './pages/NotFound';
 
 function App() {
   return (
@@ -25,6 +26,7 @@ function App() {
       <div className="main-sect">
         <Switch>
           <Route exact path="/" component={ Login } />
+          <Route path="/explore/drinks/nationalities" component={ NotFound } />
           <Route path="/foods/:id/in-progress" component={ ProgressFood } />
           <Route path="/foods/:id" component={ DetailsFood } />
           <Route exact path="/foods" component={ Foods } />
