@@ -48,7 +48,7 @@ function ProgressDrink() {
   const handleClick = () => {
     const details = {
       id,
-      type: 'cocktails',
+      type: 'drink',
       nationality: '',
       category: recipeDetail.strCategory,
       alcoholicOrNot: recipeDetail.strAlcoholic,
