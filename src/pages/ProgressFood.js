@@ -48,16 +48,17 @@ function ProgressFood() {
   const handleClick = () => {
     const details = {
       id,
-      type: 'meals',
+      type: 'food',
       nationality: recipeDetail.strArea,
       category: recipeDetail.strCategory,
       alcoholicOrNot: '',
       name: recipeDetail.strMeal,
       image: recipeDetail.strMealThumb,
       doneDate: new Date().toLocaleString(),
-      tags: recipeDetail.strTags,
+      tags: recipeDetail.strTags?.split(',') || [],
     };
     addDoneRecipes('meals', details);
+    console.log(recipeDetail);
     history.push('/done-recipes');
   };
 
