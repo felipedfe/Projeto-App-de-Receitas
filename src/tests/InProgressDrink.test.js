@@ -3,46 +3,51 @@ import { screen, waitForElement } from '@testing-library/react';
 import { act } from 'react-dom/test-utils';
 import userEvent from '@testing-library/user-event';
 import renderWithRouter from './helpers/renderWithRouter';
-import meals from '../../cypress/mocks/meals';
 import oneDrink from '../../cypress/mocks/oneDrink';
-import drinks from '../../cypress/mocks/drinks';
 import fetchMock from './mocks/fetchMock';
 import App from '../App';
 import listIngredients from './helpers/listIngredients';
-import { addDoneRecipes, getDoneRecipes, getFavorites } from '../services/localStorage';
+import { getFavorites, getInProgressRecipes } from '../services/localStorage';
 import shareImg from '../images/shareIcon.svg';
 import whiteHeart from '../images/whiteHeartIcon.svg';
 import blackHeart from '../images/blackHeartIcon.svg';
-import { doneDrink } from './mocks/doneRecipeObject';
 
 const DRINKS_PATH = '/drinks';
-const ONE_DRINK_PATH = '/drinks/178319';
+const ONE_DRINK_PATH = '/drinks/178319/in-progress';
 const PHOTO_ID = 'recipe-photo';
 const TITLE_ID = 'recipe-title';
 const SHARE_ID = 'share-btn';
 const FAVORIT_ID = 'favorite-btn';
 const CATEGORY_ID = 'recipe-category';
 const INSTRUCTION_ID = 'instructions';
-const START_BTN = 'start-recipe-btn';
+const FINISH_BTN = 'finish-recipe-btn';
 
 beforeEach(() => {
   localStorage.clear();
   window.fetch = jest.fn().mockImplementation(fetchMock);
 });
 
-const gotToDrink = async (render) => {
+const goToDrink = async (render) => {
   await render.history.push(DRINKS_PATH);
   await render.history.push(ONE_DRINK_PATH);
 };
 
-describe('Tests the Drink details page', () => {
+const checkAllIngredients = async (ingredients) => {
+  ingredients.forEach(async (item) => {
+    await act(async () => {
+      userEvent.click(item);
+    });
+  });
+};
+
+describe('Tests the Food details page', () => {
   const ingredientsList = listIngredients(oneDrink.drinks[0]);
   it('tests if the correct information is rendered', async () => {
     let render;
     await act(async () => {
       render = renderWithRouter(<App />);
     });
-    await act(async () => gotToDrink(render));
+    await act(async () => goToDrink(render));
     await waitForElement(() => screen.findByTestId(PHOTO_ID), { timeout: 5000 });
     expect(window.fetch).toHaveBeenCalled();
     const foodPhoto = await screen.findByTestId(PHOTO_ID);
@@ -50,10 +55,9 @@ describe('Tests the Drink details page', () => {
     const shareBtn = screen.getByTestId(SHARE_ID);
     const likeBtn = screen.getByTestId(FAVORIT_ID);
     const category = screen.getByTestId(CATEGORY_ID);
-    const ingredients = screen.getAllByTestId(/ingredient-name-and-measure/i);
+    const ingredients = screen.getAllByTestId(/ingredient-step/i);
     const instructions = screen.getByTestId(INSTRUCTION_ID);
-    const recomendationCards = screen.getAllByTestId(/recomendation-card/);
-    const startRecipe = screen.getByTestId(START_BTN);
+    const finishRecipe = screen.getByTestId(FINISH_BTN);
     expect(foodPhoto).toBeInTheDocument();
     expect(foodName).toBeInTheDocument();
     expect(shareBtn).toBeInTheDocument();
@@ -61,15 +65,14 @@ describe('Tests the Drink details page', () => {
     expect(category).toBeInTheDocument();
     ingredients.forEach((item) => expect(item).toBeInTheDocument());
     expect(instructions).toBeInTheDocument();
-    recomendationCards.forEach((item) => expect(item).toBeInTheDocument());
-    expect(startRecipe).toBeInTheDocument();
+    expect(finishRecipe).toBeInTheDocument();
   });
-  it('verifies the endpoint of the API', async () => {
+  it('verifies the enpoint of the API', async () => {
     let render;
     await act(async () => {
       render = renderWithRouter(<App />);
     });
-    await act(async () => gotToDrink(render));
+    await act(async () => goToDrink(render));
     expect(window.fetch).toHaveBeenCalled();
     expect(window.fetch).toBeCalledWith('https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=178319');
   });
@@ -78,14 +81,13 @@ describe('Tests the Drink details page', () => {
     await act(async () => {
       render = renderWithRouter(<App />);
     });
-    await act(async () => gotToDrink(render));
+    await act(async () => goToDrink(render));
     const drink = oneDrink.drinks[0];
     const foodPhoto = await screen.findByTestId(PHOTO_ID);
     const foodName = screen.getByTestId(TITLE_ID);
     const category = screen.getByTestId(CATEGORY_ID);
-    const ingredients = screen.getAllByTestId(/ingredient-name-and-measure/i);
+    const ingredients = screen.getAllByTestId(/ingredient-step/i);
     const instructions = screen.getByTestId(INSTRUCTION_ID);
-    const recomendationCards = screen.getAllByTestId(/recomendation-card/);
     expect(foodPhoto).toHaveAttribute('src', drink.strDrinkThumb);
     expect(foodPhoto).toHaveAttribute('alt', drink.strDrink);
     expect(foodName).toHaveTextContent(drink.strDrink);
@@ -94,81 +96,59 @@ describe('Tests the Drink details page', () => {
       expect(item).toHaveTextContent(ingredientsList[index]);
     });
     expect(instructions).toHaveTextContent(drink.strInstructions);
-    recomendationCards.forEach((item) => {
-      expect(item).toBeInTheDocument();
-    });
   });
-  it('verifies if the recommendations are for meals', async () => {
+  it('vrifies if the items are type checkbox', async () => {
     let render;
     await act(async () => {
       render = renderWithRouter(<App />);
     });
-    await act(async () => gotToDrink(render));
-    const recomendationTitle = screen.getAllByTestId(/recomendation-title/);
-    expect(recomendationTitle[0]).not.toHaveTextContent(drinks.drinks[0].strDrink);
-    expect(window.fetch).toBeCalledWith('https://www.themealdb.com/api/json/v1/1/search.php?s=');
+    await act(async () => goToDrink(render));
+    const ingredients = screen.getAllByRole('checkbox');
+    expect(ingredients).toHaveLength(ingredientsList.length);
   });
-  it('verifies the recomendation cards', async () => {
+  it('verifies the style when the ingredient is checked', async () => {
     let render;
     await act(async () => {
       render = renderWithRouter(<App />);
     });
-    await act(async () => gotToDrink(render));
-    const recomendationCards = screen.getAllByTestId(/recomendation-card/);
-    const recomendationTitle = screen.getAllByTestId(/recomendation-title/);
-    const RECOM_LENGTH = 6;
-    expect(recomendationCards).toHaveLength(RECOM_LENGTH);
-    recomendationCards.forEach((_item, index) => {
-      const meal = meals.meals[index];
-      expect(recomendationTitle[index]).toHaveTextContent(meals.meals[index].strMeal);
-      expect(screen.getByAltText(meal.strMeal)).toBeInTheDocument();
+    await act(async () => goToDrink(render));
+    let ingredients = screen.getAllByTestId(/ingredient-step/i);
+    await act(async () => {
+      userEvent.click(ingredients[0]);
     });
+    ingredients = screen.getAllByTestId(/ingredient-step/i);
+    const ingredientsCheck = screen.getAllByRole('checkbox');
+    expect(ingredientsCheck[0]).toBeChecked();
+    expect(ingredients[0]).toHaveClass('checked');
   });
-  it('tests the cards buttons', async () => {
+  it('tests if it\'s possible to check every item on the list', async () => {
     let render;
     await act(async () => {
       render = renderWithRouter(<App />);
     });
-    await act(async () => gotToDrink(render));
-    const recomendationCards = screen.getAllByTestId(/recomendation-card/);
-    await act(async () => {
-      userEvent.click(recomendationCards[0]);
+    await act(async () => goToDrink(render));
+    const ingredients = screen.getAllByTestId(/ingredient-step/i);
+    await checkAllIngredients(ingredients);
+    ingredients.forEach((_item, index) => {
+      const checkedIng = screen.getAllByRole('checkbox');
+      expect(checkedIng[index]).toBeChecked();
     });
-    const cardId = meals.meals[0].idMeal;
-    expect(render.history.location.pathname).toBe(`/foods/${cardId}`);
   });
-  it('tests the start button and the localStorage for recipes in progress', async () => {
+  it('verifies if the progress is saved', async () => {
     let render;
-    await act(async () => {
-      render = renderWithRouter(<App />);
-    });
-    await act(async () => gotToDrink(render));
-    let startBtn = screen.getByTestId(START_BTN);
-    expect(startBtn).toHaveTextContent(/start recipe/i);
-    await act(async () => {
-      userEvent.click(startBtn);
-    });
-    expect(render.history.location.pathname).toBe(`${ONE_DRINK_PATH}/in-progress`);
-    await act(async () => {
-      render.history.push(ONE_DRINK_PATH);
-    });
-    startBtn = screen.getByTestId(START_BTN);
-    expect(startBtn).toHaveTextContent(/continue recipe/i);
-    const inProgressStorage = JSON.parse(localStorage.getItem('inProgressRecipes'));
+    await act(async () => { render = renderWithRouter(<App />); });
+    await act(async () => goToDrink(render));
+    const ingredients = screen.getAllByTestId(/ingredient-step/i);
+    await act(async () => { userEvent.click(ingredients[0]); });
+    render.history.push(DRINKS_PATH);
+    render.history.push(ONE_DRINK_PATH);
+    const checkedList = await screen.findAllByRole('checkbox');
+    expect(checkedList[0]).toBeChecked();
+    expect(checkedList[1]).not.toBeChecked();
+    const inProgressStorage = getInProgressRecipes();
     expect(Object.keys(inProgressStorage.cocktails)).toHaveLength(1);
-  });
-  it('verifies the start button and localStorage when the recipe is done', async () => {
-    let render;
-    await act(async () => {
-      render = renderWithRouter(<App />);
-    });
-    await act(async () => {
-      addDoneRecipes('cocktail', doneDrink);
-    });
-    await act(async () => gotToDrink(render));
-    const doneRecipes = getDoneRecipes();
-    expect(doneRecipes).toHaveLength(1);
-    expect(screen.queryByTestId(START_BTN)).not.toBeInTheDocument();
+    expect(inProgressStorage.cocktails[oneDrink.drinks[0].idDrink])
+      .toHaveLength(ingredientsList.length);
   });
   it('tests the share button', async () => {
     let render;
@@ -177,11 +157,12 @@ describe('Tests the Drink details page', () => {
         .mockImplementation((text) => Promise.resolve(text)) },
     });
     await act(async () => { render = renderWithRouter(<App />); });
-    await act(async () => gotToDrink(render));
+    await act(async () => goToDrink(render));
     const shareBtn = screen.getByTestId(SHARE_ID);
     expect(shareBtn).toHaveAttribute('src', shareImg);
     await act(async () => { userEvent.click(shareBtn); });
-    const url = `http://localhost${render.history.location.pathname}`;
+    const copiedPath = render.history.location.pathname.split('/in-progress').join('');
+    const url = `http://localhost${copiedPath}`;
     expect(window.navigator.clipboard.writeText).toHaveBeenCalledWith(url);
   });
   it('tests the like button', async () => {
@@ -189,14 +170,18 @@ describe('Tests the Drink details page', () => {
     await act(async () => {
       render = renderWithRouter(<App />);
     });
-    await act(async () => gotToDrink(render));
+    await act(async () => goToDrink(render));
     let likeBtn = screen.getByTestId(FAVORIT_ID);
     expect(likeBtn).toHaveAttribute('src', whiteHeart);
+    let favoriteStorage = getFavorites();
+    expect(favoriteStorage).toHaveLength(0);
     await act(async () => {
       userEvent.click(likeBtn);
     });
     likeBtn = screen.getByTestId(FAVORIT_ID);
     expect(likeBtn).toHaveAttribute('src', blackHeart);
+    favoriteStorage = getFavorites();
+    expect(favoriteStorage).toHaveLength(1);
     await act(async () => {
       render.history.push(DRINKS_PATH);
       render.history.push(ONE_DRINK_PATH);
@@ -214,7 +199,7 @@ describe('Tests the Drink details page', () => {
     await act(async () => {
       render = renderWithRouter(<App />);
     });
-    await act(async () => gotToDrink(render));
+    await act(async () => goToDrink(render));
     let favoriteLocal = getFavorites();
     expect(favoriteLocal).toEqual([]);
     const likeBtn = screen.getByTestId(FAVORIT_ID);
@@ -229,5 +214,33 @@ describe('Tests the Drink details page', () => {
     });
     favoriteLocal = getFavorites();
     expect(favoriteLocal).toHaveLength(0);
+  });
+  it('tests if the done recipe button is disabled', async () => {
+    let render;
+    await act(async () => {
+      render = renderWithRouter(<App />);
+    });
+    await act(async () => goToDrink(render));
+    const ingredients = screen.getAllByTestId(/ingredient-step/i);
+    const finishBtn = screen.getByTestId(FINISH_BTN);
+    expect(finishBtn).toBeDisabled();
+    await checkAllIngredients(ingredients);
+    expect(finishBtn).not.toBeDisabled();
+  });
+  it('tests if the finish button redirect to the right page', async () => {
+    let render;
+    await act(async () => {
+      render = renderWithRouter(<App />);
+    });
+    await act(async () => goToDrink(render));
+    const ingredients = screen.getAllByTestId(/ingredient-step/i);
+    const finishBtn = screen.getByTestId(FINISH_BTN);
+    expect(finishBtn).toBeDisabled();
+    await checkAllIngredients(ingredients);
+    await act(async () => {
+      userEvent.click(finishBtn);
+    });
+    const { pathname } = render.history.location;
+    expect(pathname).toBe('/done-recipes');
   });
 });

@@ -3,27 +3,24 @@ import { screen, waitForElement } from '@testing-library/react';
 import { act } from 'react-dom/test-utils';
 import userEvent from '@testing-library/user-event';
 import renderWithRouter from './helpers/renderWithRouter';
-import oneMeal, { meals } from '../../cypress/mocks/oneMeal';
-import drinks from '../../cypress/mocks/drinks';
+import oneMeal from '../../cypress/mocks/oneMeal';
 import fetchMock from './mocks/fetchMock';
 import App from '../App';
 import listIngredients from './helpers/listIngredients';
-import { addDoneRecipes, getDoneRecipes, getFavorites } from '../services/localStorage';
+import { getFavorites, getInProgressRecipes } from '../services/localStorage';
 import shareImg from '../images/shareIcon.svg';
 import whiteHeart from '../images/whiteHeartIcon.svg';
 import blackHeart from '../images/blackHeartIcon.svg';
-import { doneMeal } from './mocks/doneRecipeObject';
 
 const FOODS_PATH = '/foods';
-const ONE_FOOD_PATH = '/foods/52771';
+const ONE_FOOD_PATH = '/foods/52771/in-progress';
 const PHOTO_ID = 'recipe-photo';
 const TITLE_ID = 'recipe-title';
 const SHARE_ID = 'share-btn';
 const FAVORIT_ID = 'favorite-btn';
 const CATEGORY_ID = 'recipe-category';
 const INSTRUCTION_ID = 'instructions';
-const VIDEO_ID = 'video';
-const START_BTN = 'start-recipe-btn';
+const FINISH_BTN = 'finish-recipe-btn';
 
 beforeEach(() => {
   localStorage.clear();
@@ -33,6 +30,14 @@ beforeEach(() => {
 const gotToFood = async (render) => {
   await render.history.push(FOODS_PATH);
   await render.history.push(ONE_FOOD_PATH);
+};
+
+const checkAllIngredients = async (ingredients) => {
+  ingredients.forEach(async (item) => {
+    await act(async () => {
+      userEvent.click(item);
+    });
+  });
 };
 
 describe('Tests the Food details page', () => {
@@ -50,11 +55,9 @@ describe('Tests the Food details page', () => {
     const shareBtn = screen.getByTestId(SHARE_ID);
     const likeBtn = screen.getByTestId(FAVORIT_ID);
     const category = screen.getByTestId(CATEGORY_ID);
-    const ingredients = screen.getAllByTestId(/ingredient-name-and-measure/i);
+    const ingredients = screen.getAllByTestId(/ingredient-step/i);
     const instructions = screen.getByTestId(INSTRUCTION_ID);
-    const video = screen.getByTestId(VIDEO_ID);
-    const recomendationCards = screen.getAllByTestId(/recomendation-card/);
-    const startRecipe = screen.getByTestId(START_BTN);
+    const finishRecipe = screen.getByTestId(FINISH_BTN);
     expect(foodPhoto).toBeInTheDocument();
     expect(foodName).toBeInTheDocument();
     expect(shareBtn).toBeInTheDocument();
@@ -62,9 +65,7 @@ describe('Tests the Food details page', () => {
     expect(category).toBeInTheDocument();
     ingredients.forEach((item) => expect(item).toBeInTheDocument());
     expect(instructions).toBeInTheDocument();
-    expect(video).toBeInTheDocument();
-    recomendationCards.forEach((item) => expect(item).toBeInTheDocument());
-    expect(startRecipe).toBeInTheDocument();
+    expect(finishRecipe).toBeInTheDocument();
   });
   it('verifies the enpoint of the API', async () => {
     let render;
@@ -85,10 +86,8 @@ describe('Tests the Food details page', () => {
     const foodPhoto = await screen.findByTestId(PHOTO_ID);
     const foodName = screen.getByTestId(TITLE_ID);
     const category = screen.getByTestId(CATEGORY_ID);
-    const ingredients = screen.getAllByTestId(/ingredient-name-and-measure/i);
+    const ingredients = screen.getAllByTestId(/ingredient-step/i);
     const instructions = screen.getByTestId(INSTRUCTION_ID);
-    const video = screen.getByTestId(VIDEO_ID);
-    const recomendationCards = screen.getAllByTestId(/recomendation-card/);
     expect(foodPhoto).toHaveAttribute('src', penne.strMealThumb);
     expect(foodPhoto).toHaveAttribute('alt', penne.strMeal);
     expect(foodName).toHaveTextContent(penne.strMeal);
@@ -97,82 +96,63 @@ describe('Tests the Food details page', () => {
       expect(item).toHaveTextContent(ingredientsList[index]);
     });
     expect(instructions).toHaveTextContent(penne.strInstructions);
-    expect(video.children[0]).toHaveAttribute('src', penne.strYoutube);
-    recomendationCards.forEach((item) => {
-      expect(item).toBeInTheDocument();
-    });
   });
-  it('verifies if the recommendations are for drinks', async () => {
+  it('vrifies if the items are type checkbox', async () => {
     let render;
     await act(async () => {
       render = renderWithRouter(<App />);
     });
     await act(async () => gotToFood(render));
-    const recomendationTitle = screen.getAllByTestId(/recomendation-title/);
-    expect(recomendationTitle[0]).not.toHaveTextContent(meals[0].strMeal);
-    expect(window.fetch).toBeCalledWith('https://www.thecocktaildb.com/api/json/v1/1/search.php?s=');
+    const ingredients = screen.getAllByRole('checkbox');
+    expect(ingredients).toHaveLength(ingredientsList.length);
   });
-  it('verifies the recomendation cards', async () => {
+  it('verifies the style when the ingredient is checked', async () => {
     let render;
     await act(async () => {
       render = renderWithRouter(<App />);
     });
     await act(async () => gotToFood(render));
-    const recomendationCards = screen.getAllByTestId(/recomendation-card/);
-    const recomendationTitle = screen.getAllByTestId(/recomendation-title/);
-    const RECOM_LENGTH = 6;
-    expect(recomendationCards).toHaveLength(RECOM_LENGTH);
-    recomendationCards.forEach((_item, index) => {
-      const drink = drinks.drinks[index];
-      expect(recomendationTitle[index]).toHaveTextContent(drinks.drinks[index].strDrink);
-      expect(screen.getByAltText(drink.strDrink)).toBeInTheDocument();
+    let ingredients = screen.getAllByTestId(/ingredient-step/i);
+    await act(async () => {
+      userEvent.click(ingredients[0]);
     });
+    ingredients = screen.getAllByTestId(/ingredient-step/i);
+    const ingredientsCheck = screen.getAllByRole('checkbox');
+    expect(ingredientsCheck[0]).toBeChecked();
+    expect(ingredients[0]).toHaveClass('checked');
   });
-  it('tests the cards buttons', async () => {
+  it('tests if it\'s possible to check every item on the list', async () => {
     let render;
     await act(async () => {
       render = renderWithRouter(<App />);
     });
     await act(async () => gotToFood(render));
-    const recomendationCards = screen.getAllByTestId(/recomendation-card/);
-    await act(async () => {
-      userEvent.click(recomendationCards[0]);
+    const ingredients = screen.getAllByTestId(/ingredient-step/i);
+    await checkAllIngredients(ingredients);
+    ingredients.forEach(async (_item, index) => {
+      const checkedIng = screen.getAllByRole('checkbox');
+      expect(checkedIng[index]).toBeChecked();
     });
-    const cardId = drinks.drinks[0].idDrink;
-    expect(render.history.location.pathname).toBe(`/drinks/${cardId}`);
   });
-  it('tests the start button and the localStorage for recipes in progress', async () => {
+  it('verifies if the progress is saved', async () => {
     let render;
     await act(async () => {
       render = renderWithRouter(<App />);
     });
     await act(async () => gotToFood(render));
-    let startBtn = screen.getByTestId(START_BTN);
-    expect(startBtn).toHaveTextContent(/start recipe/i);
+    const ingredients = screen.getAllByTestId(/ingredient-step/i);
     await act(async () => {
-      userEvent.click(startBtn);
+      userEvent.click(ingredients[0]);
     });
-    expect(render.history.location.pathname).toBe(`${ONE_FOOD_PATH}/in-progress`);
-    await act(async () => {
-      render.history.push(ONE_FOOD_PATH);
-    });
-    startBtn = screen.getByTestId(START_BTN);
-    expect(startBtn).toHaveTextContent(/continue recipe/i);
-    const inProgressStorage = JSON.parse(localStorage.getItem('inProgressRecipes'));
+    render.history.push(FOODS_PATH);
+    render.history.push(ONE_FOOD_PATH);
+    const checkedList = await screen.findAllByRole('checkbox');
+    expect(checkedList[0]).toBeChecked();
+    expect(checkedList[1]).not.toBeChecked();
+    const inProgressStorage = getInProgressRecipes();
     expect(Object.keys(inProgressStorage.meals)).toHaveLength(1);
-  });
-  it('verifies the start button and localStorage when the recipe is done', async () => {
-    let render;
-    await act(async () => {
-      render = renderWithRouter(<App />);
-    });
-    await act(async () => {
-      addDoneRecipes('meal', doneMeal);
-    });
-    await act(async () => gotToFood(render));
-    const doneRecipes = getDoneRecipes();
-    expect(doneRecipes).toHaveLength(1);
-    expect(screen.queryByTestId(START_BTN)).not.toBeInTheDocument();
+    expect(inProgressStorage.meals[oneMeal.meals[0].idMeal])
+      .toHaveLength(ingredientsList.length);
   });
   it('tests the share button', async () => {
     let render;
@@ -185,7 +165,8 @@ describe('Tests the Food details page', () => {
     const shareBtn = screen.getByTestId(SHARE_ID);
     expect(shareBtn).toHaveAttribute('src', shareImg);
     await act(async () => { userEvent.click(shareBtn); });
-    const url = `http://localhost${render.history.location.pathname}`;
+    const copiedPath = render.history.location.pathname.split('/in-progress').join('');
+    const url = `http://localhost${copiedPath}`;
     expect(window.navigator.clipboard.writeText).toHaveBeenCalledWith(url);
   });
   it('tests the like button', async () => {
@@ -233,5 +214,33 @@ describe('Tests the Food details page', () => {
     });
     favoriteLocal = getFavorites();
     expect(favoriteLocal).toHaveLength(0);
+  });
+  it('tests if the done recipe button is disabled', async () => {
+    let render;
+    await act(async () => {
+      render = renderWithRouter(<App />);
+    });
+    await act(async () => gotToFood(render));
+    const ingredients = screen.getAllByTestId(/ingredient-step/i);
+    const finishBtn = screen.getByTestId(FINISH_BTN);
+    expect(finishBtn).toBeDisabled();
+    await checkAllIngredients(ingredients);
+    expect(finishBtn).not.toBeDisabled();
+  });
+  it('tests if the finish button redirect to the right page', async () => {
+    let render;
+    await act(async () => {
+      render = renderWithRouter(<App />);
+    });
+    await act(async () => gotToFood(render));
+    const ingredients = screen.getAllByTestId(/ingredient-step/i);
+    const finishBtn = screen.getByTestId(FINISH_BTN);
+    expect(finishBtn).toBeDisabled();
+    await checkAllIngredients(ingredients);
+    await act(async () => {
+      userEvent.click(finishBtn);
+    });
+    const { pathname } = render.history.location;
+    expect(pathname).toBe('/done-recipes');
   });
 });

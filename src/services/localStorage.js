@@ -36,7 +36,7 @@ export const addUser = (email) => {
 
 // busca o usuário
 export const getUser = () => {
-  const user = JSON.parse(localStorage.getItem(USER));
+  const user = JSON.parse(localStorage.getItem(USER)) || { email: '' };
   return user;
 };
 
@@ -78,6 +78,12 @@ export const addInProgressRecipe = (type, id, ingredients) => {
   localStorage.setItem(IN_PROGRESS, JSON.stringify(newRecipes));
 };
 
+export const updateInProgress = (type, id, ingredients) => {
+  const recipes = JSON.parse(localStorage.getItem(IN_PROGRESS));
+  recipes[type][id] = ingredients;
+  localStorage.setItem(IN_PROGRESS, JSON.stringify(recipes));
+};
+
 // busca receitas acabadas
 export const getDoneRecipes = () => {
   const recipes = JSON.parse(localStorage.getItem(DONE_RECIPES)) || [];
@@ -85,19 +91,8 @@ export const getDoneRecipes = () => {
 };
 
 // finaliza receita
-export const addDoneRecipes = (recipe) => {
+export const addDoneRecipes = (_type, recipe) => {
   const recipes = JSON.parse(localStorage.getItem(DONE_RECIPES)) || [];
   const newRecipes = [...recipes, recipe];
   localStorage.setItem(DONE_RECIPES, JSON.stringify(newRecipes));
 };
-
-addDoneRecipes({
-  idDrink: '15997',
-  strDrink: 'GG',
-  strDrinkAlternate: null,
-  strTags: null,
-  strVideo: null,
-  strCategory: 'Ordinary Drink',
-  strAlcoholic: 'Optional alcohol',
-  strGlass: 'Collins Glass',
-});

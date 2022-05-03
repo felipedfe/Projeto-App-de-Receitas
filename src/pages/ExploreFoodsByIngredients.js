@@ -2,8 +2,6 @@ import React, { useContext } from 'react';
 import { useHistory } from 'react-router-dom';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
-import SearchBar from '../components/SearchBar';
-import MyContext from '../context/MyContext';
 
 function ExploreFoodsByIngredients() {
   const { search, foodIngredients, setIngredientFoodSelected } = useContext(MyContext);

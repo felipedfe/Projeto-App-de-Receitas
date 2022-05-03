@@ -1,12 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import '../style/recipeCards.css';
 
-function RecipeCard(props) {
-  const { recipeType, recipe, index } = props;
-
+function RecipeCard({ recipeType, recipe, index }) {
   const returnNameAndImage = () => {
-    switch (recipeType) {
-    case 'meal':
+    if (recipeType === 'meal') {
       return (
         <>
           <img
@@ -17,7 +15,7 @@ function RecipeCard(props) {
           <p data-testid={ `${index}-card-name` }>{recipe.strMeal}</p>
         </>
       );
-    case 'drink':
+    } if (recipeType === 'drink') {
       return (
         <>
           <img
@@ -28,13 +26,11 @@ function RecipeCard(props) {
           <p data-testid={ `${index}-card-name` }>{recipe.strDrink}</p>
         </>
       );
-    default:
-      return null;
     }
   };
 
   return (
-    <div data-testid={ `${index}-recipe-card` } className="recipe-card-container">
+    <div data-testid={ `${index}-recipe-card` } className="recipe-card">
       {returnNameAndImage()}
     </div>
   );

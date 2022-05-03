@@ -57,7 +57,6 @@ export const getDrinkByFirstLetter = async (letter) => {
     const data = await response.json();
     return data;
   } catch (error) {
-    global.alert('Your search must have only 1 (one) character');
     return error;
   }
 };
@@ -85,6 +84,7 @@ export const loadingDrinks = async () => {
 export const getFoodByCategory = async (category) => {
   try {
     const response = await fetch(`https://www.themealdb.com/api/json/v1/1/filter.php?c=${category}`);
+    console.log(response);
     const data = await response.json();
     return data;
   } catch (error) {

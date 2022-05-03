@@ -9,10 +9,10 @@ import { fetchDetails,
 function Provider({ children }) {
   const [loading, setLoading] = useState(false);
   const [mealResponse, setMealResponse] = useState({ meals: [] });
-  const [drinkResponse, setDrinkResponse] = useState({ drinks: {} });
+  const [drinkResponse, setDrinkResponse] = useState({ drinks: [] });
   const [foods, setFoods] = useState([]);
   const [drinks, setDrinks] = useState([]);
-  const [recipeDetail, setRecipeDetail] = useState([]);
+  const [recipeDetail, setRecipeDetail] = useState({});
   const [meals, setMeals] = useState({});
   const [search, setSearch] = useState(false);
   const [foodIngredients, setFoodIngredients] = useState([]);
@@ -20,6 +20,7 @@ function Provider({ children }) {
   const [ingredientFoodSelected, setIngredientFoodSelected] = useState('');
   const [ingredientDrinkSelected, setIngredientDrinkSelected] = useState('');
   const [nationality, setNationality] = useState([]);
+  const [beverage, setBeverage] = useState([]);
 
   const getRecipe = async (type, id) => {
     setLoading(true);
@@ -74,9 +75,10 @@ function Provider({ children }) {
   };
 
   const providerState = {
+    beverage,
     foods,
     drinks,
-    setDrinks,
+    setBeverage,
     setFoods,
     loading,
     setLoading,
@@ -112,6 +114,15 @@ function Provider({ children }) {
   useEffect(() => {
     providerState.loading = loading;
   }, [loading]);
+
+  useEffect(() => {
+    providerState.mealResponse = mealResponse;
+    providerState.drinkResponse = drinkResponse;
+  }, [mealResponse, drinkResponse]);
+
+  useEffect(() => {
+    providerState.search = search;
+  }, [search]);
 
   return (
     <MyContext.Provider value={ providerState }>

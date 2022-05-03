@@ -1,20 +1,15 @@
 import PropTypes from 'prop-types';
-import React, { useContext } from 'react';
+import React from 'react';
 import Header from '../components/Header';
-import SearchBar from '../components/SearchBar';
-import MyContext from '../context/MyContext';
 import Footer from '../components/Footer';
 import { getUser, cleanLocalStorage } from '../services/localStorage';
 
 function Profile(props) {
   const { email } = getUser();
   const { history } = props;
-  const { search } = useContext(MyContext);
-
-  console.log(localStorage);
 
   const redirectToPage = (page) => {
-    if (page === './') cleanLocalStorage();
+    if (page === '/') cleanLocalStorage();
     history.push(`${page}`);
   };
 
@@ -22,7 +17,6 @@ function Profile(props) {
     <section>
       <section>
         <Header />
-        {search && <SearchBar />}
       </section>
       <p data-testid="profile-email">{email}</p>
       <div className="profile-buttons-container">
@@ -43,7 +37,7 @@ function Profile(props) {
         <button
           type="button"
           data-testid="profile-logout-btn"
-          onClick={ () => redirectToPage('./') }
+          onClick={ () => redirectToPage('/') }
         >
           Logout
         </button>
