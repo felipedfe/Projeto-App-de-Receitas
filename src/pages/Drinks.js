@@ -42,7 +42,7 @@ function Drinks(props) {
     if (category === 'All' || category === wordCategory) {
       setChosenDrink(beverage);
     } else {
-      const gettingCategory = await getDrinksByCategory(category.split(' ').join('_'));
+      const gettingCategory = await getDrinksByCategory(category);
       const getCategory = gettingCategory?.drinks.slice(0, NUMBER_CARDS);
       setChosenDrink(getCategory);
     }

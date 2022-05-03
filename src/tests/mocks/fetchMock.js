@@ -47,7 +47,7 @@ const fetchMock2 = (url) => {
     return Promise.resolve({ json: () => Promise.resolve(oneMeal) });
   } if (url === 'https://www.thecocktaildb.com/api/json/v1/1/random.php') {
     return Promise.resolve({ json: () => Promise.resolve(oneDrink) });
-  } if (url === 'https://www.thecocktaildb.com/api/json/v1/1/filter.php?c=Ordinary_Drink') {
+  } if (url === 'https://www.thecocktaildb.com/api/json/v1/1/filter.php?c=Ordinary Drink') {
     return Promise.resolve({ json: () => Promise.resolve(ordinaryDrinks) });
   } if (url === 'https://www.thecocktaildb.com/api/json/v1/1/filter.php?c=Other/Unknown') {
     return Promise.resolve({ json: () => Promise.resolve(otherDrinks) });
