@@ -2,18 +2,27 @@ import React, { useContext, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
-import { loadingDrinks, getDrinksByCategory } from '../services/api';
+import { loadingDrinks,
+  getDrinksByCategory, getDrinkByIngredient } from '../services/api';
 import RecipeCard from '../components/RecipeCard';
 import MyContext from '../context/MyContext';
 import SearchBar from '../components/SearchBar';
 
 function Drinks(props) {
   const { search, getMealsAndDrinks, drinkResponse, setDrinkResponse,
-    beverage, setBeverage } = useContext(MyContext);
+    beverage, setBeverage, drinks, setDrinks, ingredientDrinkSelected } = useContext(MyContext);
   const [chosenDrink, setChosenDrink] = useState([]);
   const [wordCategory, setWordCategory] = useState('');
   const { history } = props;
   const NUMBER_CARDS = 12;
+
+  const exploreDrinksIngredients = async () => {
+    if (ingredientDrinkSelected) {
+      const drink = await getDrinkByIngredient(ingredientDrinkSelected);
+      setChosenDrink(drink.drinks.slice(0, NUMBER_CARDS));
+    }
+  };
+
   const categoryOptions = ['All', 'Ordinary Drink', 'Cocktail',
     'Other/Unknown', 'Cocoa', 'Milk / Float / Shake'];
 
@@ -26,6 +35,7 @@ function Drinks(props) {
       getMealsAndDrinks('meal');
     };
     drinksScreen();
+    exploreDrinksIngredients();
   }, []);
 
   const handleCategory = async (category) => {

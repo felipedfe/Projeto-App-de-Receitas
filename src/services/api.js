@@ -162,3 +162,62 @@ export const getSurpriseDrink = async () => {
     return error;
   }
 };
+
+/* comidas ingredientes aleatorios */
+
+export const aleatoryFoodsIngredients = async () => {
+  try {
+    const response = await fetch('https://www.themealdb.com/api/json/v1/1/list.php?i=list');
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    return error;
+  }
+};
+
+/* drinks ingredientes aleatorios */
+
+export const aleatoryDrinksIngredients = async () => {
+  try {
+    const response = await fetch('https://www.thecocktaildb.com/api/json/v1/1/list.php?i=list');
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    return error;
+  }
+};
+
+/* foods by nationality */
+
+export const getFoodByNationality = async () => {
+  try {
+    const response = await fetch('https://www.themealdb.com/api/json/v1/1/list.php?a=list');
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    return error;
+  }
+};
+
+/* Foods by area */
+export const getFoodsByArea = async (param) => {
+  try {
+    const response = await fetch(`https://www.themealdb.com/api/json/v1/1/filter.php?a=${param}`);
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    return error;
+  }
+};
+
+/* get foods catogories */
+
+export const getCategories = async () => {
+  try {
+    const response = await fetch('www.themealdb.com/api/json/v1/1/categories.php');
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    return error;
+  }
+};

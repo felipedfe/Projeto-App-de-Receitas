@@ -1,7 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import MyContext from '../context/MyContext';
-import { fetchDetails, fetchRecipes } from '../services/api';
+import { fetchDetails,
+  fetchRecipes,
+  aleatoryFoodsIngredients,
+  aleatoryDrinksIngredients, getFoodByNationality } from '../services/api';
 
 function Provider({ children }) {
   const [loading, setLoading] = useState(false);
@@ -12,6 +15,11 @@ function Provider({ children }) {
   const [recipeDetail, setRecipeDetail] = useState({});
   const [meals, setMeals] = useState({});
   const [search, setSearch] = useState(false);
+  const [foodIngredients, setFoodIngredients] = useState([]);
+  const [drinkIngredients, setDrinkIngredients] = useState([]);
+  const [ingredientFoodSelected, setIngredientFoodSelected] = useState('');
+  const [ingredientDrinkSelected, setIngredientDrinkSelected] = useState('');
+  const [nationality, setNationality] = useState([]);
   const [beverage, setBeverage] = useState([]);
 
   const getRecipe = async (type, id) => {
@@ -22,6 +30,36 @@ function Provider({ children }) {
     else key = 'drinks';
     setRecipeDetail(response[key][0]);
   };
+
+  useEffect(() => {
+    const foodNationality = async () => {
+      setLoading(true);
+      const response = await getFoodByNationality();
+      setNationality(response.meals);
+      setLoading(false);
+    };
+    foodNationality();
+  }, []);
+
+  useEffect(() => {
+    const aleatoryFoodsIn = async () => {
+      setLoading(true);
+      const response = await aleatoryFoodsIngredients();
+      setFoodIngredients(response.meals);
+      setLoading(false);
+    };
+    aleatoryFoodsIn();
+  }, []);
+
+  useEffect(() => {
+    const aleatoryDrinkIn = async () => {
+      setLoading(true);
+      const response = await aleatoryDrinksIngredients();
+      setDrinkIngredients(response.drinks);
+      setLoading(false);
+    };
+    aleatoryDrinkIn();
+  }, []);
 
   useEffect(() => {
     setLoading(false);
@@ -55,6 +93,13 @@ function Provider({ children }) {
     getMealsAndDrinks,
     search,
     setSearch,
+    foodIngredients,
+    drinkIngredients,
+    setIngredientFoodSelected,
+    ingredientFoodSelected,
+    ingredientDrinkSelected,
+    setIngredientDrinkSelected,
+    nationality,
   };
 
   useEffect(() => {
