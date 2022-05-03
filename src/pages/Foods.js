@@ -30,14 +30,14 @@ function Foods(props) {
   }, []);
 
   const handleCategory = async (category) => {
-    setWordCategory(category);
-    if (category === 'All') {
+    if (category === 'All' || category === wordCategory) {
       setChosenFood(foods); //
     } else {
       const gettingCategory = await getFoodByCategory(category);
       const getCategory = gettingCategory?.meals.slice(0, NUMBER_CARDS);
       setChosenFood(getCategory);
     }
+    setWordCategory(category);
   };
   const handleClick = (option) => {
     setMealResponse({ meals: [] });

@@ -23,15 +23,8 @@ const Login = ({ history }) => {
   }, [email, password]);
 
   const handleChange = ({ target: { name, value } }) => {
-    switch (name) {
-    case 'email':
-      setEmail(value);
-      break;
-    case 'password':
-      setPassword(value);
-      break;
-    default: return null;
-    }
+    if (name === 'email') setEmail(value);
+    if (name === 'password') setPassword(value);
   };
 
   const handleSubmit = (e) => {

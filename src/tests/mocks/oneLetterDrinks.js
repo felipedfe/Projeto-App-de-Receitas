@@ -213,4 +213,4 @@ const oneLetterDrink = {
   ],
 };
 
-export default oneLetterDrink;
+module.exports = oneLetterDrink;

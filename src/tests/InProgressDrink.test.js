@@ -136,14 +136,10 @@ describe('Tests the Food details page', () => {
   });
   it('verifies if the progress is saved', async () => {
     let render;
-    await act(async () => {
-      render = renderWithRouter(<App />);
-    });
+    await act(async () => { render = renderWithRouter(<App />); });
     await act(async () => goToDrink(render));
     const ingredients = screen.getAllByTestId(/ingredient-step/i);
-    await act(async () => {
-      userEvent.click(ingredients[0]);
-    });
+    await act(async () => { userEvent.click(ingredients[0]); });
     render.history.push(DRINKS_PATH);
     render.history.push(ONE_DRINK_PATH);
     const checkedList = await screen.findAllByRole('checkbox');
@@ -156,12 +152,18 @@ describe('Tests the Food details page', () => {
   });
   it('tests the share button', async () => {
     let render;
-    await act(async () => {
-      render = renderWithRouter(<App />);
+    Object.assign(window.navigator, {
+      clipboard: { writeText: jest.fn()
+        .mockImplementation((text) => Promise.resolve(text)) },
     });
+    await act(async () => { render = renderWithRouter(<App />); });
     await act(async () => goToDrink(render));
     const shareBtn = screen.getByTestId(SHARE_ID);
     expect(shareBtn).toHaveAttribute('src', shareImg);
+    await act(async () => { userEvent.click(shareBtn); });
+    const copiedPath = render.history.location.pathname.split('/in-progress').join('');
+    const url = `http://localhost${copiedPath}`;
+    expect(window.navigator.clipboard.writeText).toHaveBeenCalledWith(url);
   });
   it('tests the like button', async () => {
     let render;

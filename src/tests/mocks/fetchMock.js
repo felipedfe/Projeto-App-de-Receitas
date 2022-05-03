@@ -1,3 +1,10 @@
+const ordinaryDrinks = require('../../../cypress/mocks/ordinaryDrinks');
+const otherDrinks = require('../../../cypress/mocks/otherDrinks');
+const goatMeals = require('../../../cypress/mocks/goatMeals');
+const chickenMeals = require('../../../cypress/mocks/chickenMeals');
+const breakfastMeals = require('../../../cypress/mocks/breakfastMeals');
+const dessertMeals = require('../../../cypress/mocks/dessertMeals');
+const cocktailDrinks = require('../../../cypress/mocks/cocktailDrinks');
 const drinks = require('../../../cypress/mocks/drinks');
 const oneMeal = require('../../../cypress/mocks/oneMeal');
 const oneDrink = require('../../../cypress/mocks/oneDrink');
@@ -5,7 +12,7 @@ const meals = require('../../../cypress/mocks/meals');
 const soupMeals = require('../../../cypress/mocks/soupMeals');
 const beefMeals = require('../../../cypress/mocks/beefMeals');
 const oneLetterMeal = require('./oneLetterFood');
-const oneLetterDrink = require('./oneLetterDrinks');
+const oneLetterDrinks = require('./oneLetterDrinks');
 const ginDrink = require('../../../cypress/mocks/ginDrinks');
 const emptyMeals = require('../../../cypress/mocks/emptyMeals');
 const cocoaDrinks = require('../../../cypress/mocks/cocoaDrinks');
@@ -20,6 +27,24 @@ const fetchMock2 = (url) => {
     return Promise.resolve({ json: () => Promise.resolve(oneMeal) });
   } if (url === 'https://www.thecocktaildb.com/api/json/v1/1/random.php') {
     return Promise.resolve({ json: () => Promise.resolve(oneDrink) });
+  } if (url === 'https://www.thecocktaildb.com/api/json/v1/1/filter.php?c=Ordinary_Drink') {
+    return Promise.resolve({ json: () => Promise.resolve(ordinaryDrinks) });
+  } if (url === 'https://www.thecocktaildb.com/api/json/v1/1/filter.php?c=Other/Unknown') {
+    return Promise.resolve({ json: () => Promise.resolve(otherDrinks) });
+  } if (url === 'https://www.thecocktaildb.com/api/json/v1/1/filter.php?c=Cocktail') {
+    return Promise.resolve({ json: () => Promise.resolve(cocktailDrinks) });
+  } if (url === 'https://www.thecocktaildb.com/api/json/v1/1/filter.php?c=Cocoa') {
+    return Promise.resolve({ json: () => Promise.resolve(cocoaDrinks) });
+  } if (url === 'https://www.themealdb.com/api/json/v1/1/filter.php?c=Beef') {
+    return Promise.resolve({ json: () => Promise.resolve(beefMeals) });
+  } if (url === 'https://www.themealdb.com/api/json/v1/1/filter.php?c=Goat') {
+    return Promise.resolve({ json: () => Promise.resolve(goatMeals) });
+  } if (url === 'https://www.themealdb.com/api/json/v1/1/filter.php?c=Chicken') {
+    return Promise.resolve({ json: () => Promise.resolve(chickenMeals) });
+  } if (url === 'https://www.themealdb.com/api/json/v1/1/filter.php?c=Breakfast') {
+    return Promise.resolve({ json: () => Promise.resolve(breakfastMeals) });
+  } if (url === 'https://www.themealdb.com/api/json/v1/1/filter.php?c=Dessert') {
+    return Promise.resolve({ json: () => Promise.resolve(dessertMeals) });
   }
 };
 
@@ -39,7 +64,7 @@ const fetchMock = (url) => {
   } if (url === 'https://www.thecocktaildb.com/api/json/v1/1/filter.php?i=gin') {
     return Promise.resolve({ json: () => Promise.resolve(ginDrink) });
   } if (url === 'https://www.thecocktaildb.com/api/json/v1/1/search.php?f=a') {
-    return Promise.resolve({ json: () => Promise.resolve(oneLetterDrink) });
+    return Promise.resolve({ json: () => Promise.resolve(oneLetterDrinks) });
   } if (url === 'https://www.themealdb.com/api/json/v1/1/search.php?s=pizzas') {
     return Promise.resolve({ json: () => Promise.resolve(emptyMeals) });
   } if (url === 'https://www.thecocktaildb.com/api/json/v1/1/search.php?s=chocolate') {

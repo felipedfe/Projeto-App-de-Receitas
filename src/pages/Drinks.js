@@ -29,14 +29,14 @@ function Drinks(props) {
   }, []);
 
   const handleCategory = async (category) => {
-    setWordCategory(category);
-    if (category === 'All') {
+    if (category === 'All' || category === wordCategory) {
       setChosenDrink(beverage);
     } else {
-      const gettingCategory = await getDrinksByCategory(category);
+      const gettingCategory = await getDrinksByCategory(category.split(' ').join('_'));
       const getCategory = gettingCategory?.drinks.slice(0, NUMBER_CARDS);
       setChosenDrink(getCategory);
     }
+    setWordCategory(category);
   };
 
   const handleClick = (option) => {

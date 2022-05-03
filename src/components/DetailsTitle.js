@@ -53,7 +53,6 @@ const DetailsTitle = ({ type, id, recipeDetail }) => {
 
   useEffect(() => {
     const favorites = getFavorites() || [];
-
     favorites.forEach((item) => {
       if (item.id === id) setFavorite(true);
     });

@@ -6,7 +6,7 @@ import { fetchDetails, fetchRecipes } from '../services/api';
 function Provider({ children }) {
   const [loading, setLoading] = useState(false);
   const [mealResponse, setMealResponse] = useState({ meals: [] });
-  const [drinkResponse, setDrinkResponse] = useState({ drinks: {} });
+  const [drinkResponse, setDrinkResponse] = useState({ drinks: [] });
   const [foods, setFoods] = useState([]);
   const [drinks, setDrinks] = useState([]);
   const [recipeDetail, setRecipeDetail] = useState({});
