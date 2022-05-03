@@ -34,10 +34,8 @@ function FavoriteCard(props) {
   };
 
   const handleShareBtnClick = () => {
-    const COPIED_MSG_TIME = 1500;
     copyLink();
     setCopiedMessage(true);
-    setTimeout(() => setCopiedMessage(false), COPIED_MSG_TIME);
   };
 
   return (

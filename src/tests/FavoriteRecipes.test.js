@@ -1,4 +1,5 @@
 import React from 'react';
+import { act } from 'react-dom/test-utils';
 import { screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import renderWithRouter from './helpers/renderWithRouter';
@@ -59,18 +60,27 @@ describe('test the Favorite Recipes page', () => {
     const drinkCard = screen.getByTestId(FOOD_DRINK_IMG_ID);
     expect(drinkCard).toBeInTheDocument();
   });
-  // it('shows a "Link copied!" message when the share button is pressed', async () => {
-  //   const { history } = renderWithRouter(<App />);
-  //   global.navigator.clipboard = 'fsdfsdfsdf';
-  //   addFavorite(oneDrink.drinks[0]);
-  //   history.push(FAVORITE_RECIPES_URL);
+  it('copies the URL link when the share button is pressed', async () => {
+    const { history } = renderWithRouter(<App />);
+    // Função retirada de: https://stackoverflow.com/questions/62351935/how-to-mock-navigator-clipboard-writetext-in-jest
+    Object.assign(window.navigator, {
+      clipboard: {
+        writeText: jest.fn().mockImplementation(() => Promise.resolve()),
+      },
+    });
+    mockFoodsRecipe(oneMeal.meals[0]);
+    const favorite = getFavorites();
+    const { id, type } = favorite[0];
+    const URLlink = `${type}s/${id}`;
 
-  //   const shareBtn = screen.getByTestId('0-horizontal-share-btn');
-  //   expect(shareBtn).toBeInTheDocument();
-  //   userEvent.click(shareBtn);
-  //   const copiedMessage = screen.getByText(/copied/i);
-  //   expect(copiedMessage).toBeInTheDocument();
-  // });
+    history.push(FAVORITE_RECIPES_URL);
+
+    const shareBtn = screen.getByTestId('0-horizontal-share-btn');
+    expect(shareBtn).toBeInTheDocument();
+    await act(async () => userEvent.click(shareBtn));
+    expect(window.navigator.clipboard.writeText)
+      .toHaveBeenCalledWith(`http://localhost:3000/${URLlink}`);
+  });
   it('removes recipe from the favorites list when heart button is pressed', async () => {
     const { history } = renderWithRouter(<App />);
     addFavorite(oneDrink.drinks[0]);
