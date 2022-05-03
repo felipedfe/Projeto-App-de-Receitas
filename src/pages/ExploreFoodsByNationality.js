@@ -50,8 +50,10 @@ function ExploreFoodsByNationality() {
   return (
     <section>
       <section>
-        <Header />
-        {search && <SearchBar />}
+        <section>
+          <Header />
+          {search && <SearchBar />}
+        </section>
         <select
           data-testid="explore-by-nationality-dropdown"
           onChange={ (event) => onChange(event) }
