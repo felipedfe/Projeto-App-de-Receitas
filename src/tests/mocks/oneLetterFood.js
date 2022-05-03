@@ -133,4 +133,4 @@ const oneLetterMeal = {
   ],
 };
 
-export default oneLetterMeal;
+module.exports = oneLetterMeal;

@@ -38,69 +38,52 @@ describe('Test the Profile Page', () => {
   });
   it('checks if the user\'s email appears on the screen', async () => {
     let render;
-    await act(async () => {
-      render = renderWithRouter(<App />);
-    });
+    await act(async () => { render = renderWithRouter(<App />); });
     await goToProfilePage(render);
     const email = screen.getByTestId(PROFILE_EMAIL_ID);
     expect(email).toBeInTheDocument();
   });
   it('checks if button "Done Recipes" appears on the screen', async () => {
     let render;
-    await act(async () => {
-      render = renderWithRouter(<App />);
-    });
+    await act(async () => { render = renderWithRouter(<App />); });
     await goToProfilePage(render);
     const doneRecipesBtn = screen.getByTestId(PROFILE_DONE_BTN_ID);
     expect(doneRecipesBtn).toBeInTheDocument();
   });
   it('checks if button "Favorite Recipes" appears on the screen', async () => {
     let render;
-    await act(async () => {
-      render = renderWithRouter(<App />);
-    });
+    await act(async () => { render = renderWithRouter(<App />); });
     await goToProfilePage(render);
     const favoriteRecipesBtn = screen.getByTestId(PROFILE_FAVORITE_BTN_ID);
     expect(favoriteRecipesBtn).toBeInTheDocument();
   });
   it('checks if button "Favorite Recipes" appears on the screen', async () => {
     let render;
-    await act(async () => {
-      render = renderWithRouter(<App />);
-    });
+    await act(async () => { render = renderWithRouter(<App />); });
     await goToProfilePage(render);
     const logoutBtn = screen.getByTestId(PROFILE_LOGOUT_BTN_ID);
     expect(logoutBtn).toBeInTheDocument();
   });
   it('checks if the page is redirected to the Done Recipes page', async () => {
     let render;
-    await act(async () => {
-      render = renderWithRouter(<App />);
-    });
+    await act(async () => { render = renderWithRouter(<App />); });
     await goToProfilePage(render);
-    console.log(render);
     const logoutBtn = screen.getByTestId(PROFILE_DONE_BTN_ID);
     userEvent.click(logoutBtn);
     expect(render.history.location.pathname).toBe('/done-recipes');
   });
   it('checks if the page is redirected to the Favorite Recipes page', async () => {
     let render;
-    await act(async () => {
-      render = renderWithRouter(<App />);
-    });
+    await act(async () => { render = renderWithRouter(<App />); });
     await goToProfilePage(render);
-    console.log(render);
     const logoutBtn = screen.getByTestId(PROFILE_FAVORITE_BTN_ID);
     userEvent.click(logoutBtn);
     expect(render.history.location.pathname).toBe('/favorite-recipes');
   });
   it('checks if the page is redirected to the Home page', async () => {
     let render;
-    await act(async () => {
-      render = renderWithRouter(<App />);
-    });
+    await act(async () => { render = renderWithRouter(<App />); });
     await goToProfilePage(render);
-    console.log(render);
     const logoutBtn = screen.getByTestId(PROFILE_LOGOUT_BTN_ID);
     userEvent.click(logoutBtn);
     expect(render.history.location.pathname).toBe('/');

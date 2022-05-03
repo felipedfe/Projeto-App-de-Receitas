@@ -22,49 +22,34 @@ const CHICKEN_ID = 'Chicken-category-filter';
 const ALL_ID = 'All-category-filter';
 
 const category = async () => {
-  CATEGORYOPTIONFOODS.forEach((categoryy) => {
-    const getCategory = screen.getByTestId(`${categoryy}-category-filter`);
+  CATEGORYOPTIONFOODS.forEach((cat) => {
+    const getCategory = screen.queryByTestId(`${cat}-category-filter`);
     expect(getCategory).toBeInTheDocument();
+    expect(getCategory).toHaveTextContent(cat);
   });
 };
 
-const fetchResolveGoat = () => {
-  window.fetch = jest.fn().mockImplementation(() => Promise.resolve({
-    json: () => Promise.resolve(goatMeals),
-  }));
-};
-
-const fetchResolveBeef = () => {
-  window.fetch = jest.fn().mockImplementation(() => Promise.resolve({
-    json: () => Promise.resolve(beefMeals),
-  }));
-};
-
-const getFirstTwelve = async (response) => {
+const getFirstTwelve = (response) => {
+  const gettingTwelve = screen.getAllByTestId(/recipe-card/i);
+  expect(gettingTwelve.length).toBeLessThanOrEqual(MAX_LENGTH_NUMBER);
   response.forEach((item, index) => {
-    const gettingTwelve = screen.getByTestId(`${index}-recipe-card`);
-    expect(gettingTwelve).toBeInTheDocument();
     const getTitle = screen.getByTestId(`${index}-card-name`);
     const getImage = screen.getByTestId(`${index}-card-img`);
     expect(getTitle).toHaveTextContent(item.strMeal);
     expect(getImage).toHaveAttribute('src', item.strMealThumb);
   });
 };
-afterEach(() => {
-  jest.fn().mockClear();
-});
-// beforeEach(() => {
-//   window.fetch = jest.fn().mockImplementation(fetchMock);
-// });
+afterEach(() => jest.fn().mockClear());
+
+beforeEach(() => { window.fetch = jest.fn(fetchMock); });
+
 describe('Test the Foods Pages', () => {
   it('checks if there is 12 cards from the first 12 Foods recipes', async () => {
-    window.fetch = jest.fn().mockImplementation(fetchMock);
     let render;
     await act(async () => {
       render = renderWithRouter(<App />);
+      render.history.push('/foods');
     });
-
-    await act(async () => render.history.push('/foods'));
     const gettingMeal = meals.meals.slice(0, MAX_LENGTH_NUMBER);
     getFirstTwelve(gettingMeal);
     expect(window.fetch).toHaveBeenCalled();
@@ -74,150 +59,110 @@ describe('Test the Foods Pages', () => {
 });
 describe('Check the category buttons on Foods Pages ', () => {
   it('checks if there is 5 buttons with the 5 first categories from food', async () => {
-    window.fetch = jest.fn().mockImplementation(fetchMock);
     let render;
     await act(async () => {
       render = renderWithRouter(<App />);
+      render.history.push('/foods');
     });
-    await act(async () => render.history.push('/foods'));
     category();
   });
 });
 
 describe('Check the category filter ', () => {
   it('checks if the user clicks on Beef btn it shows the first 12 Beefs re', async () => {
-    fetchResolveBeef();
-    let render;
     await act(async () => {
-      render = renderWithRouter(<App />);
+      const { history } = renderWithRouter(<App />);
+      history.push('/foods');
     });
-    await act(async () => {
-      render.history.push('/foods');
-    });
-
     const beefBtn = screen.getByTestId(BEEF_ID);
-    await act(async () => {
-      userEvent.click(beefBtn);
-    });
+    await act(async () => { userEvent.click(beefBtn); });
+    expect(window.fetch).toHaveBeenCalled();
     const gettingMeal = beefMeals.meals.slice(0, MAX_LENGTH_NUMBER);
     getFirstTwelve(gettingMeal);
   });
 
   it('checks if the user clicks on Breakfast btn it shows the first 12 rec', async () => {
-    window.fetch = jest.fn().mockImplementation(() => Promise.resolve({
-      json: () => Promise.resolve(breakfastMeals),
-    }));
     let render;
     await act(async () => {
       render = renderWithRouter(<App />);
-    });
-    await act(async () => {
       render.history.push('/foods');
     });
 
     const breakfastBtn = screen.getByTestId(BREAKFAST_ID);
-    await act(async () => {
-      userEvent.click(breakfastBtn);
-    });
+    await act(async () => { userEvent.click(breakfastBtn); });
     const gettingMeal = breakfastMeals.meals.slice(0, MAX_LENGTH_NUMBER);
     getFirstTwelve(gettingMeal);
   });
   it('checks if the user clicks on Chicken btn shows the first 12 Chicken', async () => {
-    window.fetch = jest.fn().mockImplementation(() => Promise.resolve({
-      json: () => Promise.resolve(chickenMeals),
-    }));
     let render;
     await act(async () => {
       render = renderWithRouter(<App />);
+      render.history.push('/foods');
     });
-    await act(async () => render.history.push('/foods'));
 
     const chickenBtn = screen.getByTestId(CHICKEN_ID);
-    await act(async () => {
-      userEvent.click(chickenBtn);
-    });
+    await act(async () => { userEvent.click(chickenBtn); });
     const gettingMeal = chickenMeals.meals.slice(0, MAX_LENGTH_NUMBER);
     getFirstTwelve(gettingMeal);
   });
 
   it('checks if there is a toggle on category btns n return without filter', async () => {
-    fetchResolveGoat();
     let render;
     await act(async () => {
       render = renderWithRouter(<App />);
+      render.history.push('/foods');
     });
-    await act(async () => render.history.push('/foods'));
     const goatBtn = screen.getByTestId(GOAT_ID);
-    await act(async () => {
-      userEvent.click(goatBtn);
-    });
+    await act(async () => { userEvent.click(goatBtn); });
     const gettingMeal = goatMeals.meals.slice(0, MAX_LENGTH_NUMBER);
     getFirstTwelve(gettingMeal);
-
-    fetchResolve();
-    await act(async () => {
-      userEvent.click(goatBtn);
-    });
+    await act(async () => { userEvent.click(goatBtn); });
     const gettingMeals = meals.meals.slice(0, MAX_LENGTH_NUMBER);
     getFirstTwelve(gettingMeals);
   });
   it('checks if one food category filter is selected one at a time ', async () => {
-    fetchResolveGoat();
     let render;
     await act(async () => {
       render = renderWithRouter(<App />);
+      render.history.push('/foods');
     });
-    await act(async () => render.history.push('/foods'));
     const goatBtn = screen.getByTestId(GOAT_ID);
     expect(goatBtn).toBeInTheDocument();
-    await act(async () => {
-      userEvent.click(goatBtn);
-    });
+    await act(async () => { userEvent.click(goatBtn); });
     const gettingMeal = goatMeals.meals.slice(0, MAX_LENGTH_NUMBER);
     getFirstTwelve(gettingMeal);
 
     const beefBtn = screen.getByTestId(BEEF_ID);
-    await act(async () => {
-      userEvent.click(beefBtn);
+    await act(async () => { userEvent.click(beefBtn); });
+    gettingMeal.forEach((item) => {
+      expect(screen.queryByText(item.strMeal)).not.toBeInTheDocument();
     });
-    fetchResolveBeef();
-    const gettingMeals = beefMeals.meals.slice(0, MAX_LENGTH_NUMBER);
-    getFirstTwelve(gettingMeals);
   });
 
   it('checks if there is a btn that filter All categories', async () => {
-    window.fetch = jest.fn().mockImplementation(fetchMock);
     let render;
     await act(async () => {
       render = renderWithRouter(<App />);
-    });
-    await act(async () => {
       render.history.push('/foods');
     });
     const allBtn = screen.getByTestId(ALL_ID);
-    await act(async () => {
-      userEvent.click(allBtn);
-    });
+    await act(async () => { userEvent.click(allBtn); });
     const gettingMeal = meals.meals.slice(0, MAX_LENGTH_NUMBER);
     getFirstTwelve(gettingMeal);
   });
 
   it('checks if redirect to details recipes Pag by clicking on the card', async () => {
-    window.fetch = jest.fn().mockImplementation(fetchMock);
     let render;
     await act(async () => {
       render = renderWithRouter(<App />);
-    });
-    await act(async () => {
       render.history.push('/foods');
     });
     const gettingMeal = meals.meals.slice(0, MAX_LENGTH_NUMBER);
     getFirstTwelve(gettingMeal);
     const getMealId = gettingMeal[0].idMeal;
     expect(getMealId).toBe(ONE_FOOD_CLICK);
-    await act(async () => {
-      userEvent.click(getMealId);
-    });
+    const card = screen.getByTestId('0-recipe-card');
+    await act(async () => { userEvent.click(card); });
     expect(render.history.location.pathname).toBe(`/foods/${getMealId}`);
   });
 });

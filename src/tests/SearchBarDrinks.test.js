@@ -71,8 +71,7 @@ describe('Test the Search Bar component for drinks page', () => {
   it('tests the response when drink first-letter is selected', async () => {
     const history = createMemoryHistory();
     await renderWithAct(history);
-    history.push('/drinks');
-    openSearchBar();
+    await act(async () => { openSearchBar(); });
     const searchBarInput = screen.getByTestId(SEARCH_INPUT_ID);
     const firstLetter = screen.getByTestId(FIRST_LETTER_ID);
     const searchBtn = screen.getByTestId(SEARCH_RECIPES_BTN_ID);

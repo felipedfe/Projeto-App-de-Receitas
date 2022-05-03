@@ -156,12 +156,15 @@ describe('Tests the Food details page', () => {
   });
   it('tests the share button', async () => {
     let render;
-    await act(async () => {
-      render = renderWithRouter(<App />);
+    Object.assign(window.navigator, {
+      clipboard: { writeText: jest.fn().mockImplementation(() => Promise.resolve()) },
     });
+    await act(async () => { render = renderWithRouter(<App />); });
     await act(async () => gotToFood(render));
     const shareBtn = screen.getByTestId(SHARE_ID);
     expect(shareBtn).toHaveAttribute('src', shareImg);
+    await act(async () => { userEvent.click(shareBtn); });
+    expect(window.navigator.clipboard.writeText).toHaveBeenCalled();
   });
   it('tests the like button', async () => {
     let render;

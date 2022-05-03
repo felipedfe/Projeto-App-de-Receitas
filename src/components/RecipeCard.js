@@ -4,8 +4,7 @@ import '../style/recipeCards.css';
 
 function RecipeCard({ recipeType, recipe, index }) {
   const returnNameAndImage = () => {
-    switch (recipeType) {
-    case 'meal':
+    if (recipeType === 'meal') {
       return (
         <>
           <img
@@ -16,7 +15,7 @@ function RecipeCard({ recipeType, recipe, index }) {
           <p data-testid={ `${index}-card-name` }>{recipe.strMeal}</p>
         </>
       );
-    case 'drink':
+    } if (recipeType === 'drink') {
       return (
         <>
           <img
@@ -27,8 +26,6 @@ function RecipeCard({ recipeType, recipe, index }) {
           <p data-testid={ `${index}-card-name` }>{recipe.strDrink}</p>
         </>
       );
-    default:
-      return null;
     }
   };
 
