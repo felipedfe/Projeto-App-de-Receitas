@@ -64,15 +64,16 @@ function ProgressDrink() {
   return (
     renderIngredient && renderIngredient.length > 0 ? (
       !loading && (
-        <section>
+        <section className="progress-sect">
           <DetailsTitle type="drink" id={ id } recipeDetail={ recipeDetail } />
+          <h2 className="progress-subtitle">Ingredients</h2>
           <section className="ing-checkbox-sect">
             {renderIngredient
               .map(({ measure, ingredient, check = false }, index) => (
                 <label
                   key={ index }
                   htmlFor={ `${index}-ingredient` }
-                  className={ check ? 'checked' : '' }
+                  className={ check ? 'ing-label checked' : 'ing-label' }
                   data-testid={ `${index}-ingredient-step` }
                 >
                   <input
@@ -86,9 +87,12 @@ function ProgressDrink() {
                 </label>
               ))}
           </section>
-          <h2>Instructions</h2>
-          <p data-testid="instructions">{recipeDetail.strInstructions}</p>
+          <h2 className="progress-subtitle">Instructions</h2>
+          <p data-testid="instructions" className="instructions">
+            {recipeDetail.strInstructions}
+          </p>
           <button
+            className="progress-btn"
             type="button"
             data-testid="finish-recipe-btn"
             disabled={ !renderIngredient.every(({ check }) => check) }
@@ -99,9 +103,9 @@ function ProgressDrink() {
         </section>
       )
     ) : (
-      <section>
+      <section className="progress-sect">
         <p>Recipe not in progress</p>
-        <Link to="/done-recipes">Done recipes</Link>
+        <Link className="link" to="/done-recipes">Done recipes</Link>
       </section>
     )
   );

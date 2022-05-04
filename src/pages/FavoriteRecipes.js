@@ -30,9 +30,20 @@ function FavoriteRecipes() {
 
   return (
     <section>
-      <Header />
-      <div className="filters-container">
+      <section className="header-sect">
+        <Header />
+      </section>
+      <div className="cat-search-sect">
         <button
+          className="cat-btn"
+          data-testid="filter-by-all-btn"
+          type="button"
+          onClick={ () => filterRecipes() }
+        >
+          All
+        </button>
+        <button
+          className="cat-btn"
           data-testid="filter-by-food-btn"
           type="button"
           onClick={ () => filterRecipes('drink') }
@@ -40,21 +51,17 @@ function FavoriteRecipes() {
           Foods
         </button>
         <button
+          className="cat-btn"
           data-testid="filter-by-drink-btn"
           type="button"
           onClick={ () => filterRecipes('food') }
         >
           Drinks
         </button>
-        <button
-          data-testid="filter-by-all-btn"
-          type="button"
-          onClick={ () => filterRecipes() }
-        >
-          All
-        </button>
       </div>
-      {renderRecipes()}
+      <section className="done-cards-sect">
+        {renderRecipes()}
+      </section>
     </section>
   );
 }

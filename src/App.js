@@ -23,7 +23,7 @@ import NotFound from './pages/NotFound';
 function App() {
   return (
     <Provider>
-      <div className="main-sect">
+      <section className="main-sect">
         <Switch>
           <Route exact path="/" component={ Login } />
           <Route path="/explore/drinks/nationalities" component={ NotFound } />
@@ -55,7 +55,7 @@ function App() {
           <Route path="/done-recipes" component={ DoneRecipes } />
           <Route path="/favorite-recipes" component={ FavoriteRecipes } />
         </Switch>
-      </div>
+      </section>
     </Provider>
   );
 }

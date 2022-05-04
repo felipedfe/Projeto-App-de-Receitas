@@ -1,7 +1,11 @@
 .main-footer {
+  background-color: var(--main-color-darker);
   bottom: 0;
+  box-shadow: 0 0 8px var(--secondary-color-lighter);
   display: flex;
+  height: 60px;
   justify-content: space-between;
+  padding: 8px;
   position: fixed;
   width: 100vw;
 }

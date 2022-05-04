@@ -1,4 +1,6 @@
 import React, { useContext, useState } from 'react';
+import { AiOutlineUser } from 'react-icons/ai';
+import { BsSearch } from 'react-icons/bs';
 import { useLocation, Redirect } from 'react-router-dom';
 import MyContext from '../context/MyContext';
 import profileIcon from '../images/profileIcon.svg';
@@ -55,7 +57,7 @@ function Header() {
   }
 
   return (
-    <section className="header-sect">
+    <section className="header">
       <button
         type="button"
         data-testid="profile-top-btn"
@@ -63,10 +65,12 @@ function Header() {
         onClick={ () => setAvailable(true) }
       >
         {available && <Redirect to="/profile" />}
-        <img src={ profileIcon } alt="Profile" />
+        <AiOutlineUser className="react-icon" />
       </button>
 
-      <p data-testid="page-title">{ routeName }</p>
+      <h1 className="page-title" data-testid="page-title">
+        { routeName }
+      </h1>
 
       {arrayRoute.includes(pathRoute) && (
         <button
@@ -75,7 +79,7 @@ function Header() {
           data-testid="search-top-btn"
           onClick={ () => setSearch(!search) }
         >
-          <img src={ searchIcon } alt="Search" />
+          <BsSearch className="react-icon" />
         </button>
       )}
     </section>

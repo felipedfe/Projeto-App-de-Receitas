@@ -6,6 +6,7 @@ import MyContext from '../context/MyContext';
 import Footer from '../components/Footer';
 import { loadingFoods, getFoodByCategory, getMealByIngredient } from '../services/api';
 import RecipeCard from '../components/RecipeCard';
+import '../style/MainPage.css';
 
 function Foods(props) {
   const { search, getMealsAndDrinks, foods, setFoods, ingredientFoodSelected,
@@ -63,65 +64,67 @@ function Foods(props) {
 
   return (
     <section>
-      <section>
+      <section className="header-sect">
         <Header />
-        {search && <SearchBar />}
-      </section>
-      <section>
-        { categoryOptions.map((option) => (
-          <div key={ option }>
-            <button
-              type="button"
-              data-testid={ `${option}-category-filter` }
-              onClick={ () => handleClick(option) }
-            >
-              { option }
-            </button>
-          </div>
-        ))}
+        <section className="cat-search-sect">
+          {search ? <SearchBar /> : (
+            categoryOptions.map((option) => (
+              <button
+                className="cat-btn"
+                key={ option }
+                type="button"
+                data-testid={ `${option}-category-filter` }
+                onClick={ () => handleClick(option) }
+              >
+                {option}
+              </button>
+            )))}
+        </section>
       </section>
 
-      {!mealResponse.meals.length && (
-        <section className="recipe-card-container">
-          {chosenFood?.map((food, index) => (
-            <button
-              className="recipe-card-btn"
-              key={ food.idMeal }
-              type="button"
-              onClick={ () => changePage(food.idMeal) }
-            >
-              <RecipeCard
-                recipeType="meal"
-                recipe={ food }
-                index={ index }
-              />
-            </button>
-          ))}
-        </section>
-      )}
+      <section className="content-sect">
+        {!mealResponse.meals.length && (
+          <section className="recipe-card-container">
+            {chosenFood?.map((food, index) => (
+              <button
+                className="recipe-card-btn"
+                key={ food.idMeal }
+                type="button"
+                onClick={ () => changePage(food.idMeal) }
+              >
+                <RecipeCard
+                  recipeType="meal"
+                  recipe={ food }
+                  index={ index }
+                />
+              </button>
+            ))}
+          </section>
+        )}
 
-      {mealResponse.meals.length > 1 && (
-        <section className="recipe-card-container">
-          {mealResponse.meals.map((food, index) => {
-            if (index < NUMBER_CARDS) {
-              return (
-                <button
-                  className="recipe-card-btn"
-                  key={ food.idMeal }
-                  type="button"
-                  onClick={ () => changePage(food.idMeal) }
-                >
-                  <RecipeCard
-                    recipeType="meal"
-                    recipe={ food }
-                    index={ index }
-                  />
-                </button>
-              );
-            } return null;
-          })}
-        </section>
-      )}
+        {mealResponse.meals.length > 1 && (
+          <section className="recipe-card-container">
+            {mealResponse.meals.map((food, index) => {
+              if (index < NUMBER_CARDS) {
+                return (
+                  <button
+                    className="recipe-card-btn"
+                    key={ food.idMeal }
+                    type="button"
+                    onClick={ () => changePage(food.idMeal) }
+                  >
+                    <RecipeCard
+                      recipeType="meal"
+                      recipe={ food }
+                      index={ index }
+                    />
+                  </button>
+                );
+              } return null;
+            })}
+          </section>
+        )}
+      </section>
 
       <Footer />
     </section>

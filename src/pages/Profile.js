@@ -15,33 +15,38 @@ function Profile(props) {
 
   return (
     <section>
-      <section>
+      <section className="header-sect">
         <Header />
       </section>
-      <p data-testid="profile-email">{email}</p>
-      <div className="profile-buttons-container">
-        <button
-          type="button"
-          data-testid="profile-done-btn"
-          onClick={ () => redirectToPage('/done-recipes') }
-        >
-          Done Recipes
-        </button>
-        <button
-          type="button"
-          data-testid="profile-favorite-btn"
-          onClick={ () => redirectToPage('/favorite-recipes') }
-        >
-          Favorite Recipes
-        </button>
-        <button
-          type="button"
-          data-testid="profile-logout-btn"
-          onClick={ () => redirectToPage('/') }
-        >
-          Logout
-        </button>
-      </div>
+      <section className="profile-sect">
+        <h2 data-testid="profile-email" className="profile-subtitle">{email}</h2>
+        <section className="profile-buttons-container">
+          <button
+            className="explore-btn"
+            type="button"
+            data-testid="profile-done-btn"
+            onClick={ () => redirectToPage('/done-recipes') }
+          >
+            Done Recipes
+          </button>
+          <button
+            className="explore-btn"
+            type="button"
+            data-testid="profile-favorite-btn"
+            onClick={ () => redirectToPage('/favorite-recipes') }
+          >
+            Favorite Recipes
+          </button>
+          <button
+            className="explore-btn"
+            type="button"
+            data-testid="profile-logout-btn"
+            onClick={ () => redirectToPage('/') }
+          >
+            Logout
+          </button>
+        </section>
+      </section>
       <Footer />
     </section>
   );

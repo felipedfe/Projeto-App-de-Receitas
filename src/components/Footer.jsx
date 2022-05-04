@@ -1,4 +1,6 @@
 import React from 'react';
+import { GiMartini, GiKnifeFork } from 'react-icons/gi';
+import { ImCompass2 } from 'react-icons/im';
 import '../style/footer.css';
 import { useHistory } from 'react-router-dom';
 import drinkIcon from '../images/drinkIcon.svg';
@@ -28,7 +30,7 @@ function Footer() {
         onClick={ actionButtonDrink }
         src={ drinkIcon }
       >
-        <img src={ drinkIcon } alt="Drink icon" />
+        <GiMartini className="react-icon" />
       </button>
 
       <button
@@ -37,7 +39,7 @@ function Footer() {
         onClick={ actionButtonExplore }
         src={ exploreIcon }
       >
-        <img src={ exploreIcon } alt="Explore icon" />
+        <ImCompass2 className="react-icon" />
       </button>
 
       <button
@@ -46,7 +48,7 @@ function Footer() {
         onClick={ actionButtonFoods }
         src={ mealIcon }
       >
-        <img src={ mealIcon } alt="Meal icon" />
+        <GiKnifeFork className="react-icon" />
       </button>
 
     </footer>

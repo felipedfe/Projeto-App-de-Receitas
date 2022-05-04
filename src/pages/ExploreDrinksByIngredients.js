@@ -10,7 +10,7 @@ function ExploreDrinksByIngredients() {
   const INGREDIENTS_LENGTH = 12;
   const history = useHistory();
 
-  const filteringArray = drinkIngredients.slice(0, INGREDIENTS_LENGTH);
+  const filteringArray = drinkIngredients?.slice(0, INGREDIENTS_LENGTH);
 
   const handleClick = (name) => {
     setIngredientDrinkSelected(name);
@@ -18,26 +18,30 @@ function ExploreDrinksByIngredients() {
   };
   return (
     <section>
-      <section>
-        <section>
-          <Header />
-          {search && <SearchBar />}
-        </section>
+      <section className="header-sect">
+        <Header />
+        {search && <SearchBar />}
+      </section>
+      <section className="recipe-card-container food-content-sect">
         {filteringArray.map((each, index) => (
           <button
+            className="recipe-card-btn"
             type="button"
             data-testid={ `${index}-ingredient-card` }
             key={ index }
             onClick={ () => handleClick(each.strIngredient1) }
           >
-            <p data-testid={ `${index}-card-name` }>{each.strIngredient1}</p>
-            <img
-              data-testid={ `${index}-card-img` }
-              src={
-                `https://www.thecocktaildb.com/images/ingredients/${each.strIngredient1}-Small.png`
-              }
-              alt={ index }
-            />
+            <section className="recipe-card">
+              <img
+                className="recipe-card-img"
+                data-testid={ `${index}-card-img` }
+                src={
+                  `https://www.thecocktaildb.com/images/ingredients/${each.strIngredient1}-Small.png`
+                }
+                alt={ each.strIngredient1 }
+              />
+              <p data-testid={ `${index}-card-name` }>{each.strIngredient1}</p>
+            </section>
           </button>
         ))}
       </section>

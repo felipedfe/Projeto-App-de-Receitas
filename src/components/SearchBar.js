@@ -9,6 +9,7 @@ import { getMealByName,
   getDrinkByIngredient,
   getDrinkByFirstLetter,
 } from '../services/api';
+import '../style/SearchBar.css';
 
 function SearchBar() {
   const { mealResponse,
@@ -74,10 +75,11 @@ function SearchBar() {
 
   return (
     <div className="search-container">
-      <span>SearchBar: </span>
       <input
+        className="search-input"
         type="text"
         data-testid="search-input"
+        placeholder="Search by"
         onChange={ ({ target }) => setSearchInput(target.value) }
       />
 

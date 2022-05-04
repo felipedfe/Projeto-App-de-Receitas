@@ -1,98 +1,53 @@
+:root {
+
+  --main-color: #edd9a3;
+
+  --main-color-darker: #ff9c38;
+
+  --secondary-color: #540303;
+
+  --secondary-color-lighter: #ad564b;
+
+  --accent: #322e4e;
+}
+
 * {
   box-sizing: border-box;
+  color: var(--secondary-color);
   margin: 0;
   padding: 0;
 }
 
-.favorite-card-container {
-  border: solid lightgray 2px;
-  border-radius: 10px;
-  display: block;
-  margin-bottom: 30px;
-  width: 70%;
+::selection {
+  background-color: var(--accent);
+  color: var(--main-color);
 }
 
-.favorite-card-btn {
-  background: none;
-  border: none;
-  margin: 0;
-  padding: 0;
-  width: 50px;
-}
-
-.card-image {
-  width: 150px;
+body {
+  background-color: var(--main-color);
+  color: var(--secondary-color);
 }
 
 .main-sect {
+  align-items: center;
+  background-color: var(--main-color);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 100vh;
   width: 100vw;
 }
 
-.meals {
-  align-items: center;
-  background: #0fa36b;
-  color: #464646;
-  display: flex;
-  flex-direction: column;
-  font-family: sans-serif;
-  height: 100vh;
-  justify-content: center;
-  width: 100%;
+.header-sect {
+  margin-bottom: 12px;
+  width: 100vw;
 }
 
-.rocksGlass {
-  animation: shake 1s infinite ease;
-  max-height: 80vh;
+.content-sect {
+  margin-bottom: 80px;
 }
 
-/*
-#iceLeft {
-  animation: clink .8s infinite ease;
-  opacity: 0.6;
-  transform-origin: 36px 66px;
-}
-
-#iceRight {
-  animation: clink .8s .2s infinite ease;
-  opacity: 0.6;
-  transform-origin: 60px 78px;
-}
-*/
-
-.meals > .logo {
-  animation: shake 1.5s infinite ease;
-  color: aliceblue;
-  font-family: Montserrat , sans-serif;
-  font-size: 3em;
-  font-weight: 900;
-}
-
-@keyframes shake {
-
-  0% {
-    transform: rotate(5deg);
-  }
-
-  50% {
-    transform: rotate(-5deg);
-  }
-
-  100% {
-    transform: rotate(5deg);
-  }
-}
-
-@keyframes clink {
-
-  0% {
-    transform: rotate(-10deg);
-  }
-
-  50% {
-    transform: rotate(20deg);
-  }
-
-  100% {
-    transform: rotate(-10deg);
-  }
+.react-icon {
+  color: var(--secondary-color);
+  font-size: 1.8rem;
 }

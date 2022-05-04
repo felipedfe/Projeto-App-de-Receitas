@@ -1,0 +1,94 @@
+.done-cards-sect {
+  margin: auto;
+  max-width: 500px;
+  width: 90vw;
+}
+
+.favorite-card {
+  position: relative;
+}
+
+.favorite-card-container {
+  align-items: center;
+  background-color: var(--main-color-darker);
+  border-radius: 8px;
+  color: var(--secondary-color);
+  display: flex;
+  margin: 16px auto;
+  overflow: hidden;
+  text-decoration: none;
+  width: 100%;
+}
+
+.card-image {
+  border-radius: 8px;
+  width: 50%;
+}
+
+.done-card-text {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  justify-content: space-between;
+  margin-left: 8px;
+  text-align: center;
+  width: 45%;
+}
+
+.done-card-text h3 {
+  font-size: 1.1rem;
+  margin-bottom: 6px;
+}
+
+.tags-sect {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin: 8px 0;
+  width: 100%;
+}
+
+.tag {
+  background-color: var(--secondary-color-lighter);
+  border-radius: 15px;
+  color: var(--main-color);
+  font-size: 0.9rem;
+  margin: 4px;
+  padding: 4px;
+}
+
+.done-card-btn {
+  align-self: flex-end;
+  background: none;
+  border: none;
+  bottom: 4px;
+  color: var(--secondary-color);
+  font-size: 1.2rem;
+  justify-self: flex-end;
+  position: absolute;
+  right: 0;
+  width: 50px;
+}
+
+.favorite-card-btn {
+  align-self: flex-end;
+  background: none;
+  border: none;
+  color: var(--secondary-color);
+  font-size: 1.2rem;
+  justify-self: flex-end;
+  width: 50px;
+}
+
+.favorite-card-btn p {
+  font-size: 0.7rem;
+  width: 100px;
+}
+
+.fave-share-sect {
+  bottom: 4px;
+  margin-top: 16px;
+  position: absolute;
+  right: 0;
+}

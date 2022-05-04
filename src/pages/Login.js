@@ -2,6 +2,8 @@ import React, { useContext, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { addCocktailToken, addMealToken, addUser } from '../services/localStorage';
 import MyContext from '../context/MyContext';
+import logo from '../images/undraw_cooking_lyxy.svg';
+import '../style/Login.css';
 
 const Login = ({ history }) => {
   const [email, setEmail] = useState('');
@@ -36,32 +38,39 @@ const Login = ({ history }) => {
   };
 
   return (
-    <form onSubmit={ handleSubmit }>
-      <input
-        type="email"
-        value={ email }
-        data-testid="email-input"
-        name="email"
-        onChange={ handleChange }
-        placeholder="E-mail"
-      />
-      <input
-        type="password"
-        value={ password }
-        data-testid="password-input"
-        name="password"
-        onChange={ handleChange }
-        placeholder="Password"
-      />
-      <button
-        type="submit"
-        data-testid="login-submit-btn"
-        disabled={ !validate }
-        onClick={ handleSubmit }
-      >
-        Enter
-      </button>
-    </form>
+    <section className="login-content">
+      <img src={ logo } alt="recipes app" />
+      <h1>Recipes App</h1>
+      <form onSubmit={ handleSubmit } className="login-form">
+        <input
+          className="login-input"
+          type="email"
+          value={ email }
+          data-testid="email-input"
+          name="email"
+          onChange={ handleChange }
+          placeholder="E-mail"
+        />
+        <input
+          className="login-input"
+          type="password"
+          value={ password }
+          data-testid="password-input"
+          name="password"
+          onChange={ handleChange }
+          placeholder="Password"
+        />
+        <button
+          className="login-btn"
+          type="submit"
+          data-testid="login-submit-btn"
+          disabled={ !validate }
+          onClick={ handleSubmit }
+        >
+          Enter
+        </button>
+      </form>
+    </section>
   );
 };
 

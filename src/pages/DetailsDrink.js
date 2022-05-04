@@ -1,12 +1,12 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-// import DetailsTitle from '../components/DetailsTitle';
 import DetailsTitle from '../components/DetailsTitle';
 import RecipeBtn from '../components/RecipeBtn';
 import Recomendations from '../components/Recomendations';
 import MyContext from '../context/MyContext';
 import useIngredients from '../hooks/useIngredients';
 import { getDoneRecipes } from '../services/localStorage';
+import '../style/details.css';
 
 function DetailsDrink() {
   const { id } = useParams();
@@ -26,12 +26,12 @@ function DetailsDrink() {
   return (
     loading && <p>Loading...</p>,
     !loading && (
-      <section>
+      <section className="details-sect">
         {Object.keys(detail).length > 0 && (
           <>
             <DetailsTitle type="drink" recipeDetail={ detail } id={ id } />
-            <h2>Ingredients</h2>
-            <ul>
+            <h2 className="details-subtitle">Ingredients</h2>
+            <ul className="ingredients-list-dets">
               {ingredients.map(({ measure, ingredient }, index) => (
                 <li
                   key={ index }
@@ -41,9 +41,11 @@ function DetailsDrink() {
                 </li>
               ))}
             </ul>
-            <h2>Instructions</h2>
-            <p data-testid="instructions">{detail.strInstructions}</p>
-            <h2>Recommended</h2>
+            <h2 className="details-subtitle">Instructions</h2>
+            <p data-testid="instructions" className="instructions">
+              {detail.strInstructions}
+            </p>
+            <h2 className="details-subtitle">Recommended</h2>
             <Recomendations type="meal" />
             {!done && <RecipeBtn type="cocktails" id={ id } />}
           </>
