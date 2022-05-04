@@ -3,7 +3,6 @@ import CardDoneRecipes from '../components/CardDoneRecipe';
 import Header from '../components/Header';
 import SearchBar from '../components/SearchBar';
 import MyContext from '../context/MyContext';
-
 import { getDoneRecipes } from '../services/localStorage';
 
 function DoneRecipes() {
@@ -15,7 +14,6 @@ function DoneRecipes() {
     setDoneRecipe(getDoneRecipes());
     setFilterRecipe(getDoneRecipes());
   }, []);
-  console.log(doneRecipe);
 
   const handleClick = (type) => {
     if (type !== 'all') {
@@ -25,14 +23,16 @@ function DoneRecipes() {
       setFilterRecipe(doneRecipe);
     }
   };
-  console.log(filterRecipe);
 
   return (
     <section>
-      <Header />
-      {search && <SearchBar />}
-      <section>
+      <section className="header-sect">
+        <Header />
+        {search && <SearchBar />}
+      </section>
+      <section className="cat-search-sect">
         <button
+          className="cat-btn"
           type="button"
           data-testid="filter-by-all-btn"
           onClick={ () => handleClick('all') }
@@ -40,30 +40,31 @@ function DoneRecipes() {
           All
         </button>
         <button
+          className="cat-btn"
           type="button"
           data-testid="filter-by-food-btn"
           onClick={ () => handleClick('food') }
         >
-          Food
+          Foods
         </button>
         <button
+          className="cat-btn"
           type="button"
           data-testid="filter-by-drink-btn"
           onClick={ () => handleClick('drink') }
         >
-          Drink
+          Drinks
         </button>
       </section>
-      {
-        filterRecipe.map((recipe, index) => (
-          <section key={ recipe.id }>
-            <CardDoneRecipes
-              recipes={ recipe }
-              index={ index }
-            />
-          </section>
-        ))
-      }
+      <section className="done-cards-sect">
+        {filterRecipe.map((recipe, index) => (
+          <CardDoneRecipes
+            key={ recipe.id }
+            recipes={ recipe }
+            index={ index }
+          />
+        ))}
+      </section>
     </section>
   );
 }

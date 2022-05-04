@@ -19,22 +19,28 @@ function ExploreFoodsByIngredients() {
 
   return (
     <section>
-      <section>
+      <section className="header-sect">
         <Header />
         {search && <SearchBar />}
+      </section>
+      <section className="recipe-card-container food-content-sect">
         {filteringArray.map((each, index) => (
           <button
+            className="recipe-card-btn"
             type="button"
             data-testid={ `${index}-ingredient-card` }
             key={ index }
             onClick={ () => handleClick(each.strIngredient) }
           >
-            <p data-testid={ `${index}-card-name` }>{each.strIngredient}</p>
-            <img
-              data-testid={ `${index}-card-img` }
-              src={ `https://www.themealdb.com/images/ingredients/${each.strIngredient}-Small.png` }
-              alt={ index }
-            />
+            <section className="recipe-card">
+              <img
+                className="recipe-card-img"
+                data-testid={ `${index}-card-img` }
+                src={ `https://www.themealdb.com/images/ingredients/${each.strIngredient}-Small.png` }
+                alt={ index }
+              />
+              <p data-testid={ `${index}-card-name` }>{each.strIngredient}</p>
+            </section>
           </button>
         ))}
       </section>

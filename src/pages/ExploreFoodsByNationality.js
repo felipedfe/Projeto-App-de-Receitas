@@ -28,7 +28,6 @@ function ExploreFoodsByNationality() {
       return renderByNationality();
     }
     if (option) {
-      console.log(option);
       const response = await getFoodsByArea(option);
       setAllFoods(response?.meals.slice(0, NUMBER_CARDS));
     }
@@ -50,39 +49,49 @@ function ExploreFoodsByNationality() {
   return (
     <section>
       <section>
-        <section>
+        <section className="header-sect">
           <Header />
           {search && <SearchBar />}
         </section>
-        <select
-          data-testid="explore-by-nationality-dropdown"
-          onChange={ (event) => onChange(event) }
-        >
-          <option
-            data-testid="All-option"
-            name="all"
-            value="all"
+        <section className="select-sect">
+          <select
+            className="select"
+            data-testid="explore-by-nationality-dropdown"
+            onChange={ (event) => onChange(event) }
           >
-            All
-          </option>
-          {nationality.map((each, index) => (
             <option
-              data-testid={ `${each.strArea}-option` }
-              name={ each.strArea }
-              value={ each.strArea }
-              key={ index }
+              data-testid="All-option"
+              name="all"
+              value="all"
             >
-              {each.strArea}
-
+              All
             </option>
-          ))}
-        </select>
+            {nationality.map((each, index) => (
+              <option
+                data-testid={ `${each.strArea}-option` }
+                name={ each.strArea }
+                value={ each.strArea }
+                key={ index }
+              >
+                {each.strArea}
+
+              </option>
+            ))}
+          </select>
+        </section>
       </section>
-      {allFoods.map((each, index) => (
-        <button type="button" onClick={ () => handleClick(each.idMeal) } key={ index }>
-          <RecipeCard recipe={ each } index={ index } recipeType="meal" />
-        </button>
-      ))}
+      <section className="recipe-card-container">
+        {allFoods.map((each, index) => (
+          <button
+            className="recipe-card-btn"
+            type="button"
+            onClick={ () => handleClick(each.idMeal) }
+            key={ index }
+          >
+            <RecipeCard recipe={ each } index={ index } recipeType="meal" />
+          </button>
+        ))}
+      </section>
       <Footer />
     </section>
   );

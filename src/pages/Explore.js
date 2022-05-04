@@ -17,12 +17,12 @@ function Explore() {
 
   return (
     <section>
-      <section>
+      <section className="header-sect">
         <Header />
       </section>
-      <section className="sectionExplore">
-        <h1>Explore</h1>
+      <section className="explore-content-sect">
         <button
+          className="explore-btn"
           id="exploreFoods"
           type="button"
           data-testid="explore-foods"
@@ -31,6 +31,7 @@ function Explore() {
           Explore Foods
         </button>
         <button
+          className="explore-btn"
           id="exploreDrinks"
           type="button"
           data-testid="explore-drinks"

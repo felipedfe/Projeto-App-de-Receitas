@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { BsShare } from 'react-icons/bs';
 import PropTypes from 'prop-types';
 import shareIcon from '../images/shareIcon.svg';
+import '../style/DonePage.css';
 
 function CardDoneRecipes(props) {
   const { recipes: {
@@ -23,76 +25,85 @@ function CardDoneRecipes(props) {
   return (
     type === 'food'
       ? (
-        <section key={ name } className="favorite-card-container">
-          <Link to={ `/foods/${id}` }>
+        <section className="favorite-card">
+          <Link to={ `/foods/${id}` } key={ name } className="favorite-card-container">
             <img
               src={ image }
               className="card-image"
               alt="Recipe"
               data-testid={ `${index}-horizontal-image` }
             />
-            <p data-testid={ `${index}-horizontal-name` }>
-              { name }
-            </p>
+            <section className="done-card-text">
+              <h3 data-testid={ `${index}-horizontal-name` }>
+                { name }
+              </h3>
+              <p data-testid={ `${index}-horizontal-top-text` }>
+                { `${nationality} - ${category}` }
+              </p>
+              <p data-testid={ `${index}-horizontal-done-date` }>
+                { doneDate.split(' ')[0] }
+              </p>
+              <section className="tags-sect">
+                { tags.map((tag) => {
+                  if (tag) {
+                    return (
+                      <p
+                        className="tag"
+                        key={ tag }
+                        data-testid={ `${index}-${tag}-horizontal-tag` }
+                      >
+                        { tag }
+                      </p>
+                    );
+                  }
+                  return null;
+                }) }
+              </section>
+            </section>
           </Link>
-          <p data-testid={ `${index}-horizontal-top-text` }>
-            { `${nationality} - ${category}` }
-          </p>
-          <p data-testid={ `${index}-horizontal-done-date` }>{ doneDate }</p>
-          <section>
-            { tags.map((tag) => {
-              if (tag) {
-                return (
-                  <p
-                    key={ tag }
-                    data-testid={ `${index}-${tag}-horizontal-tag` }
-                  >
-                    { tag }
-                  </p>
-                );
-              }
-              return null;
-            }) }
-          </section>
           <button
             type="button"
             data-testid={ `${index}-horizontal-share-btn` }
             src={ shareIcon }
-            className="favorite-card-btn"
+            className="done-card-btn"
             onClick={ () => handleShareBtnClick(`/foods/${id}`) }
           >
-            <img src={ shareIcon } alt="Share" />
+            <BsShare />
+            {copiedMessage && <p>Link copied!</p>}
           </button>
-          {copiedMessage && <p>Link copied!</p>}
         </section>
       )
       : (
-        <section key={ name } className="favorite-card-container">
-          <Link to={ `/drinks/${id}` }>
+        <section className="favorite-card">
+          <Link to={ `/drinks/${id}` } key={ name } className="favorite-card-container">
             <img
               src={ image }
               className="card-image"
               alt="Recipe"
               data-testid={ `${index}-horizontal-image` }
             />
-            <p data-testid={ `${index}-horizontal-name` }>
-              { name }
-            </p>
+            <section className="done-card-text">
+              <h3 data-testid={ `${index}-horizontal-name` }>
+                { name }
+              </h3>
+              <p data-testid={ `${index}-horizontal-top-text` }>
+                { alcoholicOrNot }
+              </p>
+              <p data-testid={ `${index}-horizontal-done-date` }>
+                { doneDate.split(' ')[0] }
+              </p>
+            </section>
           </Link>
-          <p data-testid={ `${index}-horizontal-top-text` }>
-            { alcoholicOrNot }
-          </p>
-          <p data-testid={ `${index}-horizontal-done-date` }>{ doneDate }</p>
           <button
             type="button"
             data-testid={ `${index}-horizontal-share-btn` }
             src={ shareIcon }
-            className="favorite-card-btn"
+            className="done-card-btn"
             onClick={ () => handleShareBtnClick(`/drinks/${id}`) }
           >
-            <img src={ shareIcon } alt="Share" />
+            <BsShare />
+            {copiedMessage && <p>Link copied!</p>}
           </button>
-          {copiedMessage && <p>Link copied!</p>}
         </section>
       )
   );

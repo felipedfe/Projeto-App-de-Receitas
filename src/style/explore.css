@@ -1,11 +1,51 @@
-.sectionExplore {
+.explore-content-sect, .profile-sect, .profile-buttons-container {
+  align-items: center;
   display: flex;
-  flex-flow: column wrap;
-  text-align: center;
+  flex-direction: column;
+  justify-content: center;
+  min-height: 90vw;
+  width: 100vw;
 }
 
-button {
-  align-self: center;
-  margin-top: 20px;
-  width: 200px;
+.explore-btn {
+  border: none;
+  border-radius: 8px;
+  box-shadow: 0 0 6px var(--secondary-color-lighter);
+  cursor: pointer;
+  font-size: 1.2rem;
+  margin: 12px;
+  max-width: 500px;
+  padding: 12px;
+  text-align: center;
+  width: 80vw;
+}
+
+.explore-btn:hover {
+  background-color: var(--main-color-darker);
+}
+
+.explore-btn:active {
+  background-color: var(--accent);
+  color: var(--main-color);
+}
+
+.food-content-sect {
+  margin-bottom: 80px;
+}
+
+.select-sect {
+  display: flex;
+  justify-content: center;
+  width: 100vw;
+}
+
+.select {
+  background-color: var(--main-color-darker);
+  border: none;
+  border-radius: 8px;
+  box-shadow: 0 0 8px var(--secondary-color-lighter);
+  font-size: 1.2rem;
+  margin: 16px;
+  padding: 8px;
+  width: 80%;
 }

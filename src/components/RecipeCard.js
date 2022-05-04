@@ -8,6 +8,7 @@ function RecipeCard({ recipeType, recipe, index }) {
       return (
         <>
           <img
+            className="recipe-card-img"
             data-testid={ `${index}-card-img` }
             alt={ recipe.strMeal }
             src={ recipe.strMealThumb }
@@ -19,6 +20,7 @@ function RecipeCard({ recipeType, recipe, index }) {
       return (
         <>
           <img
+            className="recipe-card-img"
             data-testid={ `${index}-card-img` }
             alt={ recipe.strDrink }
             src={ recipe.strDrinkThumb }

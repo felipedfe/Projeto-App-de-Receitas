@@ -1,15 +1,28 @@
-.header-sect img {
+.header img {
+  color: var(--secondary-color);
   width: 30px;
 }
 
-.header-sect {
+.header {
   align-items: center;
+  background-color: var(--main-color-darker);
   display: flex;
+  height: 60px;
   justify-content: space-between;
   padding: 8px;
+  position: relative;
+  width: 100%;
 }
 
-.header-sect button {
+.header button {
   background-color: transparent;
   border: none;
+}
+
+.page-title {
+  font-size: 1.4rem;
+  left: 50%;
+  position: absolute;
+  transform: translateX(-50%);
+  width: fit-content;
 }

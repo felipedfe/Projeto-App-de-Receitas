@@ -24,7 +24,7 @@ function Drinks(props) {
   };
 
   const categoryOptions = ['All', 'Ordinary Drink', 'Cocktail',
-    'Other/Unknown', 'Cocoa', 'Milk / Float / Shake'];
+    'Other/Unknown', 'Cocoa', 'Shake'];
 
   useEffect(() => {
     const drinksScreen = async () => {
@@ -65,64 +65,67 @@ function Drinks(props) {
 
   return (
     <section>
-      <section>
+      <section className="header-sect">
         <Header />
-        {search && <SearchBar />}
-      </section>
-      <section>
-        {categoryOptions.map((option) => (
-          <button
-            key={ option }
-            type="button"
-            data-testid={ `${option}-category-filter` }
-            onClick={ () => handleClick(option) }
-          >
-            {option}
-          </button>
-        ))}
+        <section className="cat-search-sect">
+          {search ? <SearchBar /> : (
+            categoryOptions.map((option) => (
+              <button
+                className="cat-btn"
+                key={ option }
+                type="button"
+                data-testid={ `${option}-category-filter` }
+                onClick={ () => handleClick(option) }
+              >
+                {option}
+              </button>
+            )))}
+        </section>
       </section>
 
-      {!drinkResponse.drinks.length && (
-        <section className="recipe-card-container">
-          {chosenDrink?.map((order, index) => (
-            <button
-              className="recipe-card-btn"
-              key={ order.idDrink }
-              type="button"
-              onClick={ () => changePage(order.idDrink) }
-            >
-              <RecipeCard
-                recipeType="drink"
-                recipe={ order }
-                index={ index }
-              />
-            </button>
-          ))}
-        </section>
-      )}
+      <section className="content-sect">
+        {!drinkResponse.drinks.length && (
+          <section className="recipe-card-container">
+            {chosenDrink?.map((order, index) => (
+              <button
+                className="recipe-card-btn"
+                key={ order.idDrink }
+                type="button"
+                onClick={ () => changePage(order.idDrink) }
+              >
+                <RecipeCard
+                  recipeType="drink"
+                  recipe={ order }
+                  index={ index }
+                />
+              </button>
+            ))}
+          </section>
+        )}
 
-      {drinkResponse.drinks.length > 1 && (
-        <section className="recipe-card-container">
-          { drinkResponse.drinks.map((order, index) => {
-            if (index < NUMBER_CARDS) {
-              return (
-                <button
-                  className="recipe-card-btn"
-                  key={ order.idDrink }
-                  type="button"
-                  onClick={ () => changePage(order.idDrink) }
-                >
-                  <RecipeCard
-                    recipeType="drink"
-                    recipe={ order }
-                    index={ index }
-                  />
-                </button>
-              );
-            } return null;
-          })}
-        </section>
-      )}
+        {drinkResponse.drinks.length > 1 && (
+          <section className="recipe-card-container">
+            { drinkResponse.drinks.map((order, index) => {
+              if (index < NUMBER_CARDS) {
+                return (
+                  <button
+                    className="recipe-card-btn"
+                    key={ order.idDrink }
+                    type="button"
+                    onClick={ () => changePage(order.idDrink) }
+                  >
+                    <RecipeCard
+                      recipeType="drink"
+                      recipe={ order }
+                      index={ index }
+                    />
+                  </button>
+                );
+              } return null;
+            })}
+          </section>
+        )}
+      </section>
       <Footer />
     </section>
   );
