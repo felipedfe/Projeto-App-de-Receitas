@@ -28,7 +28,6 @@ function ExploreFoodsByNationality() {
       return renderByNationality();
     }
     if (option) {
-      console.log(option);
       const response = await getFoodsByArea(option);
       setAllFoods(response?.meals.slice(0, NUMBER_CARDS));
     }
