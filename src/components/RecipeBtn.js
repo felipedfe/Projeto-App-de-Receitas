@@ -33,7 +33,6 @@ const RecipeBtn = ({ type, id }) => {
     <button
       className="start-btn"
       type="button"
-      data-testid="start-recipe-btn"
       onClick={ handleClick }
     >
       {inProgress ? 'Continue Recipe' : 'Start Recipe'}

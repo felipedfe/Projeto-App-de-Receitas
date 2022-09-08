@@ -17,7 +17,8 @@ function CardDoneRecipes(props) {
 
   const handleShareBtnClick = (sentId) => {
     const COPIED_MSG_TIME = 1500;
-    navigator.clipboard.writeText(`http://localhost:3000${sentId}`);
+    const location = window.location.origin;
+    navigator.clipboard.writeText(`${location}${sentId}`);
     setCopiedMessage(true);
     setTimeout(() => setCopiedMessage(false), COPIED_MSG_TIME);
   };
@@ -31,16 +32,15 @@ function CardDoneRecipes(props) {
               src={ image }
               className="card-image"
               alt="Recipe"
-              data-testid={ `${index}-horizontal-image` }
             />
             <section className="done-card-text">
-              <h3 data-testid={ `${index}-horizontal-name` }>
+              <h3>
                 { name }
               </h3>
-              <p data-testid={ `${index}-horizontal-top-text` }>
+              <p>
                 { `${nationality} - ${category}` }
               </p>
-              <p data-testid={ `${index}-horizontal-done-date` }>
+              <p>
                 { doneDate.split(' ')[0] }
               </p>
               <section className="tags-sect">
@@ -50,7 +50,6 @@ function CardDoneRecipes(props) {
                       <p
                         className="tag"
                         key={ tag }
-                        data-testid={ `${index}-${tag}-horizontal-tag` }
                       >
                         { tag }
                       </p>
@@ -63,7 +62,6 @@ function CardDoneRecipes(props) {
           </Link>
           <button
             type="button"
-            data-testid={ `${index}-horizontal-share-btn` }
             src={ shareIcon }
             className="done-card-btn"
             onClick={ () => handleShareBtnClick(`/foods/${id}`) }
@@ -80,16 +78,15 @@ function CardDoneRecipes(props) {
               src={ image }
               className="card-image"
               alt="Recipe"
-              data-testid={ `${index}-horizontal-image` }
             />
             <section className="done-card-text">
-              <h3 data-testid={ `${index}-horizontal-name` }>
+              <h3>
                 { name }
               </h3>
-              <p data-testid={ `${index}-horizontal-top-text` }>
+              <p>
                 { alcoholicOrNot }
               </p>
-              <p data-testid={ `${index}-horizontal-done-date` }>
+              <p>
                 { doneDate.split(' ')[0] }
               </p>
             </section>

@@ -9,11 +9,10 @@ function RecipeCard({ recipeType, recipe, index }) {
         <>
           <img
             className="recipe-card-img"
-            data-testid={ `${index}-card-img` }
             alt={ recipe.strMeal }
             src={ recipe.strMealThumb }
           />
-          <p data-testid={ `${index}-card-name` }>{recipe.strMeal}</p>
+          <p>{recipe.strMeal}</p>
         </>
       );
     } if (recipeType === 'drink') {
@@ -21,11 +20,10 @@ function RecipeCard({ recipeType, recipe, index }) {
         <>
           <img
             className="recipe-card-img"
-            data-testid={ `${index}-card-img` }
             alt={ recipe.strDrink }
             src={ recipe.strDrinkThumb }
           />
-          <p data-testid={ `${index}-card-name` }>{recipe.strDrink}</p>
+          <p>{recipe.strDrink}</p>
         </>
       );
     }

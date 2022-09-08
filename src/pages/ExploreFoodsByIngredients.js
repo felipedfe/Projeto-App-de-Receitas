@@ -28,18 +28,16 @@ function ExploreFoodsByIngredients() {
           <button
             className="recipe-card-btn"
             type="button"
-            data-testid={ `${index}-ingredient-card` }
             key={ index }
             onClick={ () => handleClick(each.strIngredient) }
           >
             <section className="recipe-card">
               <img
                 className="recipe-card-img"
-                data-testid={ `${index}-card-img` }
                 src={ `https://www.themealdb.com/images/ingredients/${each.strIngredient}-Small.png` }
                 alt={ index }
               />
-              <p data-testid={ `${index}-card-name` }>{each.strIngredient}</p>
+              <p>{each.strIngredient}</p>
             </section>
           </button>
         ))}

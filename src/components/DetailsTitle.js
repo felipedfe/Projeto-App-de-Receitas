@@ -85,10 +85,9 @@ const DetailsTitle = ({ type, id, recipeDetail }) => {
         className="details-food-img"
         src={ detail.image }
         alt={ detail.name }
-        data-testid="recipe-photo"
         width="300"
       />
-      <h1 className="details-title" data-testid="recipe-title">
+      <h1 className="details-title">
         { detail.name }
       </h1>
       <section className="like-share-sect">
@@ -96,7 +95,6 @@ const DetailsTitle = ({ type, id, recipeDetail }) => {
           <button
             className="copy-btn"
             type="button"
-            data-testid="share-btn"
             src={ share }
             onClick={ handleCopy }
           >
@@ -107,7 +105,6 @@ const DetailsTitle = ({ type, id, recipeDetail }) => {
         <button
           className="like-btn"
           type="button"
-          data-testid="favorite-btn"
           onClick={ handleClick }
           src={ favorite ? blackHeart : whiteHeart }
         >
@@ -115,10 +112,10 @@ const DetailsTitle = ({ type, id, recipeDetail }) => {
         </button>
       </section>
       {type === 'meal' && (
-        <p className="details-cat" data-testid="recipe-category">{ detail.category }</p>
+        <p className="details-cat">{ detail.category }</p>
       )}
       {detail.alcoholicOrNot && (
-        <p className="details-cat" data-testid="recipe-category">
+        <p className="details-cat">
           {detail.alcoholicOrNot}
         </p>)}
     </section>

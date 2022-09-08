@@ -13,9 +13,6 @@ const FAVORITE_RECIPES_URL = '/favorite-recipes';
 const FOOD_DRINK_IMG_ID = '0-horizontal-image';
 const FILTERED_ALL = 3;
 
-// console.log(drinks.drinks[0].idDrink);
-// console.log(drinks.drinks[1].idDrink);
-
 const mockRecipeCard = (id, category = false) => ({
   id,
   type: category ? 'food' : 'drink',

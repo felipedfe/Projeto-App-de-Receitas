@@ -60,7 +60,6 @@ function Header() {
     <section className="header">
       <button
         type="button"
-        data-testid="profile-top-btn"
         src={ profileIcon }
         onClick={ () => setAvailable(true) }
       >
@@ -68,7 +67,7 @@ function Header() {
         <AiOutlineUser className="react-icon" />
       </button>
 
-      <h1 className="page-title" data-testid="page-title">
+      <h1 className="page-title">
         { routeName }
       </h1>
 
@@ -76,7 +75,6 @@ function Header() {
         <button
           type="button"
           src={ searchIcon }
-          data-testid="search-top-btn"
           onClick={ () => setSearch(!search) }
         >
           <BsSearch className="react-icon" />

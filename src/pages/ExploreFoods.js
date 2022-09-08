@@ -30,7 +30,6 @@ function ExploreFoods() {
       <section className="explore-content-sect">
         <button
           className="explore-btn"
-          data-testid="explore-by-ingredient"
           type="button"
           onClick={ redirectByIngredient }
         >
@@ -38,7 +37,6 @@ function ExploreFoods() {
         </button>
         <button
           className="explore-btn"
-          data-testid="explore-by-nationality"
           type="button"
           onClick={ redirectByNationality }
         >
@@ -46,7 +44,6 @@ function ExploreFoods() {
         </button>
         <button
           className="explore-btn"
-          data-testid="explore-surprise"
           type="button"
           onClick={ redirectBySurpriseMe }
         >

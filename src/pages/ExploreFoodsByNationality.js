@@ -56,11 +56,9 @@ function ExploreFoodsByNationality() {
         <section className="select-sect">
           <select
             className="select"
-            data-testid="explore-by-nationality-dropdown"
             onChange={ (event) => onChange(event) }
           >
             <option
-              data-testid="All-option"
               name="all"
               value="all"
             >
@@ -68,7 +66,6 @@ function ExploreFoodsByNationality() {
             </option>
             {nationality.map((each, index) => (
               <option
-                data-testid={ `${each.strArea}-option` }
                 name={ each.strArea }
                 value={ each.strArea }
                 key={ index }

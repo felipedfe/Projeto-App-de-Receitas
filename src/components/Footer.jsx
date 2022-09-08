@@ -22,10 +22,9 @@ function Footer() {
   };
 
   return (
-    <footer data-testid="footer" className="main-footer">
+    <footer className="main-footer">
 
       <button
-        data-testid="drinks-bottom-btn"
         type="button"
         onClick={ actionButtonDrink }
         src={ drinkIcon }
@@ -34,7 +33,6 @@ function Footer() {
       </button>
 
       <button
-        data-testid="explore-bottom-btn"
         type="button"
         onClick={ actionButtonExplore }
         src={ exploreIcon }
@@ -43,7 +41,6 @@ function Footer() {
       </button>
 
       <button
-        data-testid="food-bottom-btn"
         type="button"
         onClick={ actionButtonFoods }
         src={ mealIcon }

@@ -46,7 +46,6 @@ const Login = ({ history }) => {
           className="login-input"
           type="email"
           value={ email }
-          data-testid="email-input"
           name="email"
           onChange={ handleChange }
           placeholder="E-mail"
@@ -55,7 +54,6 @@ const Login = ({ history }) => {
           className="login-input"
           type="password"
           value={ password }
-          data-testid="password-input"
           name="password"
           onChange={ handleChange }
           placeholder="Password"
@@ -63,7 +61,6 @@ const Login = ({ history }) => {
         <button
           className="login-btn"
           type="submit"
-          data-testid="login-submit-btn"
           disabled={ !validate }
           onClick={ handleSubmit }
         >

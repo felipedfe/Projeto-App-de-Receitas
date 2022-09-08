@@ -73,7 +73,6 @@ function ProgressFood() {
                 key={ index }
                 htmlFor={ `${index}-ingredient` }
                 className={ check ? 'ing-label checked' : 'ing-label' }
-                data-testid={ `${index}-ingredient-step` }
               >
                 <input
                   type="checkbox"
@@ -87,13 +86,12 @@ function ProgressFood() {
             ))}
         </section>
         <h2 className="progress-subtitle">Instructions</h2>
-        <p data-testid="instructions" className="instructions">
+        <p className="instructions">
           {recipeDetail.strInstructions}
         </p>
         <button
           className="progress-btn"
           type="button"
-          data-testid="finish-recipe-btn"
           disabled={ !renderIngredient.every(({ check }) => check) }
           onClick={ handleClick }
         >

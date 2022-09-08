@@ -34,7 +34,6 @@ function DoneRecipes() {
         <button
           className="cat-btn"
           type="button"
-          data-testid="filter-by-all-btn"
           onClick={ () => handleClick('all') }
         >
           All
@@ -42,7 +41,6 @@ function DoneRecipes() {
         <button
           className="cat-btn"
           type="button"
-          data-testid="filter-by-food-btn"
           onClick={ () => handleClick('food') }
         >
           Foods
@@ -50,7 +48,6 @@ function DoneRecipes() {
         <button
           className="cat-btn"
           type="button"
-          data-testid="filter-by-drink-btn"
           onClick={ () => handleClick('drink') }
         >
           Drinks

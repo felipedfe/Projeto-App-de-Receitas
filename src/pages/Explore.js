@@ -25,7 +25,6 @@ function Explore() {
           className="explore-btn"
           id="exploreFoods"
           type="button"
-          data-testid="explore-foods"
           onClick={ goToExploreFoodsPage }
         >
           Explore Foods
@@ -34,7 +33,6 @@ function Explore() {
           className="explore-btn"
           id="exploreDrinks"
           type="button"
-          data-testid="explore-drinks"
           onClick={ goToExploreDrinks }
         >
           Explore Drinks

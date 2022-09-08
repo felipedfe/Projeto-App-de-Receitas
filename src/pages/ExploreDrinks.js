@@ -26,7 +26,6 @@ function ExploreDrinks() {
       <section className="explore-content-sect">
         <button
           className="explore-btn"
-          data-testid="explore-by-ingredient"
           type="button"
           onClick={ redirectByIngredient }
         >
@@ -34,7 +33,6 @@ function ExploreDrinks() {
         </button>
         <button
           className="explore-btn"
-          data-testid="explore-surprise"
           type="button"
           onClick={ redirectBySurpriseDrink }
         >

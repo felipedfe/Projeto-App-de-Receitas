@@ -27,20 +27,18 @@ function ExploreDrinksByIngredients() {
           <button
             className="recipe-card-btn"
             type="button"
-            data-testid={ `${index}-ingredient-card` }
             key={ index }
             onClick={ () => handleClick(each.strIngredient1) }
           >
             <section className="recipe-card">
               <img
                 className="recipe-card-img"
-                data-testid={ `${index}-card-img` }
                 src={
                   `https://www.thecocktaildb.com/images/ingredients/${each.strIngredient1}-Small.png`
                 }
                 alt={ each.strIngredient1 }
               />
-              <p data-testid={ `${index}-card-name` }>{each.strIngredient1}</p>
+              <p>{each.strIngredient1}</p>
             </section>
           </button>
         ))}

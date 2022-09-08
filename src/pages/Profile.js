@@ -19,12 +19,11 @@ function Profile(props) {
         <Header />
       </section>
       <section className="profile-sect">
-        <h2 data-testid="profile-email" className="profile-subtitle">{email}</h2>
+        <h2 className="profile-subtitle">{email}</h2>
         <section className="profile-buttons-container">
           <button
             className="explore-btn"
             type="button"
-            data-testid="profile-done-btn"
             onClick={ () => redirectToPage('/done-recipes') }
           >
             Done Recipes
@@ -32,7 +31,6 @@ function Profile(props) {
           <button
             className="explore-btn"
             type="button"
-            data-testid="profile-favorite-btn"
             onClick={ () => redirectToPage('/favorite-recipes') }
           >
             Favorite Recipes
@@ -40,7 +38,6 @@ function Profile(props) {
           <button
             className="explore-btn"
             type="button"
-            data-testid="profile-logout-btn"
             onClick={ () => redirectToPage('/') }
           >
             Logout

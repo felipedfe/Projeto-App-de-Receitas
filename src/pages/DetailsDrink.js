@@ -35,14 +35,13 @@ function DetailsDrink() {
               {ingredients.map(({ measure, ingredient }, index) => (
                 <li
                   key={ index }
-                  data-testid={ `${index}-ingredient-name-and-measure` }
                 >
                   {`${measure}-${ingredient}`}
                 </li>
               ))}
             </ul>
             <h2 className="details-subtitle">Instructions</h2>
-            <p data-testid="instructions" className="instructions">
+            <p className="instructions">
               {detail.strInstructions}
             </p>
             <h2 className="details-subtitle">Recommended</h2>

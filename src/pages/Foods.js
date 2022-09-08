@@ -73,7 +73,6 @@ function Foods(props) {
                 className="cat-btn"
                 key={ option }
                 type="button"
-                data-testid={ `${option}-category-filter` }
                 onClick={ () => handleClick(option) }
               >
                 {option}

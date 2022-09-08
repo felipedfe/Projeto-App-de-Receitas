@@ -78,7 +78,6 @@ function SearchBar() {
       <input
         className="search-input"
         type="text"
-        data-testid="search-input"
         placeholder="Search by"
         onChange={ ({ target }) => setSearchInput(target.value) }
       />
@@ -90,7 +89,6 @@ function SearchBar() {
             id="ingredient"
             value="ingredient"
             name="search-type"
-            data-testid="ingredient-search-radio"
             defaultChecked
             onClick={ ({ target }) => { setRadio(target.value); } }
           />
@@ -103,7 +101,6 @@ function SearchBar() {
             id="name"
             name="search-type"
             value="name"
-            data-testid="name-search-radio"
             onClick={ ({ target }) => { setRadio(target.value); } }
           />
           Name
@@ -115,7 +112,6 @@ function SearchBar() {
             id="first-letter"
             name="search-type"
             value="first-letter"
-            data-testid="first-letter-search-radio"
             onClick={ ({ target }) => { setRadio(target.value); } }
           />
           First Letter
@@ -125,7 +121,6 @@ function SearchBar() {
       <button
         type="button"
         name="search-type"
-        data-testid="exec-search-btn"
         onClick={ handleClick }
       >
         Search

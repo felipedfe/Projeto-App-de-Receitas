@@ -34,17 +34,16 @@ function DetailsFood() {
               {ingredients.map(({ measure, ingredient }, index) => (
                 <li
                   key={ index }
-                  data-testid={ `${index}-ingredient-name-and-measure` }
                 >
                   {`${measure}-${ingredient}`}
                 </li>
               ))}
             </ul>
             <h2 className="details-subtitle">Instructions</h2>
-            <p data-testid="instructions" className="instructions">
+            <p className="instructions">
               {detail.strInstructions}
             </p>
-            <video width="300" controls data-testid="video">
+            <video width="300" controls>
               <source src={ detail.strYoutube } />
               <track
                 src="captions_en.vtt"

@@ -32,7 +32,8 @@ function FavoriteCard(props) {
 
   // Função que copia o link para a página de detalhes da receita
   const copyLink = () => {
-    navigator.clipboard.writeText(`http://localhost:3000${urlLink}`);
+    const location = window.location.origin;
+    navigator.clipboard.writeText(`${location}${urlLink}`);
   };
 
   const handleShareBtnClick = () => {
@@ -44,16 +45,13 @@ function FavoriteCard(props) {
     <section className="favorite-card">
       <Link to={ urlLink } className="favorite-card-container">
         <img
-          data-testid={ `${index}-horizontal-image` }
           className="card-image"
           src={ image }
           alt={ name }
         />
         <section className="done-card-text">
-          <h3 data-testid={ `${index}-horizontal-name` }>{name}</h3>
-          <p
-            data-testid={ `${index}-horizontal-top-text` }
-          >
+          <h3>{name}</h3>
+          <p>
             {type === 'food' ? `${nationality} - ${category}` : alcoholicOrNot}
           </p>
 
@@ -61,7 +59,6 @@ function FavoriteCard(props) {
       </Link>
       <section className="fave-share-sect">
         <button
-          data-testid={ `${index}-horizontal-share-btn` }
           type="button"
           className="favorite-card-btn"
           src={ shareIcon }

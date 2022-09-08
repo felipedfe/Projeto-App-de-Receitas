@@ -22,7 +22,6 @@ const CarouselRecom = ({ type }) => {
               <button
                 key={ card.idMeal }
                 type="button"
-                data-testid={ `${index}-recomendation-card` }
                 onClick={ () => handleClick(card.idMeal) }
               >
                 <img
@@ -30,7 +29,7 @@ const CarouselRecom = ({ type }) => {
                   src={ card.strMealThumb }
                   alt={ card.strMeal }
                 />
-                <p data-testid={ `${index}-recomendation-title` }>{card.strMeal}</p>
+                <p>{card.strMeal}</p>
               </button>);
           } return null;
         })
@@ -41,7 +40,6 @@ const CarouselRecom = ({ type }) => {
               <button
                 key={ card.idDrink }
                 type="button"
-                data-testid={ `${index}-recomendation-card` }
                 onClick={ () => handleClick(card.idDrink) }
               >
                 <img
@@ -49,7 +47,7 @@ const CarouselRecom = ({ type }) => {
                   src={ card.strDrinkThumb }
                   alt={ card.strDrink }
                 />
-                <p data-testid={ `${index}-recomendation-title` }>{card.strDrink}</p>
+                <p>{card.strDrink}</p>
               </button>);
           } return null;
         })
