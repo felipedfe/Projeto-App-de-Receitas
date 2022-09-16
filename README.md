@@ -1,16 +1,23 @@
-# 🚧 README em construção 🚧
+# App de Receitas
 
-<!-- Olá, Tryber!
+## •Descrição
+Uma aplicação onde é possível buscar, salvar e marcar o passo-a-passo de conclusão de diversas receitas (e drinks também!). Ela se alimenta das APIs *TheMealDB API* (https://www.themealdb.com/api.php) e *The CockTailDB API* (https://www.thecocktaildb.com/api.php). Foi desenvolvida em grupo na conclusão do módulo de Front-End do curso de desenvolvimento web da Trybe.
+O app seguiu a metodologia Mobile First em seu desenvolvimento.
 
-Esse é apenas um arquivo inicial para o README do seu projeto.
+## •Tecnologias e bibliotecas
+- Javascript
+- HTML
+- CSS
+- React
+- Context API
 
-É essencial que você preencha esse documento por conta própria, ok?
+## •Executando a aplicação
+- Clone o repositório em sua máquina
+- No terminal, instale as dependência da aplicação: ```npm install```
+- Agora é só colocar a aplicação para rodar: ```npm start```
 
-Não deixe de usar nossas dicas de escrita de README de projetos, e deixe sua criatividade brilhar!
-
-⚠️ IMPORTANTE: você precisa deixar nítido:
-- quais arquivos/pastas foram desenvolvidos por você; 
-- quais arquivos/pastas foram desenvolvidos por outra pessoa estudante;
-- quais arquivos/pastas foram desenvolvidos pela Trybe.
-
--->
+## •Grupo do projeto
+- Rafaella Ladeira
+- João Kruschewsky
+- Débora Serra
+- Felipe Fernandes
