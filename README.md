@@ -1,4 +1,5 @@
 # App de Receitas
+![Tela da aplicação](https://github.com/felipedfe/felipedfe.github.io/blob/main/imagens/06-appdereceitas.jpg)
 
 ## •Descrição
 Uma aplicação onde é possível buscar, salvar e marcar o passo-a-passo de conclusão de diversas receitas (e drinks também!). Ela se alimenta das APIs *TheMealDB API* (https://www.themealdb.com/api.php) e *The CockTailDB API* (https://www.thecocktaildb.com/api.php). Foi desenvolvida em grupo na conclusão do módulo de Front-End do curso de desenvolvimento web da Trybe.
