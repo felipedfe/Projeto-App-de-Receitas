@@ -1,23 +1,23 @@
-# App de Receitas
+# Recipes App
 ![Tela da aplicação](https://github.com/felipedfe/felipedfe.github.io/blob/main/imagens/06-appdereceitas.jpg)
 
-## •Descrição
-Uma aplicação onde é possível buscar, salvar e marcar o passo-a-passo de conclusão de diversas receitas (e drinks também!). Ela se alimenta das APIs *TheMealDB API* (https://www.themealdb.com/api.php) e *The CockTailDB API* (https://www.thecocktaildb.com/api.php). Foi desenvolvida em grupo na conclusão do módulo de Front-End do curso de desenvolvimento web da Trybe.
-O app seguiu a metodologia Mobile First em seu desenvolvimento.
+## •Description
+An application where you can search, save and mark the step-by-step completion of several recipes (and drinks too!). It consumes *TheMealDB API* (https://www.themealdb.com/api.php) and *The CockTailDB API* (https://www.thecocktaildb.com/api.php) APIs. It was developed in a group at the conclusion of the Front-End module of the Trybe web development course.
+The app followed the Mobile First methodology in its development.
 
-## •Tecnologias e bibliotecas
+## •Technologies and Libraries
 - Javascript
 - HTML
 - CSS
 - React
 - Context API
 
-## •Executando a aplicação
-- Clone o repositório em sua máquina
-- No terminal, instale as dependência da aplicação: ```npm install```
-- Agora é só colocar a aplicação para rodar: ```npm start```
+## •How to run the application
+- Clone the repository on your machine
+- In the terminal, install the application's dependencies: `npm install`
+- Now just put the application to run!: `npm start`
 
-## •Grupo do projeto
+## •Project Partners
 - Rafaella Ladeira
 - João Kruschewsky
 - Débora Serra
